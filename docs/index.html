@@ -102,8 +102,12 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
 
   <section>
     <h2>Skaters</h2>
-    <p class="sub">Click any column to sort. <b>P(G)</b> and <b>P(PT)</b> are
-      the chance of at least one goal, and of at least one point.</p>
+    <p class="sub">Click any column to sort. <b>PP</b> and <b>PK</b> are
+      projected power-play and penalty-kill minutes — every stat is projected
+      at each game state separately and added up, so power-play minutes are
+      worth roughly three times even-strength ones for scoring.
+      <b>P(G)</b> and <b>P(PT)</b> are the chance of at least one goal, and of
+      at least one point.</p>
     <div class="panel scroll" style="margin-top:10px">
       <table id="sk"><thead></thead><tbody></tbody></table>
     </div>
@@ -146,6 +150,7 @@ const SK_COLS = [
   ["opponent", "Opp", r => (r.is_home ? "vs " : "@ ") + r.opponent, "l"],
   ["toi", "TOI", r => fmt(r.toi, 1)],
   ["pp_toi", "PP", r => fmt(r.pp_toi, 1)],
+  ["pk_toi", "PK", r => fmt(r.pk_toi, 1)],
   ["sog", "SOG", r => fmt(r.sog)],
   ["goals", "G", r => fmt(r.goals)],
   ["assists", "A", r => fmt(r.assists)],
