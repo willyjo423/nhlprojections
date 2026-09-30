@@ -1,15 +1,25 @@
 name: Fetch history
 
-# One request per player, about a thousand of them. Twelve minutes or so, and
-# it only needs running when a new season is under way or the cache is gone.
+# THIS IS THE JOB THAT KEEPS THE MODEL CURRENT.
+#
+# A cached season file is never re-read from MoneyPuck, so without a schedule
+# here the history freezes on the day it was first fetched while the
+# projection job goes on producing confident daily numbers from a month-old
+# view of every player. The nightly run re-downloads the most recent season,
+# which is what puts last night's games into tomorrow's projection.
+#
+# It runs two hours before "Project tonight" so the projection always reads a
+# history that already includes yesterday.
 on:
+  schedule:
+    - cron: "31 13 * * *"
   workflow_dispatch:
     inputs:
       seasons:
         description: "season directories to take the PLAYER LIST from - each one downloads whole careers, so two is plenty"
         default: "2025,2026"
       refresh:
-        description: "seasons to re-download even if already cached"
+        description: "seasons to re-download even if already cached (blank on a scheduled run means: the latest one)"
         default: ""
       limit:
         description: "smoke test only - fetch N players and SAVE NOTHING"
@@ -17,6 +27,12 @@ on:
 
 permissions:
   contents: write
+
+# Never two of these at once, and never at the same time as the projection
+# job - they both push to main.
+concurrency:
+  group: nhl-data
+  cancel-in-progress: false
 
 jobs:
   fetch:
@@ -43,13 +59,20 @@ jobs:
           SEASONS: ${{ inputs.seasons }}
           REFRESH: ${{ inputs.refresh }}
           LIMIT: ${{ inputs.limit }}
+          SCHEDULED: ${{ github.event_name == 'schedule' }}
         run: |
           set -o pipefail
-          python fetch.py --seasons "${SEASONS:-2025,2026}" \
-            --refresh "${REFRESH:-}" --limit "${LIMIT:-0}"
+          args=(--seasons "${SEASONS:-2025,2026}" --limit "${LIMIT:-0}")
+          if [ -n "$REFRESH" ]; then
+            args+=(--refresh "$REFRESH")
+          elif [ "$SCHEDULED" = "true" ]; then
+            # The nightly point of this job.
+            args+=(--refresh-latest)
+          fi
+          python fetch.py "${args[@]}"
 
       - name: Commit the cache
-        if: inputs.limit == '0'
+        if: inputs.limit == '0' || github.event_name == 'schedule'
         env:
           SEASONS: ${{ inputs.seasons }}
         run: |
@@ -62,8 +85,12 @@ jobs:
           git add -f data/*.csv.gz
           git commit -m "history cache: ${SEASONS:-2025,2026}" || {
             echo "nothing changed"; exit 0; }
+          # Rebase before pushing. The projection job also pushes to main, and
+          # a rejected push here would throw away a fetch that has just cost
+          # ten minutes.
+          git pull --rebase --autostash origin main
           git push
 
       - name: Say what the smoke test did
-        if: inputs.limit != '0'
+        if: inputs.limit != '0' && github.event_name != 'schedule'
         run: echo "Smoke test only. Nothing was saved and nothing was committed."
