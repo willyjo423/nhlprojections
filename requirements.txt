@@ -1,7 +1,0 @@
-# Upper bounds are deliberate. An unpinned `>=` means every CI run installs
-# whatever is newest, so a dependency's major release breaks a workflow that
-# has not been touched in months and the failure looks like your own bug. That
-# has already cost this project an evening once.
-pandas>=2.0,<4
-numpy>=1.24,<3
-requests>=2.28,<3
