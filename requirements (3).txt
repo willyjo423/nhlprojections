@@ -1,0 +1,12 @@
+# Upper bounds are deliberate. An unpinned `>=` means every CI run installs
+# whatever is newest, so a dependency's major release breaks a workflow that
+# has not been touched in months and the failure looks like your own bug. That
+# has already cost this project an evening once.
+#
+# Note honestly that `<4` still admits pandas 3.x, which IS a major release
+# (copy-on-write always on, a real string dtype). The suite is run against
+# pandas 3.0.x and passes, which is why the bound is where it is rather than
+# at `<3`. Tighten it if a 3.x release ever breaks a run.
+pandas>=2.0,<4
+numpy>=1.24,<3
+requests>=2.28,<3
