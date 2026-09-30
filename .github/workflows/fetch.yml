@@ -38,13 +38,20 @@ jobs:
         run: python -c "import source, fetch, model, slate, project, validate"
 
       - name: Fetch
+        # Inputs through the ENVIRONMENT, not interpolated into the shell.
+        env:
+          SEASONS: ${{ inputs.seasons }}
+          REFRESH: ${{ inputs.refresh }}
+          LIMIT: ${{ inputs.limit }}
         run: |
           set -o pipefail
-          python fetch.py --seasons "${{ inputs.seasons || '2025,2026' }}" \
-            --refresh "${{ inputs.refresh }}" --limit "${{ inputs.limit }}"
+          python fetch.py --seasons "${SEASONS:-2025,2026}" \
+            --refresh "${REFRESH:-}" --limit "${LIMIT:-0}"
 
       - name: Commit the cache
         if: inputs.limit == '0'
+        env:
+          SEASONS: ${{ inputs.seasons }}
         run: |
           set -e
           git config user.name "github-actions[bot]"
@@ -53,7 +60,7 @@ jobs:
           # by default, and a silently uncommitted cache means the daily job
           # re-fetches a thousand players every morning.
           git add -f data/*.csv.gz
-          git commit -m "history cache: ${{ inputs.seasons }}" || {
+          git commit -m "history cache: ${SEASONS:-2025,2026}" || {
             echo "nothing changed"; exit 0; }
           git push
 
