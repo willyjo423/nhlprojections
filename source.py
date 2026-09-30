@@ -71,6 +71,7 @@ GAME_GOALIES = f"{MP}/playerData/careers/gameByGame/regular/goalies/{{pid}}.csv"
 
 SITUATION_ALL = "all"
 SITUATION_PP = "5on4"
+SITUATION_PK = "4on5"
 
 
 class DataUnavailable(RuntimeError):
@@ -140,7 +141,8 @@ def need(df: pd.DataFrame, col: str, what: str) -> pd.Series:
         + "\n\nRun `python source.py --probe` and update the constant.")
 
 
-def optional(df: pd.DataFrame, names: list[str], what: str) -> pd.Series | None:
+def optional(df: pd.DataFrame, names: list[str], what: str,
+             quiet: bool = False) -> pd.Series | None:
     """A stat worth having but not worth failing over.
 
     A candidate list is safe HERE and nowhere else in this file: for hits and
@@ -153,10 +155,12 @@ def optional(df: pd.DataFrame, names: list[str], what: str) -> pd.Series | None:
     """
     for n in names:
         if n in df.columns:
-            log.info("%s: using column '%s'", what, n)
+            if not quiet:
+                log.info("%s: using column '%s'", what, n)
             return pd.to_numeric(df[n], errors="coerce")
-    log.warning("%s: none of %s is in this file, so the stat is DROPPED "
-                "rather than projected as zero", what, names)
+    if not quiet:
+        log.warning("%s: none of %s is in this file, so the stat is DROPPED "
+                    "rather than projected as zero", what, names)
     return None
 
 
@@ -231,7 +235,7 @@ def season_summary(season: int, side: str = "skaters") -> pd.DataFrame:
 
 
 def game_by_game(player_ids, side: str = "skaters",
-                 pause: float = 0.05) -> pd.DataFrame:
+                 pause: float = 0.15) -> pd.DataFrame:
     """One row per player per game - the only thing a model may be fitted on.
 
     Fetched per player, because MoneyPuck publishes careers rather than
@@ -291,19 +295,39 @@ OPTIONAL_SKATER = {
             "I_F_penalityMinutes", "I_F_penaltyMinutes"],
     "takeaways": ["I_F_takeaways", "takeaways"],
     "giveaways": ["I_F_giveaways", "giveaways"],
+    # Expected goals: the whole reason to read MoneyPuck rather than a box
+    # score. A goal is one bounce; xG is the chance that created it, and it
+    # predicts the next game materially better.
+    "xg": ["I_F_xGoals"],
+    # Shot ATTEMPTS, about twice the sample of shots on goal, with a stable
+    # per-player fraction that reaches the net. A lower-variance estimate of
+    # the same quantity - the xG trick, applied to shooting volume.
+    "attempts": ["I_F_shotAttempts", "I_F_shotsAttempted"],
+    # Expected goals scored by his team WHILE HE IS ON THE ICE. This is the
+    # opportunity set for assists, which is otherwise the least predictable
+    # thing on the page: an assist requires a team-mate to score while you
+    # are out there, and this measures exactly that, with far more signal
+    # than assists themselves carry.
+    "onice_xg": ["OnIce_F_xGoals"],
+}
+
+# The canonical stats, and where each comes from in a raw row. Declared once
+# so the all-situations frame and the per-state frames cannot drift apart -
+# which is how a power-play column ends up holding an even-strength number.
+REQUIRED_SKATER = {
+    "sog": ("I_F_shotsOnGoal", "shots on goal"),
+    "goals": ("I_F_goals", "goals"),
+    # BLOCKS HE MADE. `I_F_blockedShotAttempts` is his own shots that got
+    # blocked and also matches a search for "blocked".
+    "blocks": ("shotsBlockedByPlayer", "blocks the player MADE"),
 }
 
 
-def _tidy_skaters(raw: pd.DataFrame) -> pd.DataFrame:
-    rows = _situation(raw, SITUATION_ALL, "skater game logs")
-    out = _identity(rows)
-
-    out["toi"] = _minutes(need(rows, "icetime", "ice time"), "skater ice time")
-    out["sog"] = pd.to_numeric(
-        need(rows, "I_F_shotsOnGoal", "shots on goal"), errors="coerce")
-    out["goals"] = pd.to_numeric(
-        need(rows, "I_F_goals", "goals"), errors="coerce")
-
+def _stats_of(rows: pd.DataFrame, quiet: bool = False) -> pd.DataFrame:
+    """Every canonical stat present in this frame, by canonical name."""
+    out = pd.DataFrame(index=rows.index)
+    for key, (col, what) in REQUIRED_SKATER.items():
+        out[key] = pd.to_numeric(need(rows, col, what), errors="coerce")
     # Primary and secondary assists are SUMMED. Taking whichever column
     # matched first would drop roughly a third of every playmaker's assists
     # and look entirely plausible on the page.
@@ -312,42 +336,86 @@ def _tidy_skaters(raw: pd.DataFrame) -> pd.DataFrame:
     a2 = pd.to_numeric(need(rows, "I_F_secondaryAssists", "secondary assists"),
                        errors="coerce").fillna(0)
     out["assists"] = a1 + a2
-    out["points"] = out["goals"].fillna(0) + out["assists"]
-
-    # BLOCKS HE MADE. `I_F_blockedShotAttempts` is his own shots that got
-    # blocked and also matches a search for "blocked".
-    out["blocks"] = pd.to_numeric(
-        need(rows, "shotsBlockedByPlayer", "blocks the player MADE"),
-        errors="coerce")
-
-    # Expected goals. The whole reason to read MoneyPuck rather than a box
-    # score: xG predicts future scoring materially better than goals do,
-    # because a goal is one bounce and xG is the chance that created it.
-    out["xg"] = pd.to_numeric(rows.get("I_F_xGoals"), errors="coerce")
-
     for key, names in OPTIONAL_SKATER.items():
-        col = optional(rows, names, key)
+        col = optional(rows, names, key, quiet=quiet)
         if col is not None:
             out[key] = col
+    return out
 
-    # POWER-PLAY ICE TIME IS A ROW, NOT A COLUMN.
-    pp = _situation(raw, SITUATION_PP, "power-play rows")
-    if len(pp):
-        pptoi = pd.DataFrame({
-            "player_id": need(pp, "playerId", "player id").astype(str),
-            "game_id": need(pp, "gameId", "game id").astype(str),
-            "pp_toi": _minutes(need(pp, "icetime", "pp ice time"), "pp ice time"),
-        }).drop_duplicates(["player_id", "game_id"])
+
+def _state_frame(raw: pd.DataFrame, situation: str, prefix: str,
+                 label: str) -> pd.DataFrame | None:
+    """One player-game row of stats at ONE game state, column-prefixed."""
+    rows = _situation(raw, situation, label)
+    if not len(rows):
+        log.warning("no %s rows at all - %s columns will be empty", situation,
+                    prefix)
+        return None
+    f = _stats_of(rows, quiet=True)
+    f["toi"] = _minutes(need(rows, "icetime", f"{label} ice time"), label)
+    f = f.add_prefix(prefix)
+    f["player_id"] = need(rows, "playerId", "player id").astype(str).values
+    f["game_id"] = need(rows, "gameId", "game id").astype(str).values
+    return f.drop_duplicates(["player_id", "game_id"])
+
+
+def _tidy_skaters(raw: pd.DataFrame) -> pd.DataFrame:
+    rows = _situation(raw, SITUATION_ALL, "skater game logs")
+    out = _identity(rows)
+    out["toi"] = _minutes(need(rows, "icetime", "ice time"), "skater ice time")
+    stats = _stats_of(rows)
+    for c in stats.columns:
+        out[c] = stats[c].values
+    out["points"] = out["goals"].fillna(0) + out["assists"].fillna(0)
+
+    # EVERY GAME STATE IS A ROW, NOT A COLUMN. MoneyPuck writes one row per
+    # player per game per state - all, 5on5, 5on4, 4on5, other - so the power
+    # play is not a column you can read, it is a subset of rows you have to
+    # go and get. Reading the file unfiltered quintuples the history; reading
+    # only `all` throws away the single most useful split in hockey.
+    #
+    # A man's power-play rate is roughly triple his even-strength rate, and
+    # his power-play minutes swing from 0:30 to 3:30 on a coach's decision.
+    # Blended into one number, a promotion to the top unit is nearly
+    # invisible. Split, it is the largest legitimate move a projection makes.
+    for situation, prefix, label in ((SITUATION_PP, "pp_", "power-play rows"),
+                                     (SITUATION_PK, "pk_", "penalty-kill rows")):
+        f = _state_frame(raw, situation, prefix, label)
+        if f is None:
+            out[prefix + "toi"] = 0.0
+            continue
         before = len(out)
-        out = out.merge(pptoi, on=["player_id", "game_id"], how="left")
+        out = out.merge(f, on=["player_id", "game_id"], how="left")
         if len(out) != before:
             raise DataUnavailable(
-                f"the power-play join fanned out {before} rows to {len(out)}")
-    else:
-        out["pp_toi"] = float("nan")
-        log.warning("no 5on4 rows - power-play ice time is empty, and it is "
-                    "the largest single difference between two otherwise "
-                    "identical forwards")
+                f"the {label} join fanned out {before} rows to {len(out)}")
+
+    # "Everything else" is the complement, computed by SUBTRACTION rather than
+    # by reading the 5on5 rows. That guarantees the three buckets add back up
+    # to the all-situations total exactly - no game state falls between them,
+    # nothing is counted twice, and a stat can never quietly go missing
+    # because it happened at 4on4 or with the goalie pulled.
+    base = [c for c in stats.columns if c != "points"] + ["toi"]
+    for c in base:
+        pp = out.get("pp_" + c)
+        pk = out.get("pk_" + c)
+        total = out[c].fillna(0)
+        rest = total - (pp.fillna(0) if pp is not None else 0) \
+                     - (pk.fillna(0) if pk is not None else 0)
+        # Rounding in MoneyPuck's own numbers can make this a hair negative.
+        out["rest_" + c] = rest.clip(lower=0)
+
+    bad = int((out["pp_toi"].fillna(0) + out["pk_toi"].fillna(0)
+               > out["toi"].fillna(0) + 0.5).sum())
+    if bad:
+        log.error("%d rows have power-play plus penalty-kill minutes ABOVE "
+                  "total ice time, which cannot happen - the state rows are "
+                  "not what this code thinks they are", bad)
+
+    share = (out["pp_toi"].fillna(0).sum()
+             / max(out["toi"].fillna(0).sum(), 1e-9))
+    log.info("power play is %.1f%% of all skater ice time (about 8%% is "
+             "right for the NHL)", 100 * share)
 
     out["played"] = (out["toi"].fillna(0) > 0).astype(int)
     return _finish(out, "skaters")

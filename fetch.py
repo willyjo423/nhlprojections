@@ -30,7 +30,7 @@ def season_file(season: int, side: str) -> pathlib.Path:
 
 
 def fetch_season(season: int, side: str, limit: int = 0,
-                 pause: float = 0.05) -> pd.DataFrame:
+                 pause: float = 0.15) -> pd.DataFrame:
     directory = SRC.season_summary(season, side)
     ids = directory["player_id"].dropna().unique().tolist()
     if limit:
@@ -50,7 +50,7 @@ def fetch_season(season: int, side: str, limit: int = 0,
 
 
 def load(seasons: list[int], side: str, refresh: list[int] | None = None,
-         limit: int = 0) -> pd.DataFrame:
+         limit: int = 0, since=None) -> pd.DataFrame:
     refresh = set(refresh or [])
     frames, missing = [], []
     for s in seasons:
@@ -82,6 +82,37 @@ def load(seasons: list[int], side: str, refresh: list[int] | None = None,
             f"(skipped as unplayed: {missing or 'none'})")
     out = pd.concat(frames, ignore_index=True)
     out["date"] = pd.to_datetime(out["date"], errors="coerce")
+
+    # MONEYPUCK'S gameByGame FILES ARE WHOLE CAREERS, NOT SEASONS.
+    #
+    # The path says `careers/gameByGame/regular/skaters/{id}.csv` and it means
+    # it: one request returns every game that player has ever played. The
+    # season in the URL only chooses WHICH PLAYERS are in that directory, not
+    # which of their games come back.
+    #
+    # So fetching three seasons downloads most players three times and every
+    # one of their games appears three times in the concat. Nothing crashes.
+    # The rates barely move, because a tripled numerator over a tripled
+    # denominator is the same ratio - which is exactly why this survived a
+    # clean-looking run. What it breaks is everything that counts: the
+    # shrinkage thinks it has three times the evidence and therefore trusts a
+    # player's own numbers far more than it should, and the exponential decay
+    # counts each game three times in a row, so a twenty-game halflife
+    # silently becomes a seven-game one.
+    before = len(out)
+    out = out.drop_duplicates(["player_id", "game_id"], keep="first")
+    if len(out) != before:
+        log.warning("dropped %d duplicate %s rows (%d -> %d). This is normal "
+                    "when several seasons are requested: each one downloads "
+                    "the same career files.", before - len(out), side,
+                    before, len(out))
+
+    if since is not None:
+        cut = pd.Timestamp(since)
+        n = len(out)
+        out = out[out["date"] >= cut]
+        log.info("%s: kept %d of %d rows on or after %s", side, len(out), n,
+                 cut.date())
     return out.sort_values(["player_id", "date"]).reset_index(drop=True)
 
 

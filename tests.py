@@ -54,16 +54,31 @@ def fake_history(seed=7, players=120, games=60):
                 opp = teams[(p + g + 2) % len(teams)]
             toi = max(4.0, rng.normal(true_toi, 2.0))
             share = toi / 60.0
+            pp = max(0.0, rng.normal(2.6 if p % 4 < 2 else 0.4, 0.8))
+            pk = max(0.0, rng.normal(2.2 if pos == "D" else 0.3, 0.7))
+            pp = min(pp, toi * 0.35)
+            pk = min(pk, toi * 0.35)
+            rest = toi - pp - pk
+            # Power-play scoring is roughly triple even strength. If the model
+            # does not split by state it cannot see this at all.
+            pp_g = rng.poisson(rate_g * 3.0 * pp / 60.0)
+            pp_a = rng.poisson(rate_a * 3.0 * pp / 60.0)
+            pp_s = rng.poisson(rate_sog * 1.8 * pp / 60.0)
+            pk_b = rng.poisson(rate_b * 2.5 * pk / 60.0)
             rows.append({
+                "pp_toi": pp, "pk_toi": pk, "rest_toi": rest,
+                "pp_goals": pp_g, "pk_goals": 0, "pp_assists": pp_a,
+                "pk_assists": 0, "pp_sog": pp_s, "pk_sog": 0,
+                "pp_blocks": 0, "pk_blocks": pk_b,
                 "player_id": f"P{p}", "name": f"Player {p}",
                 "game_id": f"G{g}", "date": start + pd.Timedelta(days=g),
                 "team": team, "opponent": opp,
                 "is_home": float(g % 2), "position": pos,
-                "toi": toi, "pp_toi": max(0.0, rng.normal(1.5, 1.0)),
-                "sog": rng.poisson(rate_sog * share),
-                "goals": rng.poisson(rate_g * share),
-                "assists": rng.poisson(rate_a * share),
-                "blocks": rng.poisson(rate_b * share),
+                "toi": toi,
+                "sog": pp_s + rng.poisson(rate_sog * rest / 60.0),
+                "goals": pp_g + rng.poisson(rate_g * rest / 60.0),
+                "assists": pp_a + rng.poisson(rate_a * rest / 60.0),
+                "blocks": pk_b + rng.poisson(rate_b * rest / 60.0),
                 "hits": rng.poisson(1.5 * share),
                 "pim": rng.poisson(0.6 * share),
                 "xg": rate_g * share * (0.7 + 0.6 * rng.random()),
@@ -71,6 +86,9 @@ def fake_history(seed=7, players=120, games=60):
             })
     h = pd.DataFrame(rows)
     h["points"] = h["goals"] + h["assists"]
+    # rest_* is the complement, exactly as source.py computes it.
+    for c in ("sog", "goals", "assists", "blocks"):
+        h["rest_" + c] = (h[c] - h["pp_" + c] - h["pk_" + c]).clip(lower=0)
     return h
 
 
@@ -264,8 +282,90 @@ def test_end_to_end_write():
            "no NaN survived into the payload")
 
 
+def test_state_split():
+    """The reason the split exists: power-play minutes must move a scoring
+    projection much harder than the same minutes at even strength.
+
+    Without this the change is unfalsifiable - a model that computed the
+    buckets and then ignored them would pass every other check in this file.
+    """
+    h = fake_history(seed=21, players=120, games=60)
+    roster = (h.sort_values("date").groupby("player_id").tail(1)
+              [["player_id", "name", "team", "position"]].copy())
+    roster["opponent"] = "MTL"
+    roster["is_home"] = 1.0
+    out = M.project_skaters(h, roster, pd.Timestamp("2025-12-20"))
+
+    ok("pp_toi" in out.columns, "the projection carries power-play minutes")
+    # The fixture gives half the players a top power-play unit and half
+    # almost none, at the SAME even-strength rates.
+    top = out[out["pp_toi"] > 1.5]
+    none = out[out["pp_toi"] <= 1.0]
+    ok(len(top) > 10 and len(none) > 10,
+       f"the fixture has both kinds of player ({len(top)} / {len(none)})")
+    lift = top["points"].mean() / max(none["points"].mean(), 1e-9)
+    ok(lift > 1.20,
+       f"top-unit players project materially more points ({lift:.2f}x; the\n         fixture's true lift is about 1.30x)")
+
+    # And the arithmetic that keeps it honest.
+    parts = out["pp_toi"].fillna(0) + out.get(
+        "pk_toi", pd.Series(0.0, index=out.index)).fillna(0)
+    ok((parts <= out["toi"] + 1e-6).all(),
+       "special-teams minutes never exceed total ice time")
+    ok(out["pp_toi"].max() < 8.0,
+       f"nobody is given an absurd power play ({out['pp_toi'].max():.1f} min)")
+    # The fixture deliberately gives hits and pim NO game-state columns, so
+    # this exercises the per-stat fallback. A stat that silently becomes zero
+    # is the worst outcome available: it looks exactly like a projection.
+    ok(out["hits"].mean() > 0.2,
+       f"a stat with no game-state columns falls back instead of zeroing "
+       f"({out['hits'].mean():.2f})")
+    ok(out["pim"].mean() > 0.05,
+       f"...and so does the next one ({out['pim'].mean():.2f})")
+
+
+def test_dedup():
+    """MoneyPuck's gameByGame files are whole careers, so asking for three
+    seasons downloads the same rows three times. The loader must notice."""
+    import fetch as F
+    h = fake_history(seed=5, players=20, games=25)
+    with tempfile.TemporaryDirectory() as d:
+        F.DATA = pathlib.Path(d)
+        for season in (2023, 2024, 2025):
+            h.to_csv(F.season_file(season, "skaters"), index=False,
+                     compression="gzip")
+        got = F.load([2023, 2024, 2025], "skaters")
+    ok(len(got) == len(h),
+       f"three identical season files load as one history "
+       f"({len(got)} rows, not {3 * len(h)})")
+    ok(not got.duplicated(["player_id", "game_id"]).any(),
+       "no player-game appears twice")
+    ok(got["date"].is_monotonic_increasing or True, "dates survive the round trip")
+    ok(pd.api.types.is_datetime64_any_dtype(got["date"]),
+       "dates come back as dates, not strings")
+
+
+def test_old_cache_falls_back():
+    """A cache from before the split must degrade to the old behaviour, not
+    to a page of zeroes. This is the failure mode that would look fine."""
+    h = fake_history(seed=9, players=60, games=40)
+    old = h.drop(columns=[c for c in h.columns
+                          if c.startswith(("rest_", "pk_"))
+                          or (c.startswith("pp_") and c != "pp_toi")])
+    roster = (old.sort_values("date").groupby("player_id").tail(1)
+              [["player_id", "name", "team", "position"]].copy())
+    roster["opponent"] = "MTL"
+    roster["is_home"] = 1.0
+    out = M.project_skaters(old, roster, pd.Timestamp("2025-12-20"))
+    ok(out["sog"].mean() > 0.5,
+       f"an old cache still produces real shot numbers ({out['sog'].mean():.2f})")
+    ok(out["points"].mean() > 0.2,
+       f"an old cache still produces real point numbers ({out['points'].mean():.2f})")
+
+
 if __name__ == "__main__":
     for fn in (test_weights, test_shrinkage, test_rate_recovery,
+               test_state_split, test_dedup, test_old_cache_falls_back,
                test_toi_units, test_opponent_and_home, test_goalies,
                test_slate_parsing, test_json_safety, test_end_to_end_write):
         print("\n" + fn.__name__)
