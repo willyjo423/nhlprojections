@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       seasons:
-        description: "MoneyPuck season start years, comma separated"
-        default: "2023,2024,2025"
+        description: "season directories to take the PLAYER LIST from - each one downloads whole careers, so two is plenty"
+        default: "2025,2026"
       refresh:
         description: "seasons to re-download even if already cached"
         default: ""
@@ -40,7 +40,7 @@ jobs:
       - name: Fetch
         run: |
           set -o pipefail
-          python fetch.py --seasons "${{ inputs.seasons }}" \
+          python fetch.py --seasons "${{ inputs.seasons || '2025,2026' }}" \
             --refresh "${{ inputs.refresh }}" --limit "${{ inputs.limit }}"
 
       - name: Commit the cache
