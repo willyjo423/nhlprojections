@@ -93,8 +93,8 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
       </select></div>
     <div class="ctl"><label for="q">Search</label>
       <input id="q" type="search" placeholder="name or team"></div>
-    <div class="ctl"><label for="mingp">Min games, last 30 days</label>
-      <input id="mingp" type="number" min="0" max="20" value="1"></div>
+    <div class="ctl"><label for="mingp" title="0 shows everyone who has played for these teams in the last year. Players with no game in the last 30 days are flagged on their row rather than hidden.">Min games, last 30 days</label>
+      <input id="mingp" type="number" min="0" max="20" value="0"></div>
   </div>
 
   <div class="games" id="gamelist"></div>
@@ -189,7 +189,7 @@ async function boot() {
   const slates = (index.slates || []).filter(s => s.file);
   if (!slates.length) { $("status").textContent = "The index is empty."; return; }
   $("slate").innerHTML = slates.map((s, i) =>
-    `<option value="${i}">${esc(s.date)} — ${s.games} games</option>`).join("");
+    `<option value="${i}">${esc(s.date)} — ${esc(s.games)} games</option>`).join("");
   $("slate").onchange = () => load(slates[$("slate").value].file);
   $("foot").innerHTML = "Index updated " + esc(index.updated_at || "unknown") +
     " · data from <a href='https://moneypuck.com'>MoneyPuck</a> · " +
@@ -208,8 +208,11 @@ async function load(file) {
   $("status").textContent =
     `${DATA.skaters.length} skaters · ${DATA.goalies.length} goalies · ` +
     `${DATA.games.length} games · built ${DATA.generated_at}`;
-  const base = DATA.date;
-  $("status").innerHTML = $("status").textContent +
+  // esc() here too. These values come from the build rather than from a
+  // third party, but they are the last raw-to-innerHTML paths on the page and
+  // there is no reason to leave them different from every other one.
+  const base = encodeURIComponent(DATA.date);
+  $("status").innerHTML = esc($("status").textContent) +
     ` · <a href="data/${base}_skaters.csv" download>skaters CSV</a>` +
     ` · <a href="data/${base}_goalies.csv" download>goalies CSV</a>`;
   draw();
@@ -261,21 +264,28 @@ function drawTable(id, cols, rows, sort) {
     // is yours to set.
     const stale = (r.gp_30d || 0) === 0
       ? `<span class="pill">last ${esc(r.last_played || "?")}</span>` : "";
+    // esc() on the value, NOT on `stale` - that one is markup this file
+    // wrote. These were the only unescaped insertions on the page, and they
+    // are the ones carrying names and team codes from an outside source.
     return "<tr>" + cols.map(([, , get, cls], i) =>
-      `<td class="${cls || ""}">${get(r)}${i === 0 ? stale : ""}</td>`)
+      `<td class="${cls || ""}">${esc(get(r))}${i === 0 ? stale : ""}</td>`)
       .join("") + "</tr>";
   }).join("");
 }
 
 function draw() {
   if (!DATA) return;
-  drawTable("sk", SK_COLS.filter(c =>
-    !DATA.dropped_stats.includes(c[0])), filtered(DATA.skaters, true), SORT);
+  const gone = DATA.dropped_stats || [];
+  drawTable("sk", SK_COLS.filter(c => !gone.includes(c[0])),
+            filtered(DATA.skaters, true), SORT);
   drawTable("go", GO_COLS, filtered(DATA.goalies, false), GSORT);
 }
 
 function honesty() {
-  const dropped = (DATA.dropped_stats || []);
+  // Only the ones this page would otherwise have shown. Naming a column the
+  // reader never had is not honesty, it is noise.
+  const shown = new Set(SK_COLS.map(c => c[0]));
+  const dropped = (DATA.dropped_stats || []).filter(s => shown.has(s));
   $("honesty").innerHTML = `
     <b>These are expectations, not predictions.</b> A projection of 0.35 goals
     does not mean a third of a goal; it means usually none and sometimes one.
