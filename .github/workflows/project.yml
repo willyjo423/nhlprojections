@@ -56,18 +56,30 @@ jobs:
           ls -la data/
 
       - name: Project
+        # Inputs go through the ENVIRONMENT, not through string interpolation
+        # into the command line. `${{ inputs.games }}` pasted straight into a
+        # shell is an injection point, and it also breaks on any input
+        # containing a quote.
+        env:
+          SEASONS: ${{ inputs.seasons }}
+          DAY: ${{ inputs.date }}
+          GAMES: ${{ inputs.games }}
         run: |
           set -o pipefail
-          python project.py --seasons "${{ inputs.seasons || '2025,2026' }}" \
-            ${{ inputs.date && format('--date {0}', inputs.date) || '' }} \
-            ${{ inputs.games && format('--games "{0}"', inputs.games) || '' }}
+          args=(--seasons "${SEASONS:-2025,2026}")
+          [ -n "$DAY" ] && args+=(--date "$DAY")
+          [ -n "$GAMES" ] && args+=(--games "$GAMES")
+          python project.py "${args[@]}"
 
       - name: Commit
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/data
+          # data/ as well as docs/data. If the projection run had to fetch a
+          # season the cache was missing, that download cost ten minutes and
+          # would otherwise be thrown away and repeated every single morning.
+          git add -f docs/data data
           git commit -m "projections $(date -u +%Y-%m-%d)" || {
             echo "nothing changed"; exit 0; }
           git push
