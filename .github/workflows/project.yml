@@ -1,0 +1,73 @@
+name: Project tonight
+
+on:
+  schedule:
+    # 15:31 UTC is late morning in North America - well before any puck drop,
+    # and off the hour because :00 is when every cron on GitHub fires at once
+    # and schedules get delayed.
+    - cron: "31 15 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "YYYY-MM-DD (blank = today)"
+        default: ""
+      games:
+        description: 'skip the schedule call, e.g. "TOR@MTL,EDM@CGY"'
+        default: ""
+      seasons:
+        description: "seasons to read from the cache"
+        default: "2023,2024,2025"
+
+permissions:
+  contents: write
+
+jobs:
+  project:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+
+      - name: Every import resolves
+        run: python -c "import source, fetch, model, slate, project, validate"
+
+      - name: Tests
+        # These need no network and no cache, and they are the only thing
+        # standing between a units bug and a page full of confident nonsense.
+        run: |
+          set -o pipefail
+          python tests.py
+
+      - name: The history cache is present
+        # Without this the projection step would quietly start fetching a
+        # thousand players inside a job with a thirty minute limit, and fail
+        # at minute thirty with a timeout that explains nothing.
+        run: |
+          set -e
+          if ! ls data/skaters_*.csv.gz >/dev/null 2>&1; then
+            echo "::error::No history cache in data/. Run the 'Fetch history'"
+            echo "::error::workflow once before this one."
+            exit 1
+          fi
+          ls -la data/
+
+      - name: Project
+        run: |
+          set -o pipefail
+          python project.py --seasons "${{ inputs.seasons || '2023,2024,2025' }}" \
+            ${{ inputs.date && format('--date {0}', inputs.date) || '' }} \
+            ${{ inputs.games && format('--games "{0}"', inputs.games) || '' }}
+
+      - name: Commit
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data
+          git commit -m "projections $(date -u +%Y-%m-%d)" || {
+            echo "nothing changed"; exit 0; }
+          git push
