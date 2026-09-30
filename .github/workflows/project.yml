@@ -16,7 +16,7 @@ on:
         default: ""
       seasons:
         description: "seasons to read from the cache"
-        default: "2023,2024,2025"
+        default: "2025,2026"
 
 permissions:
   contents: write
@@ -58,7 +58,7 @@ jobs:
       - name: Project
         run: |
           set -o pipefail
-          python project.py --seasons "${{ inputs.seasons || '2023,2024,2025' }}" \
+          python project.py --seasons "${{ inputs.seasons || '2025,2026' }}" \
             ${{ inputs.date && format('--date {0}', inputs.date) || '' }} \
             ${{ inputs.games && format('--games "{0}"', inputs.games) || '' }}
 
