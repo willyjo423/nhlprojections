@@ -1,0 +1,62 @@
+name: Fetch history
+
+# One request per player, about a thousand of them. Twelve minutes or so, and
+# it only needs running when a new season is under way or the cache is gone.
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "MoneyPuck season start years, comma separated"
+        default: "2023,2024,2025"
+      refresh:
+        description: "seasons to re-download even if already cached"
+        default: ""
+      limit:
+        description: "smoke test only - fetch N players and SAVE NOTHING"
+        default: "0"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+
+      - name: Every import resolves
+        # A missing module is a five-second failure here and a forty-minute
+        # one after the fetch. `tee` is deliberately absent from every step in
+        # this file: a pipeline reports the exit status of its LAST command,
+        # so `python x.py | tee log` can never fail. That mistake made a whole
+        # workflow report success while the build was crashing.
+        run: python -c "import source, fetch, model, slate, project, validate"
+
+      - name: Fetch
+        run: |
+          set -o pipefail
+          python fetch.py --seasons "${{ inputs.seasons }}" \
+            --refresh "${{ inputs.refresh }}" --limit "${{ inputs.limit }}"
+
+      - name: Commit the cache
+        if: inputs.limit == '0'
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # -f because data/ is the kind of path a .gitignore template excludes
+          # by default, and a silently uncommitted cache means the daily job
+          # re-fetches a thousand players every morning.
+          git add -f data/*.csv.gz
+          git commit -m "history cache: ${{ inputs.seasons }}" || {
+            echo "nothing changed"; exit 0; }
+          git push
+
+      - name: Say what the smoke test did
+        if: inputs.limit != '0'
+        run: echo "Smoke test only. Nothing was saved and nothing was committed."
