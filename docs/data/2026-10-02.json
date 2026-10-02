@@ -1,6 +1,6 @@
 {
  "date": "2026-10-02",
- "generated_at": "2026-10-02T15:44:39+00:00",
+ "generated_at": "2026-10-02T20:34:35+00:00",
  "games": [
   {
    "away": "NYR",
@@ -51,6 +51,7 @@
    "p_goals": 0.102,
    "p_assists": 0.377,
    "p_points": 0.441,
+   "p_assist_only": 0.338,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -76,6 +77,7 @@
    "p_goals": 0.116,
    "p_assists": 0.343,
    "p_points": 0.419,
+   "p_assist_only": 0.303,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -101,6 +103,7 @@
    "p_goals": 0.118,
    "p_assists": 0.359,
    "p_points": 0.434,
+   "p_assist_only": 0.316,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -126,6 +129,7 @@
    "p_goals": 0.117,
    "p_assists": 0.35,
    "p_points": 0.426,
+   "p_assist_only": 0.309,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -151,6 +155,7 @@
    "p_goals": 0.099,
    "p_assists": 0.367,
    "p_points": 0.43,
+   "p_assist_only": 0.33,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-09"
@@ -176,6 +181,7 @@
    "p_goals": 0.081,
    "p_assists": 0.288,
    "p_points": 0.346,
+   "p_assist_only": 0.265,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -201,6 +207,7 @@
    "p_goals": 0.095,
    "p_assists": 0.322,
    "p_points": 0.387,
+   "p_assist_only": 0.292,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-15"
@@ -226,6 +233,7 @@
    "p_goals": 0.091,
    "p_assists": 0.261,
    "p_points": 0.328,
+   "p_assist_only": 0.237,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -251,6 +259,7 @@
    "p_goals": 0.111,
    "p_assists": 0.377,
    "p_points": 0.446,
+   "p_assist_only": 0.335,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -276,6 +285,7 @@
    "p_goals": 0.126,
    "p_assists": 0.297,
    "p_points": 0.385,
+   "p_assist_only": 0.26,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -301,6 +311,7 @@
    "p_goals": 0.081,
    "p_assists": 0.266,
    "p_points": 0.325,
+   "p_assist_only": 0.244,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -326,6 +337,7 @@
    "p_goals": 0.062,
    "p_assists": 0.225,
    "p_points": 0.273,
+   "p_assist_only": 0.211,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -351,6 +363,7 @@
    "p_goals": 0.085,
    "p_assists": 0.288,
    "p_points": 0.348,
+   "p_assist_only": 0.264,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -376,6 +389,7 @@
    "p_goals": 0.079,
    "p_assists": 0.269,
    "p_points": 0.327,
+   "p_assist_only": 0.247,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -401,6 +415,7 @@
    "p_goals": 0.116,
    "p_assists": 0.311,
    "p_points": 0.391,
+   "p_assist_only": 0.275,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -426,6 +441,7 @@
    "p_goals": 0.071,
    "p_assists": 0.242,
    "p_points": 0.296,
+   "p_assist_only": 0.225,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -451,6 +467,7 @@
    "p_goals": 0.082,
    "p_assists": 0.242,
    "p_points": 0.304,
+   "p_assist_only": 0.223,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-15"
@@ -476,6 +493,7 @@
    "p_goals": 0.063,
    "p_assists": 0.204,
    "p_points": 0.254,
+   "p_assist_only": 0.191,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -501,6 +519,7 @@
    "p_goals": 0.08,
    "p_assists": 0.277,
    "p_points": 0.335,
+   "p_assist_only": 0.255,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -526,6 +545,7 @@
    "p_goals": 0.072,
    "p_assists": 0.187,
    "p_points": 0.246,
+   "p_assist_only": 0.174,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -551,6 +571,7 @@
    "p_goals": 0.054,
    "p_assists": 0.213,
    "p_points": 0.255,
+   "p_assist_only": 0.202,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -576,6 +597,7 @@
    "p_goals": 0.103,
    "p_assists": 0.339,
    "p_points": 0.407,
+   "p_assist_only": 0.304,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -601,6 +623,7 @@
    "p_goals": 0.096,
    "p_assists": 0.272,
    "p_points": 0.342,
+   "p_assist_only": 0.246,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -626,6 +649,7 @@
    "p_goals": 0.277,
    "p_assists": 0.438,
    "p_points": 0.594,
+   "p_assist_only": 0.317,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -651,6 +675,7 @@
    "p_goals": 0.102,
    "p_assists": 0.261,
    "p_points": 0.336,
+   "p_assist_only": 0.234,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -676,6 +701,7 @@
    "p_goals": 0.069,
    "p_assists": 0.254,
    "p_points": 0.305,
+   "p_assist_only": 0.236,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -701,6 +727,7 @@
    "p_goals": 0.076,
    "p_assists": 0.227,
    "p_points": 0.285,
+   "p_assist_only": 0.209,
    "gp_30d": 0,
    "games_used": 27.2,
    "last_played": "2026-04-16"
@@ -726,6 +753,7 @@
    "p_goals": 0.321,
    "p_assists": 0.384,
    "p_points": 0.582,
+   "p_assist_only": 0.261,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -751,6 +779,7 @@
    "p_goals": 0.06,
    "p_assists": 0.213,
    "p_points": 0.261,
+   "p_assist_only": 0.2,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -776,6 +805,7 @@
    "p_goals": 0.054,
    "p_assists": 0.205,
    "p_points": 0.248,
+   "p_assist_only": 0.194,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -801,6 +831,7 @@
    "p_goals": 0.054,
    "p_assists": 0.222,
    "p_points": 0.264,
+   "p_assist_only": 0.211,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -826,6 +857,7 @@
    "p_goals": 0.066,
    "p_assists": 0.221,
    "p_points": 0.272,
+   "p_assist_only": 0.206,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -851,6 +883,7 @@
    "p_goals": 0.058,
    "p_assists": 0.215,
    "p_points": 0.261,
+   "p_assist_only": 0.202,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -876,6 +909,7 @@
    "p_goals": 0.057,
    "p_assists": 0.203,
    "p_points": 0.249,
+   "p_assist_only": 0.191,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -901,6 +935,7 @@
    "p_goals": 0.053,
    "p_assists": 0.279,
    "p_points": 0.317,
+   "p_assist_only": 0.264,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -926,6 +961,7 @@
    "p_goals": 0.083,
    "p_assists": 0.257,
    "p_points": 0.319,
+   "p_assist_only": 0.236,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -951,6 +987,7 @@
    "p_goals": 0.336,
    "p_assists": 0.401,
    "p_points": 0.603,
+   "p_assist_only": 0.267,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -976,6 +1013,7 @@
    "p_goals": 0.057,
    "p_assists": 0.218,
    "p_points": 0.263,
+   "p_assist_only": 0.205,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -1001,6 +1039,7 @@
    "p_goals": 0.063,
    "p_assists": 0.231,
    "p_points": 0.279,
+   "p_assist_only": 0.217,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -1026,6 +1065,7 @@
    "p_goals": 0.3,
    "p_assists": 0.462,
    "p_points": 0.624,
+   "p_assist_only": 0.324,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1051,6 +1091,7 @@
    "p_goals": 0.257,
    "p_assists": 0.363,
    "p_points": 0.526,
+   "p_assist_only": 0.269,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -1076,6 +1117,7 @@
    "p_goals": 0.069,
    "p_assists": 0.225,
    "p_points": 0.278,
+   "p_assist_only": 0.209,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2025-10-28"
@@ -1101,6 +1143,7 @@
    "p_goals": 0.267,
    "p_assists": 0.396,
    "p_points": 0.557,
+   "p_assist_only": 0.29,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1126,6 +1169,7 @@
    "p_goals": 0.074,
    "p_assists": 0.208,
    "p_points": 0.266,
+   "p_assist_only": 0.193,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -1151,6 +1195,7 @@
    "p_goals": 0.056,
    "p_assists": 0.205,
    "p_points": 0.25,
+   "p_assist_only": 0.193,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-12"
@@ -1176,6 +1221,7 @@
    "p_goals": 0.318,
    "p_assists": 0.368,
    "p_points": 0.569,
+   "p_assist_only": 0.251,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -1201,6 +1247,7 @@
    "p_goals": 0.251,
    "p_assists": 0.335,
    "p_points": 0.502,
+   "p_assist_only": 0.251,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -1226,6 +1273,7 @@
    "p_goals": 0.276,
    "p_assists": 0.412,
    "p_points": 0.574,
+   "p_assist_only": 0.298,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -1251,6 +1299,7 @@
    "p_goals": 0.086,
    "p_assists": 0.269,
    "p_points": 0.332,
+   "p_assist_only": 0.246,
    "gp_30d": 0,
    "games_used": 27.6,
    "last_played": "2026-04-14"
@@ -1276,6 +1325,7 @@
    "p_goals": 0.269,
    "p_assists": 0.401,
    "p_points": 0.562,
+   "p_assist_only": 0.293,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1301,6 +1351,7 @@
    "p_goals": 0.284,
    "p_assists": 0.353,
    "p_points": 0.537,
+   "p_assist_only": 0.253,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-13"
@@ -1326,6 +1377,7 @@
    "p_goals": 0.113,
    "p_assists": 0.318,
    "p_points": 0.395,
+   "p_assist_only": 0.282,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1351,6 +1403,7 @@
    "p_goals": 0.06,
    "p_assists": 0.204,
    "p_points": 0.251,
+   "p_assist_only": 0.191,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -1376,6 +1429,7 @@
    "p_goals": 0.069,
    "p_assists": 0.231,
    "p_points": 0.285,
+   "p_assist_only": 0.215,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-04-14"
@@ -1401,6 +1455,7 @@
    "p_goals": 0.255,
    "p_assists": 0.383,
    "p_points": 0.54,
+   "p_assist_only": 0.285,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1426,6 +1481,7 @@
    "p_goals": 0.309,
    "p_assists": 0.368,
    "p_points": 0.563,
+   "p_assist_only": 0.254,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -1451,6 +1507,7 @@
    "p_goals": 0.051,
    "p_assists": 0.187,
    "p_points": 0.228,
+   "p_assist_only": 0.177,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1476,6 +1533,7 @@
    "p_goals": 0.241,
    "p_assists": 0.347,
    "p_points": 0.504,
+   "p_assist_only": 0.263,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -1501,6 +1559,7 @@
    "p_goals": 0.057,
    "p_assists": 0.226,
    "p_points": 0.271,
+   "p_assist_only": 0.213,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-12"
@@ -1526,6 +1585,7 @@
    "p_goals": 0.238,
    "p_assists": 0.303,
    "p_points": 0.468,
+   "p_assist_only": 0.231,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -1551,6 +1611,7 @@
    "p_goals": 0.1,
    "p_assists": 0.252,
    "p_points": 0.327,
+   "p_assist_only": 0.227,
    "gp_30d": 0,
    "games_used": 11.3,
    "last_played": "2026-04-14"
@@ -1576,6 +1637,7 @@
    "p_goals": 0.066,
    "p_assists": 0.231,
    "p_points": 0.282,
+   "p_assist_only": 0.216,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-01"
@@ -1601,6 +1663,7 @@
    "p_goals": 0.255,
    "p_assists": 0.34,
    "p_points": 0.508,
+   "p_assist_only": 0.253,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -1626,6 +1689,7 @@
    "p_goals": 0.245,
    "p_assists": 0.345,
    "p_points": 0.506,
+   "p_assist_only": 0.26,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -1651,6 +1715,7 @@
    "p_goals": 0.266,
    "p_assists": 0.332,
    "p_points": 0.509,
+   "p_assist_only": 0.244,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -1676,6 +1741,7 @@
    "p_goals": 0.312,
    "p_assists": 0.402,
    "p_points": 0.588,
+   "p_assist_only": 0.277,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -1701,6 +1767,7 @@
    "p_goals": 0.066,
    "p_assists": 0.221,
    "p_points": 0.272,
+   "p_assist_only": 0.206,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-04-02"
@@ -1726,6 +1793,7 @@
    "p_goals": 0.064,
    "p_assists": 0.215,
    "p_points": 0.265,
+   "p_assist_only": 0.201,
    "gp_30d": 2,
    "games_used": 2.0,
    "last_played": "2026-10-01"
@@ -1751,6 +1819,7 @@
    "p_goals": 0.072,
    "p_assists": 0.226,
    "p_points": 0.282,
+   "p_assist_only": 0.21,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -1776,6 +1845,7 @@
    "p_goals": 0.252,
    "p_assists": 0.357,
    "p_points": 0.519,
+   "p_assist_only": 0.267,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -1801,6 +1871,7 @@
    "p_goals": 0.06,
    "p_assists": 0.185,
    "p_points": 0.234,
+   "p_assist_only": 0.174,
    "gp_30d": 0,
    "games_used": 27.1,
    "last_played": "2026-04-15"
@@ -1826,6 +1897,7 @@
    "p_goals": 0.285,
    "p_assists": 0.356,
    "p_points": 0.54,
+   "p_assist_only": 0.255,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -1851,6 +1923,7 @@
    "p_goals": 0.23,
    "p_assists": 0.346,
    "p_points": 0.496,
+   "p_assist_only": 0.266,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -1876,6 +1949,7 @@
    "p_goals": 0.055,
    "p_assists": 0.199,
    "p_points": 0.244,
+   "p_assist_only": 0.188,
    "gp_30d": 1,
    "games_used": 25.9,
    "last_played": "2026-09-29"
@@ -1901,6 +1975,7 @@
    "p_goals": 0.248,
    "p_assists": 0.319,
    "p_points": 0.488,
+   "p_assist_only": 0.24,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -1926,6 +2001,7 @@
    "p_goals": 0.049,
    "p_assists": 0.182,
    "p_points": 0.221,
+   "p_assist_only": 0.173,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -1951,6 +2027,7 @@
    "p_goals": 0.256,
    "p_assists": 0.326,
    "p_points": 0.499,
+   "p_assist_only": 0.243,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -1976,6 +2053,7 @@
    "p_goals": 0.061,
    "p_assists": 0.239,
    "p_points": 0.286,
+   "p_assist_only": 0.225,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-01-31"
@@ -2001,6 +2079,7 @@
    "p_goals": 0.221,
    "p_assists": 0.299,
    "p_points": 0.454,
+   "p_assist_only": 0.233,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2026,6 +2105,7 @@
    "p_goals": 0.214,
    "p_assists": 0.261,
    "p_points": 0.419,
+   "p_assist_only": 0.205,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -2051,6 +2131,7 @@
    "p_goals": 0.215,
    "p_assists": 0.308,
    "p_points": 0.457,
+   "p_assist_only": 0.242,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -2076,6 +2157,7 @@
    "p_goals": 0.06,
    "p_assists": 0.2,
    "p_points": 0.248,
+   "p_assist_only": 0.188,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2025-11-14"
@@ -2101,6 +2183,7 @@
    "p_goals": 0.068,
    "p_assists": 0.192,
    "p_points": 0.247,
+   "p_assist_only": 0.179,
    "gp_30d": 0,
    "games_used": 11.3,
    "last_played": "2026-04-16"
@@ -2126,6 +2209,7 @@
    "p_goals": 0.063,
    "p_assists": 0.212,
    "p_points": 0.262,
+   "p_assist_only": 0.199,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2151,6 +2235,7 @@
    "p_goals": 0.229,
    "p_assists": 0.262,
    "p_points": 0.431,
+   "p_assist_only": 0.202,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -2176,6 +2261,7 @@
    "p_goals": 0.243,
    "p_assists": 0.315,
    "p_points": 0.481,
+   "p_assist_only": 0.239,
    "gp_30d": 0,
    "games_used": 27.3,
    "last_played": "2026-04-16"
@@ -2201,6 +2287,7 @@
    "p_goals": 0.053,
    "p_assists": 0.202,
    "p_points": 0.245,
+   "p_assist_only": 0.192,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-15"
@@ -2226,6 +2313,7 @@
    "p_goals": 0.243,
    "p_assists": 0.37,
    "p_points": 0.523,
+   "p_assist_only": 0.28,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -2251,6 +2339,7 @@
    "p_goals": 0.067,
    "p_assists": 0.18,
    "p_points": 0.235,
+   "p_assist_only": 0.168,
    "gp_30d": 0,
    "games_used": 13.1,
    "last_played": "2026-04-13"
@@ -2276,6 +2365,7 @@
    "p_goals": 0.055,
    "p_assists": 0.193,
    "p_points": 0.237,
+   "p_assist_only": 0.182,
    "gp_30d": 0,
    "games_used": 5.5,
    "last_played": "2026-04-16"
@@ -2301,6 +2391,7 @@
    "p_goals": 0.266,
    "p_assists": 0.306,
    "p_points": 0.49,
+   "p_assist_only": 0.224,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-01"
@@ -2326,6 +2417,7 @@
    "p_goals": 0.225,
    "p_assists": 0.294,
    "p_points": 0.453,
+   "p_assist_only": 0.228,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2351,6 +2443,7 @@
    "p_goals": 0.25,
    "p_assists": 0.297,
    "p_points": 0.473,
+   "p_assist_only": 0.223,
    "gp_30d": 0,
    "games_used": 27.6,
    "last_played": "2026-04-16"
@@ -2376,6 +2469,7 @@
    "p_goals": 0.055,
    "p_assists": 0.174,
    "p_points": 0.22,
+   "p_assist_only": 0.164,
    "gp_30d": 0,
    "games_used": 28.0,
    "last_played": "2026-04-15"
@@ -2401,6 +2495,7 @@
    "p_goals": 0.199,
    "p_assists": 0.302,
    "p_points": 0.441,
+   "p_assist_only": 0.241,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -2426,6 +2521,7 @@
    "p_goals": 0.262,
    "p_assists": 0.325,
    "p_points": 0.502,
+   "p_assist_only": 0.24,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -2451,6 +2547,7 @@
    "p_goals": 0.222,
    "p_assists": 0.279,
    "p_points": 0.439,
+   "p_assist_only": 0.217,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2476,6 +2573,7 @@
    "p_goals": 0.258,
    "p_assists": 0.356,
    "p_points": 0.522,
+   "p_assist_only": 0.264,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-03-06"
@@ -2501,6 +2599,7 @@
    "p_goals": 0.209,
    "p_assists": 0.247,
    "p_points": 0.405,
+   "p_assist_only": 0.196,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -2526,6 +2625,7 @@
    "p_goals": 0.053,
    "p_assists": 0.22,
    "p_points": 0.261,
+   "p_assist_only": 0.208,
    "gp_30d": 0,
    "games_used": 23.2,
    "last_played": "2026-02-28"
@@ -2551,6 +2651,7 @@
    "p_goals": 0.277,
    "p_assists": 0.338,
    "p_points": 0.521,
+   "p_assist_only": 0.244,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2576,6 +2677,7 @@
    "p_goals": 0.209,
    "p_assists": 0.243,
    "p_points": 0.401,
+   "p_assist_only": 0.193,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -2601,6 +2703,7 @@
    "p_goals": 0.192,
    "p_assists": 0.258,
    "p_points": 0.4,
+   "p_assist_only": 0.208,
    "gp_30d": 1,
    "games_used": 28.7,
    "last_played": "2026-09-29"
@@ -2626,6 +2729,7 @@
    "p_goals": 0.273,
    "p_assists": 0.31,
    "p_points": 0.498,
+   "p_assist_only": 0.225,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -2651,6 +2755,7 @@
    "p_goals": 0.215,
    "p_assists": 0.269,
    "p_points": 0.426,
+   "p_assist_only": 0.211,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -2676,6 +2781,7 @@
    "p_goals": 0.233,
    "p_assists": 0.297,
    "p_points": 0.461,
+   "p_assist_only": 0.228,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -2701,6 +2807,7 @@
    "p_goals": 0.24,
    "p_assists": 0.342,
    "p_points": 0.5,
+   "p_assist_only": 0.26,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -2726,6 +2833,7 @@
    "p_goals": 0.24,
    "p_assists": 0.299,
    "p_points": 0.467,
+   "p_assist_only": 0.227,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -2751,6 +2859,7 @@
    "p_goals": 0.195,
    "p_assists": 0.245,
    "p_points": 0.392,
+   "p_assist_only": 0.197,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -2776,6 +2885,7 @@
    "p_goals": 0.05,
    "p_assists": 0.193,
    "p_points": 0.233,
+   "p_assist_only": 0.183,
    "gp_30d": 0,
    "games_used": 7.9,
    "last_played": "2026-04-15"
@@ -2801,6 +2911,7 @@
    "p_goals": 0.285,
    "p_assists": 0.288,
    "p_points": 0.49,
+   "p_assist_only": 0.206,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-16"
@@ -2826,6 +2937,7 @@
    "p_goals": 0.045,
    "p_assists": 0.161,
    "p_points": 0.199,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -2851,6 +2963,7 @@
    "p_goals": 0.187,
    "p_assists": 0.304,
    "p_points": 0.434,
+   "p_assist_only": 0.247,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-12"
@@ -2876,6 +2989,7 @@
    "p_goals": 0.054,
    "p_assists": 0.182,
    "p_points": 0.226,
+   "p_assist_only": 0.172,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-16"
@@ -2901,6 +3015,7 @@
    "p_goals": 0.042,
    "p_assists": 0.179,
    "p_points": 0.213,
+   "p_assist_only": 0.171,
    "gp_30d": 0,
    "games_used": 28.9,
    "last_played": "2026-04-14"
@@ -2926,6 +3041,7 @@
    "p_goals": 0.052,
    "p_assists": 0.167,
    "p_points": 0.21,
+   "p_assist_only": 0.158,
    "gp_30d": 0,
    "games_used": 20.9,
    "last_played": "2026-03-23"
@@ -2951,6 +3067,7 @@
    "p_goals": 0.051,
    "p_assists": 0.19,
    "p_points": 0.231,
+   "p_assist_only": 0.18,
    "gp_30d": 0,
    "games_used": 22.3,
    "last_played": "2025-12-21"
@@ -2976,6 +3093,7 @@
    "p_goals": 0.183,
    "p_assists": 0.211,
    "p_points": 0.356,
+   "p_assist_only": 0.173,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -3001,6 +3119,7 @@
    "p_goals": 0.242,
    "p_assists": 0.346,
    "p_points": 0.504,
+   "p_assist_only": 0.262,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3026,6 +3145,7 @@
    "p_goals": 0.173,
    "p_assists": 0.256,
    "p_points": 0.384,
+   "p_assist_only": 0.211,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -3051,6 +3171,7 @@
    "p_goals": 0.051,
    "p_assists": 0.16,
    "p_points": 0.203,
+   "p_assist_only": 0.152,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-15"
@@ -3076,6 +3197,7 @@
    "p_goals": 0.065,
    "p_assists": 0.181,
    "p_points": 0.235,
+   "p_assist_only": 0.17,
    "gp_30d": 1,
    "games_used": 10.6,
    "last_played": "2026-09-29"
@@ -3101,6 +3223,7 @@
    "p_goals": 0.045,
    "p_assists": 0.175,
    "p_points": 0.212,
+   "p_assist_only": 0.167,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -3126,6 +3249,7 @@
    "p_goals": 0.273,
    "p_assists": 0.362,
    "p_points": 0.536,
+   "p_assist_only": 0.263,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3151,6 +3275,7 @@
    "p_goals": 0.042,
    "p_assists": 0.164,
    "p_points": 0.199,
+   "p_assist_only": 0.157,
    "gp_30d": 0,
    "games_used": 28.7,
    "last_played": "2026-01-19"
@@ -3176,6 +3301,7 @@
    "p_goals": 0.042,
    "p_assists": 0.164,
    "p_points": 0.199,
+   "p_assist_only": 0.157,
    "gp_30d": 0,
    "games_used": 20.9,
    "last_played": "2026-03-25"
@@ -3201,6 +3327,7 @@
    "p_goals": 0.218,
    "p_assists": 0.248,
    "p_points": 0.412,
+   "p_assist_only": 0.194,
    "gp_30d": 2,
    "games_used": 25.1,
    "last_played": "2026-10-01"
@@ -3226,6 +3353,7 @@
    "p_goals": 0.057,
    "p_assists": 0.196,
    "p_points": 0.242,
+   "p_assist_only": 0.185,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -3251,6 +3379,7 @@
    "p_goals": 0.218,
    "p_assists": 0.311,
    "p_points": 0.461,
+   "p_assist_only": 0.243,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2025-12-02"
@@ -3276,6 +3405,7 @@
    "p_goals": 0.065,
    "p_assists": 0.175,
    "p_points": 0.228,
+   "p_assist_only": 0.163,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-07"
@@ -3301,6 +3431,7 @@
    "p_goals": 0.235,
    "p_assists": 0.309,
    "p_points": 0.472,
+   "p_assist_only": 0.236,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3326,6 +3457,7 @@
    "p_goals": 0.168,
    "p_assists": 0.236,
    "p_points": 0.364,
+   "p_assist_only": 0.196,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -3351,6 +3483,7 @@
    "p_goals": 0.21,
    "p_assists": 0.278,
    "p_points": 0.43,
+   "p_assist_only": 0.22,
    "gp_30d": 0,
    "games_used": 3.8,
    "last_played": "2026-04-14"
@@ -3376,6 +3509,7 @@
    "p_goals": 0.22,
    "p_assists": 0.305,
    "p_points": 0.458,
+   "p_assist_only": 0.238,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -3401,6 +3535,7 @@
    "p_goals": 0.195,
    "p_assists": 0.249,
    "p_points": 0.396,
+   "p_assist_only": 0.2,
    "gp_30d": 0,
    "games_used": 27.6,
    "last_played": "2026-04-15"
@@ -3426,6 +3561,7 @@
    "p_goals": 0.045,
    "p_assists": 0.166,
    "p_points": 0.203,
+   "p_assist_only": 0.158,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-15"
@@ -3451,6 +3587,7 @@
    "p_goals": 0.185,
    "p_assists": 0.237,
    "p_points": 0.379,
+   "p_assist_only": 0.193,
    "gp_30d": 0,
    "games_used": 5.5,
    "last_played": "2026-04-14"
@@ -3476,6 +3613,7 @@
    "p_goals": 0.209,
    "p_assists": 0.271,
    "p_points": 0.424,
+   "p_assist_only": 0.214,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3501,6 +3639,7 @@
    "p_goals": 0.178,
    "p_assists": 0.252,
    "p_points": 0.385,
+   "p_assist_only": 0.207,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -3526,6 +3665,7 @@
    "p_goals": 0.22,
    "p_assists": 0.296,
    "p_points": 0.451,
+   "p_assist_only": 0.231,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -3551,6 +3691,7 @@
    "p_goals": 0.064,
    "p_assists": 0.211,
    "p_points": 0.261,
+   "p_assist_only": 0.198,
    "gp_30d": 0,
    "games_used": 17.8,
    "last_played": "2026-02-25"
@@ -3576,6 +3717,7 @@
    "p_goals": 0.184,
    "p_assists": 0.267,
    "p_points": 0.402,
+   "p_assist_only": 0.218,
    "gp_30d": 0,
    "games_used": 27.6,
    "last_played": "2026-04-14"
@@ -3601,6 +3743,7 @@
    "p_goals": 0.214,
    "p_assists": 0.222,
    "p_points": 0.389,
+   "p_assist_only": 0.174,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -3626,6 +3769,7 @@
    "p_goals": 0.196,
    "p_assists": 0.254,
    "p_points": 0.4,
+   "p_assist_only": 0.204,
    "gp_30d": 0,
    "games_used": 27.9,
    "last_played": "2026-04-15"
@@ -3651,6 +3795,7 @@
    "p_goals": 0.169,
    "p_assists": 0.237,
    "p_points": 0.366,
+   "p_assist_only": 0.197,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -3676,6 +3821,7 @@
    "p_goals": 0.181,
    "p_assists": 0.284,
    "p_points": 0.413,
+   "p_assist_only": 0.233,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3701,6 +3847,7 @@
    "p_goals": 0.053,
    "p_assists": 0.187,
    "p_points": 0.23,
+   "p_assist_only": 0.178,
    "gp_30d": 0,
    "games_used": 20.0,
    "last_played": "2026-04-16"
@@ -3726,6 +3873,7 @@
    "p_goals": 0.208,
    "p_assists": 0.246,
    "p_points": 0.403,
+   "p_assist_only": 0.195,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3751,6 +3899,7 @@
    "p_goals": 0.049,
    "p_assists": 0.173,
    "p_points": 0.213,
+   "p_assist_only": 0.164,
    "gp_30d": 0,
    "games_used": 25.7,
    "last_played": "2026-04-13"
@@ -3776,6 +3925,7 @@
    "p_goals": 0.043,
    "p_assists": 0.147,
    "p_points": 0.183,
+   "p_assist_only": 0.141,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-11"
@@ -3801,6 +3951,7 @@
    "p_goals": 0.065,
    "p_assists": 0.21,
    "p_points": 0.261,
+   "p_assist_only": 0.196,
    "gp_30d": 0,
    "games_used": 26.6,
    "last_played": "2026-04-15"
@@ -3826,6 +3977,7 @@
    "p_goals": 0.184,
    "p_assists": 0.23,
    "p_points": 0.372,
+   "p_assist_only": 0.188,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -3851,6 +4003,7 @@
    "p_goals": 0.2,
    "p_assists": 0.248,
    "p_points": 0.399,
+   "p_assist_only": 0.198,
    "gp_30d": 0,
    "games_used": 2.0,
    "last_played": "2026-04-11"
@@ -3876,6 +4029,7 @@
    "p_goals": 0.053,
    "p_assists": 0.163,
    "p_points": 0.207,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 25.0,
    "last_played": "2026-03-05"
@@ -3901,6 +4055,7 @@
    "p_goals": 0.182,
    "p_assists": 0.215,
    "p_points": 0.358,
+   "p_assist_only": 0.176,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -3926,6 +4081,7 @@
    "p_goals": 0.211,
    "p_assists": 0.265,
    "p_points": 0.421,
+   "p_assist_only": 0.209,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-04-14"
@@ -3951,6 +4107,7 @@
    "p_goals": 0.168,
    "p_assists": 0.229,
    "p_points": 0.359,
+   "p_assist_only": 0.19,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -3976,6 +4133,7 @@
    "p_goals": 0.049,
    "p_assists": 0.192,
    "p_points": 0.231,
+   "p_assist_only": 0.182,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-14"
@@ -4001,6 +4159,7 @@
    "p_goals": 0.049,
    "p_assists": 0.207,
    "p_points": 0.245,
+   "p_assist_only": 0.197,
    "gp_30d": 0,
    "games_used": 21.5,
    "last_played": "2026-04-14"
@@ -4026,6 +4185,7 @@
    "p_goals": 0.045,
    "p_assists": 0.151,
    "p_points": 0.19,
+   "p_assist_only": 0.145,
    "gp_30d": 0,
    "games_used": 15.7,
    "last_played": "2025-12-02"
@@ -4051,6 +4211,7 @@
    "p_goals": 0.166,
    "p_assists": 0.214,
    "p_points": 0.344,
+   "p_assist_only": 0.178,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -4076,6 +4237,7 @@
    "p_goals": 0.199,
    "p_assists": 0.257,
    "p_points": 0.405,
+   "p_assist_only": 0.206,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -4101,6 +4263,7 @@
    "p_goals": 0.178,
    "p_assists": 0.247,
    "p_points": 0.381,
+   "p_assist_only": 0.203,
    "gp_30d": 1,
    "games_used": 2.9,
    "last_played": "2026-09-29"
@@ -4126,6 +4289,7 @@
    "p_goals": 0.059,
    "p_assists": 0.199,
    "p_points": 0.247,
+   "p_assist_only": 0.187,
    "gp_30d": 0,
    "games_used": 29.1,
    "last_played": "2026-04-09"
@@ -4151,6 +4315,7 @@
    "p_goals": 0.041,
    "p_assists": 0.17,
    "p_points": 0.204,
+   "p_assist_only": 0.164,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-11"
@@ -4176,6 +4341,7 @@
    "p_goals": 0.25,
    "p_assists": 0.293,
    "p_points": 0.469,
+   "p_assist_only": 0.22,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-14"
@@ -4201,6 +4367,7 @@
    "p_goals": 0.048,
    "p_assists": 0.173,
    "p_points": 0.212,
+   "p_assist_only": 0.165,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-12"
@@ -4226,6 +4393,7 @@
    "p_goals": 0.052,
    "p_assists": 0.159,
    "p_points": 0.202,
+   "p_assist_only": 0.151,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-16"
@@ -4251,6 +4419,7 @@
    "p_goals": 0.181,
    "p_assists": 0.248,
    "p_points": 0.384,
+   "p_assist_only": 0.203,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -4276,6 +4445,7 @@
    "p_goals": 0.159,
    "p_assists": 0.221,
    "p_points": 0.345,
+   "p_assist_only": 0.186,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -4301,6 +4471,7 @@
    "p_goals": 0.198,
    "p_assists": 0.244,
    "p_points": 0.394,
+   "p_assist_only": 0.196,
    "gp_30d": 0,
    "games_used": 27.8,
    "last_played": "2026-04-14"
@@ -4326,6 +4497,7 @@
    "p_goals": 0.042,
    "p_assists": 0.134,
    "p_points": 0.17,
+   "p_assist_only": 0.128,
    "gp_30d": 0,
    "games_used": 28.4,
    "last_played": "2026-04-14"
@@ -4351,6 +4523,7 @@
    "p_goals": 0.167,
    "p_assists": 0.204,
    "p_points": 0.336,
+   "p_assist_only": 0.17,
    "gp_30d": 0,
    "games_used": 27.0,
    "last_played": "2026-04-16"
@@ -4376,6 +4549,7 @@
    "p_goals": 0.05,
    "p_assists": 0.168,
    "p_points": 0.21,
+   "p_assist_only": 0.16,
    "gp_30d": 0,
    "games_used": 25.0,
    "last_played": "2025-12-27"
@@ -4401,6 +4575,7 @@
    "p_goals": 0.232,
    "p_assists": 0.28,
    "p_points": 0.447,
+   "p_assist_only": 0.215,
    "gp_30d": 1,
    "games_used": 1.0,
    "last_played": "2026-09-29"
@@ -4426,6 +4601,7 @@
    "p_goals": 0.18,
    "p_assists": 0.26,
    "p_points": 0.393,
+   "p_assist_only": 0.213,
    "gp_30d": 0,
    "games_used": 29.1,
    "last_played": "2026-04-16"
@@ -4451,6 +4627,7 @@
    "p_goals": 0.201,
    "p_assists": 0.261,
    "p_points": 0.41,
+   "p_assist_only": 0.209,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -4476,6 +4653,7 @@
    "p_goals": 0.193,
    "p_assists": 0.226,
    "p_points": 0.376,
+   "p_assist_only": 0.182,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -4501,6 +4679,7 @@
    "p_goals": 0.154,
    "p_assists": 0.218,
    "p_points": 0.338,
+   "p_assist_only": 0.185,
    "gp_30d": 2,
    "games_used": 27.2,
    "last_played": "2026-10-01"
@@ -4526,6 +4705,7 @@
    "p_goals": 0.129,
    "p_assists": 0.186,
    "p_points": 0.291,
+   "p_assist_only": 0.162,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-02"
@@ -4551,6 +4731,7 @@
    "p_goals": 0.212,
    "p_assists": 0.261,
    "p_points": 0.418,
+   "p_assist_only": 0.206,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -4576,6 +4757,7 @@
    "p_goals": 0.19,
    "p_assists": 0.263,
    "p_points": 0.404,
+   "p_assist_only": 0.213,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-02-25"
@@ -4601,6 +4783,7 @@
    "p_goals": 0.182,
    "p_assists": 0.22,
    "p_points": 0.362,
+   "p_assist_only": 0.18,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-15"
@@ -4626,6 +4809,7 @@
    "p_goals": 0.201,
    "p_assists": 0.225,
    "p_points": 0.381,
+   "p_assist_only": 0.18,
    "gp_30d": 0,
    "games_used": 11.9,
    "last_played": "2026-04-14"
@@ -4651,6 +4835,7 @@
    "p_goals": 0.196,
    "p_assists": 0.261,
    "p_points": 0.405,
+   "p_assist_only": 0.21,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -4676,6 +4861,7 @@
    "p_goals": 0.209,
    "p_assists": 0.275,
    "p_points": 0.427,
+   "p_assist_only": 0.218,
    "gp_30d": 1,
    "games_used": 25.0,
    "last_played": "2026-09-29"
@@ -4701,6 +4887,7 @@
    "p_goals": 0.155,
    "p_assists": 0.204,
    "p_points": 0.327,
+   "p_assist_only": 0.172,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-01"
@@ -4726,6 +4913,7 @@
    "p_goals": 0.148,
    "p_assists": 0.188,
    "p_points": 0.308,
+   "p_assist_only": 0.16,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-04-13"
@@ -4751,6 +4939,7 @@
    "p_goals": 0.14,
    "p_assists": 0.19,
    "p_points": 0.304,
+   "p_assist_only": 0.163,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-02"
@@ -4776,6 +4965,7 @@
    "p_goals": 0.19,
    "p_assists": 0.221,
    "p_points": 0.369,
+   "p_assist_only": 0.179,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -4801,6 +4991,7 @@
    "p_goals": 0.05,
    "p_assists": 0.162,
    "p_points": 0.204,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 23.8,
    "last_played": "2026-04-13"
@@ -4826,6 +5017,7 @@
    "p_goals": 0.206,
    "p_assists": 0.235,
    "p_points": 0.393,
+   "p_assist_only": 0.186,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -4851,6 +5043,7 @@
    "p_goals": 0.172,
    "p_assists": 0.215,
    "p_points": 0.349,
+   "p_assist_only": 0.178,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-04"
@@ -4876,6 +5069,7 @@
    "p_goals": 0.166,
    "p_assists": 0.202,
    "p_points": 0.334,
+   "p_assist_only": 0.168,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-15"
@@ -4901,6 +5095,7 @@
    "p_goals": 0.191,
    "p_assists": 0.233,
    "p_points": 0.38,
+   "p_assist_only": 0.188,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -4926,6 +5121,7 @@
    "p_goals": 0.04,
    "p_assists": 0.16,
    "p_points": 0.193,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-14"
@@ -4951,6 +5147,7 @@
    "p_goals": 0.15,
    "p_assists": 0.23,
    "p_points": 0.345,
+   "p_assist_only": 0.195,
    "gp_30d": 0,
    "games_used": 26.7,
    "last_played": "2026-02-04"
@@ -4976,6 +5173,7 @@
    "p_goals": 0.139,
    "p_assists": 0.202,
    "p_points": 0.313,
+   "p_assist_only": 0.174,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -5001,6 +5199,7 @@
    "p_goals": 0.164,
    "p_assists": 0.225,
    "p_points": 0.352,
+   "p_assist_only": 0.188,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-16"
@@ -5026,6 +5225,7 @@
    "p_goals": 0.136,
    "p_assists": 0.188,
    "p_points": 0.299,
+   "p_assist_only": 0.163,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-15"
@@ -5051,6 +5251,7 @@
    "p_goals": 0.053,
    "p_assists": 0.138,
    "p_points": 0.184,
+   "p_assist_only": 0.131,
    "gp_30d": 0,
    "games_used": 26.8,
    "last_played": "2026-04-16"
@@ -5076,6 +5277,7 @@
    "p_goals": 0.173,
    "p_assists": 0.213,
    "p_points": 0.349,
+   "p_assist_only": 0.176,
    "gp_30d": 0,
    "games_used": 2.0,
    "last_played": "2025-12-18"
@@ -5101,6 +5303,7 @@
    "p_goals": 0.158,
    "p_assists": 0.224,
    "p_points": 0.347,
+   "p_assist_only": 0.189,
    "gp_30d": 0,
    "games_used": 9.3,
    "last_played": "2025-11-28"
@@ -5126,6 +5329,7 @@
    "p_goals": 0.174,
    "p_assists": 0.227,
    "p_points": 0.362,
+   "p_assist_only": 0.188,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -5151,6 +5355,7 @@
    "p_goals": 0.164,
    "p_assists": 0.222,
    "p_points": 0.349,
+   "p_assist_only": 0.186,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -5176,6 +5381,7 @@
    "p_goals": 0.174,
    "p_assists": 0.219,
    "p_points": 0.355,
+   "p_assist_only": 0.181,
    "gp_30d": 0,
    "games_used": 11.3,
    "last_played": "2026-04-15"
@@ -5201,6 +5407,7 @@
    "p_goals": 0.166,
    "p_assists": 0.233,
    "p_points": 0.36,
+   "p_assist_only": 0.194,
    "gp_30d": 0,
    "games_used": 3.8,
    "last_played": "2025-11-28"
@@ -5226,6 +5433,7 @@
    "p_goals": 0.152,
    "p_assists": 0.228,
    "p_points": 0.346,
+   "p_assist_only": 0.194,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -5251,6 +5459,7 @@
    "p_goals": 0.143,
    "p_assists": 0.194,
    "p_points": 0.309,
+   "p_assist_only": 0.167,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-13"
@@ -5276,6 +5485,7 @@
    "p_goals": 0.191,
    "p_assists": 0.22,
    "p_points": 0.369,
+   "p_assist_only": 0.178,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-11"
@@ -5301,6 +5511,7 @@
    "p_goals": 0.124,
    "p_assists": 0.171,
    "p_points": 0.274,
+   "p_assist_only": 0.15,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -5326,6 +5537,7 @@
    "p_goals": 0.12,
    "p_assists": 0.174,
    "p_points": 0.273,
+   "p_assist_only": 0.153,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -5351,6 +5563,7 @@
    "p_goals": 0.137,
    "p_assists": 0.173,
    "p_points": 0.287,
+   "p_assist_only": 0.15,
    "gp_30d": 0,
    "games_used": 22.3,
    "last_played": "2026-04-16"
@@ -5376,6 +5589,7 @@
    "p_goals": 0.143,
    "p_assists": 0.18,
    "p_points": 0.298,
+   "p_assist_only": 0.155,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-07"
@@ -5401,6 +5615,7 @@
    "p_goals": 0.148,
    "p_assists": 0.208,
    "p_points": 0.325,
+   "p_assist_only": 0.177,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -5426,6 +5641,7 @@
    "p_goals": 0.147,
    "p_assists": 0.195,
    "p_points": 0.313,
+   "p_assist_only": 0.166,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-12"
@@ -5451,6 +5667,7 @@
    "p_goals": 0.164,
    "p_assists": 0.221,
    "p_points": 0.349,
+   "p_assist_only": 0.185,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-03-26"
@@ -5476,6 +5693,7 @@
    "p_goals": 0.137,
    "p_assists": 0.189,
    "p_points": 0.3,
+   "p_assist_only": 0.163,
    "gp_30d": 0,
    "games_used": 25.8,
    "last_played": "2026-01-13"
@@ -5501,6 +5719,7 @@
    "p_goals": 0.138,
    "p_assists": 0.189,
    "p_points": 0.3,
+   "p_assist_only": 0.163,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -5526,6 +5745,7 @@
    "p_goals": 0.163,
    "p_assists": 0.184,
    "p_points": 0.317,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 17.0,
    "last_played": "2026-04-13"
@@ -5551,6 +5771,7 @@
    "p_goals": 0.177,
    "p_assists": 0.189,
    "p_points": 0.333,
+   "p_assist_only": 0.156,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -5576,6 +5797,7 @@
    "p_goals": 0.129,
    "p_assists": 0.155,
    "p_points": 0.264,
+   "p_assist_only": 0.135,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-16"
@@ -5601,6 +5823,7 @@
    "p_goals": 0.14,
    "p_assists": 0.19,
    "p_points": 0.304,
+   "p_assist_only": 0.164,
    "gp_30d": 0,
    "games_used": 4.7,
    "last_played": "2025-12-11"
@@ -5626,6 +5849,7 @@
    "p_goals": 0.162,
    "p_assists": 0.177,
    "p_points": 0.311,
+   "p_assist_only": 0.149,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -5651,6 +5875,7 @@
    "p_goals": 0.161,
    "p_assists": 0.174,
    "p_points": 0.307,
+   "p_assist_only": 0.146,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -5676,6 +5901,7 @@
    "p_goals": 0.168,
    "p_assists": 0.176,
    "p_points": 0.314,
+   "p_assist_only": 0.147,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -5701,6 +5927,7 @@
    "p_goals": 0.157,
    "p_assists": 0.219,
    "p_points": 0.342,
+   "p_assist_only": 0.184,
    "gp_30d": 0,
    "games_used": 19.3,
    "last_played": "2026-04-16"
@@ -5726,6 +5953,7 @@
    "p_goals": 0.147,
    "p_assists": 0.178,
    "p_points": 0.298,
+   "p_assist_only": 0.152,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-09-29"
@@ -5751,6 +5979,7 @@
    "p_goals": 0.156,
    "p_assists": 0.201,
    "p_points": 0.325,
+   "p_assist_only": 0.17,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -5776,6 +6005,7 @@
    "p_goals": 0.164,
    "p_assists": 0.174,
    "p_points": 0.309,
+   "p_assist_only": 0.146,
    "gp_30d": 0,
    "games_used": 23.0,
    "last_played": "2026-01-29"
@@ -5801,6 +6031,7 @@
    "p_goals": 0.128,
    "p_assists": 0.152,
    "p_points": 0.261,
+   "p_assist_only": 0.133,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -5826,6 +6057,7 @@
    "p_goals": 0.146,
    "p_assists": 0.189,
    "p_points": 0.307,
+   "p_assist_only": 0.161,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -5851,6 +6083,7 @@
    "p_goals": 0.167,
    "p_assists": 0.184,
    "p_points": 0.321,
+   "p_assist_only": 0.154,
    "gp_30d": 0,
    "games_used": 9.3,
    "last_played": "2026-04-15"
@@ -5876,6 +6109,7 @@
    "p_goals": 0.147,
    "p_assists": 0.199,
    "p_points": 0.317,
+   "p_assist_only": 0.169,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-13"
@@ -5901,6 +6135,7 @@
    "p_goals": 0.152,
    "p_assists": 0.201,
    "p_points": 0.323,
+   "p_assist_only": 0.171,
    "gp_30d": 0,
    "games_used": 24.8,
    "last_played": "2026-04-12"
@@ -5926,6 +6161,7 @@
    "p_goals": 0.143,
    "p_assists": 0.193,
    "p_points": 0.308,
+   "p_assist_only": 0.165,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-04"
@@ -5951,6 +6187,7 @@
    "p_goals": 0.157,
    "p_assists": 0.225,
    "p_points": 0.347,
+   "p_assist_only": 0.19,
    "gp_30d": 0,
    "games_used": 18.2,
    "last_played": "2026-01-03"
@@ -5976,6 +6213,7 @@
    "p_goals": 0.174,
    "p_assists": 0.218,
    "p_points": 0.354,
+   "p_assist_only": 0.18,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-02-27"
@@ -6001,6 +6239,7 @@
    "p_goals": 0.035,
    "p_assists": 0.129,
    "p_points": 0.159,
+   "p_assist_only": 0.124,
    "gp_30d": 0,
    "games_used": 21.8,
    "last_played": "2026-04-14"
@@ -6026,6 +6265,7 @@
    "p_goals": 0.152,
    "p_assists": 0.19,
    "p_points": 0.313,
+   "p_assist_only": 0.161,
    "gp_30d": 0,
    "games_used": 7.9,
    "last_played": "2026-04-15"
@@ -6051,6 +6291,7 @@
    "p_goals": 0.165,
    "p_assists": 0.191,
    "p_points": 0.324,
+   "p_assist_only": 0.159,
    "gp_30d": 0,
    "games_used": 27.9,
    "last_played": "2026-04-05"
@@ -6076,6 +6317,7 @@
    "p_goals": 0.158,
    "p_assists": 0.174,
    "p_points": 0.304,
+   "p_assist_only": 0.146,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -6101,6 +6343,7 @@
    "p_goals": 0.134,
    "p_assists": 0.196,
    "p_points": 0.304,
+   "p_assist_only": 0.17,
    "gp_30d": 0,
    "games_used": 17.8,
    "last_played": "2026-03-02"
@@ -6126,6 +6369,7 @@
    "p_goals": 0.122,
    "p_assists": 0.172,
    "p_points": 0.273,
+   "p_assist_only": 0.151,
    "gp_30d": 0,
    "games_used": 25.1,
    "last_played": "2026-01-05"
@@ -6151,6 +6395,7 @@
    "p_goals": 0.16,
    "p_assists": 0.189,
    "p_points": 0.319,
+   "p_assist_only": 0.159,
    "gp_30d": 0,
    "games_used": 24.5,
    "last_played": "2026-04-16"
@@ -6176,6 +6421,7 @@
    "p_goals": 0.113,
    "p_assists": 0.156,
    "p_points": 0.251,
+   "p_assist_only": 0.138,
    "gp_30d": 0,
    "games_used": 23.2,
    "last_played": "2026-04-16"
@@ -6201,6 +6447,7 @@
    "p_goals": 0.155,
    "p_assists": 0.185,
    "p_points": 0.311,
+   "p_assist_only": 0.156,
    "gp_30d": 0,
    "games_used": 24.2,
    "last_played": "2026-02-01"
@@ -6226,6 +6473,7 @@
    "p_goals": 0.16,
    "p_assists": 0.209,
    "p_points": 0.335,
+   "p_assist_only": 0.175,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-11"
@@ -6251,6 +6499,7 @@
    "p_goals": 0.178,
    "p_assists": 0.222,
    "p_points": 0.36,
+   "p_assist_only": 0.183,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -6276,6 +6525,7 @@
    "p_goals": 0.144,
    "p_assists": 0.179,
    "p_points": 0.297,
+   "p_assist_only": 0.153,
    "gp_30d": 0,
    "games_used": 13.6,
    "last_played": "2025-11-28"
@@ -6301,6 +6551,7 @@
    "p_goals": 0.151,
    "p_assists": 0.183,
    "p_points": 0.307,
+   "p_assist_only": 0.156,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -6326,6 +6577,7 @@
    "p_goals": 0.15,
    "p_assists": 0.164,
    "p_points": 0.29,
+   "p_assist_only": 0.14,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-15"
@@ -6351,6 +6603,7 @@
    "p_goals": 0.161,
    "p_assists": 0.186,
    "p_points": 0.317,
+   "p_assist_only": 0.156,
    "gp_30d": 0,
    "games_used": 16.1,
    "last_played": "2026-03-16"
@@ -6376,6 +6629,7 @@
    "p_goals": 0.143,
    "p_assists": 0.172,
    "p_points": 0.291,
+   "p_assist_only": 0.147,
    "gp_30d": 0,
    "games_used": 7.9,
    "last_played": "2025-12-15"
@@ -6401,6 +6655,7 @@
    "p_goals": 0.118,
    "p_assists": 0.156,
    "p_points": 0.256,
+   "p_assist_only": 0.137,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-01-17"
@@ -6426,6 +6681,7 @@
    "p_goals": 0.143,
    "p_assists": 0.159,
    "p_points": 0.279,
+   "p_assist_only": 0.136,
    "gp_30d": 0,
    "games_used": 23.8,
    "last_played": "2026-01-29"
@@ -6451,6 +6707,7 @@
    "p_goals": 0.146,
    "p_assists": 0.182,
    "p_points": 0.301,
+   "p_assist_only": 0.155,
    "gp_30d": 0,
    "games_used": 26.6,
    "last_played": "2026-03-21"
@@ -6476,6 +6733,7 @@
    "p_goals": 0.146,
    "p_assists": 0.208,
    "p_points": 0.324,
+   "p_assist_only": 0.178,
    "gp_30d": 0,
    "games_used": 24.2,
    "last_played": "2026-02-25"
@@ -6501,6 +6759,7 @@
    "p_goals": 0.133,
    "p_assists": 0.153,
    "p_points": 0.266,
+   "p_assist_only": 0.133,
    "gp_30d": 0,
    "games_used": 16.6,
    "last_played": "2025-12-18"
@@ -6526,6 +6785,7 @@
    "p_goals": 0.117,
    "p_assists": 0.159,
    "p_points": 0.257,
+   "p_assist_only": 0.14,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-03-10"
@@ -6551,6 +6811,7 @@
    "p_goals": 0.149,
    "p_assists": 0.194,
    "p_points": 0.314,
+   "p_assist_only": 0.165,
    "gp_30d": 1,
    "games_used": 28.0,
    "last_played": "2026-09-29"
@@ -6576,6 +6837,7 @@
    "p_goals": 0.131,
    "p_assists": 0.173,
    "p_points": 0.282,
+   "p_assist_only": 0.15,
    "gp_30d": 0,
    "games_used": 13.6,
    "last_played": "2026-04-04"
@@ -6601,6 +6863,7 @@
    "p_goals": 0.14,
    "p_assists": 0.168,
    "p_points": 0.284,
+   "p_assist_only": 0.144,
    "gp_30d": 1,
    "games_used": 18.6,
    "last_played": "2026-10-01"
@@ -6626,6 +6889,7 @@
    "p_goals": 0.157,
    "p_assists": 0.17,
    "p_points": 0.3,
+   "p_assist_only": 0.144,
    "gp_30d": 0,
    "games_used": 12.5,
    "last_played": "2026-04-16"
@@ -6651,6 +6915,7 @@
    "p_goals": 0.142,
    "p_assists": 0.178,
    "p_points": 0.295,
+   "p_assist_only": 0.152,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -6676,6 +6941,7 @@
    "p_goals": 0.149,
    "p_assists": 0.172,
    "p_points": 0.295,
+   "p_assist_only": 0.146,
    "gp_30d": 0,
    "games_used": 13.1,
    "last_played": "2025-11-26"
@@ -6701,6 +6967,7 @@
    "p_goals": 0.142,
    "p_assists": 0.158,
    "p_points": 0.278,
+   "p_assist_only": 0.136,
    "gp_30d": 0,
    "games_used": 24.5,
    "last_played": "2026-04-14"
@@ -6726,6 +6993,7 @@
    "p_goals": 0.122,
    "p_assists": 0.161,
    "p_points": 0.264,
+   "p_assist_only": 0.141,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-01-06"
@@ -6751,6 +7019,7 @@
    "p_goals": 0.152,
    "p_assists": 0.195,
    "p_points": 0.318,
+   "p_assist_only": 0.166,
    "gp_30d": 0,
    "games_used": 13.1,
    "last_played": "2026-03-03"
@@ -6776,6 +7045,7 @@
    "p_goals": 0.133,
    "p_assists": 0.184,
    "p_points": 0.293,
+   "p_assist_only": 0.16,
    "gp_30d": 0,
    "games_used": 5.5,
    "last_played": "2026-03-31"
@@ -6801,6 +7071,7 @@
    "p_goals": 0.115,
    "p_assists": 0.152,
    "p_points": 0.249,
+   "p_assist_only": 0.134,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-03-23"
@@ -6826,6 +7097,7 @@
    "p_goals": 0.139,
    "p_assists": 0.151,
    "p_points": 0.269,
+   "p_assist_only": 0.13,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-03-28"
@@ -6851,6 +7123,7 @@
    "p_goals": 0.132,
    "p_assists": 0.154,
    "p_points": 0.265,
+   "p_assist_only": 0.134,
    "gp_30d": 0,
    "games_used": 28.2,
    "last_played": "2026-03-05"
@@ -6876,6 +7149,7 @@
    "p_goals": 0.118,
    "p_assists": 0.147,
    "p_points": 0.247,
+   "p_assist_only": 0.13,
    "gp_30d": 1,
    "games_used": 27.9,
    "last_played": "2026-09-29"
@@ -6901,6 +7175,7 @@
    "p_goals": 0.118,
    "p_assists": 0.144,
    "p_points": 0.245,
+   "p_assist_only": 0.127,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-09-29"
@@ -6926,6 +7201,7 @@
    "p_goals": 0.13,
    "p_assists": 0.164,
    "p_points": 0.272,
+   "p_assist_only": 0.143,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-02-03"
@@ -6951,6 +7227,7 @@
    "p_goals": 0.111,
    "p_assists": 0.138,
    "p_points": 0.234,
+   "p_assist_only": 0.123,
    "gp_30d": 0,
    "games_used": 14.2,
    "last_played": "2026-02-05"
@@ -6976,6 +7253,7 @@
    "p_goals": 0.126,
    "p_assists": 0.14,
    "p_points": 0.249,
+   "p_assist_only": 0.122,
    "gp_30d": 0,
    "games_used": 17.8,
    "last_played": "2026-04-11"
