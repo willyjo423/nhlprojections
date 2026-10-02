@@ -160,6 +160,10 @@ const SK_COLS = [
   ["pim", "PIM", r => fmt(r.pim)],
   ["p_goals", "P(G)", r => pct(r.p_goals)],
   ["p_points", "P(PT)", r => pct(r.p_points)],
+  // The gap, which is an exact probability rather than a difference of two
+  // unrelated numbers: P(PT) - P(G) = P(no goal) x P(at least one assist),
+  // the chance he reaches the scoresheet WITHOUT scoring.
+  ["p_assist_only", "A ONLY", r => pct(r.p_assist_only)],
   ["gp_30d", "GP30", r => r.gp_30d],
 ];
 const GO_COLS = [
