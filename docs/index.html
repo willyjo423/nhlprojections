@@ -91,6 +91,11 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
         <option value="W">wingers</option>
         <option value="D">defence</option>
       </select></div>
+    <div class="ctl"><label for="view" title="Shot volume replaces the scoring columns with the ones that drive shots on goal: the per-sixty rate, the ice time it is multiplied by, which of the two is carrying the projection, and the chance of clearing two or three shots.">Skater view</label>
+      <select id="view">
+        <option value="all">all stats</option>
+        <option value="shots">shot volume</option>
+      </select></div>
     <div class="ctl"><label for="q">Search</label>
       <input id="q" type="search" placeholder="name or team"></div>
     <div class="ctl"><label for="mingp" title="0 shows everyone who has played for these teams in the last year. Players with no game in the last 30 days are flagged on their row rather than hidden.">Min games, last 30 days</label>
@@ -102,12 +107,20 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
 
   <section>
     <h2>Skaters</h2>
-    <p class="sub">Click any column to sort. <b>PP</b> and <b>PK</b> are
-      projected power-play and penalty-kill minutes — every stat is projected
-      at each game state separately and added up, so power-play minutes are
-      worth roughly three times even-strength ones for scoring.
+    <p class="sub" id="allnote">Click any column to sort. <b>PP</b> and
+      <b>PK</b> are projected power-play and penalty-kill minutes — every stat
+      is projected at each game state separately and added up, so power-play
+      minutes are worth roughly three times even-strength ones for scoring.
       <b>P(G)</b> and <b>P(PT)</b> are the chance of at least one goal, and of
       at least one point.</p>
+    <p class="sub" id="shotnote" hidden>Click any column to sort; this view
+      opens on <b>SOG</b>, highest first. <b>SOG/60</b> is the shot rate, and
+      <b>TOI</b> is what it gets multiplied by — the projection is those two
+      numbers and nothing else, so <b>DRIVER</b> says which one is carrying
+      it: <b>rate</b> means he shoots more than his position's median but
+      plays less, <b>mins</b> the reverse, <b>both</b> means above the median
+      on each, <b>low</b> neither. <b>P(2+)</b> and <b>P(3+)</b> are the
+      chance of clearing those shot totals.</p>
     <div class="panel scroll" style="margin-top:10px">
       <table id="sk"><thead></thead><tbody></tbody></table>
     </div>
@@ -140,6 +153,75 @@ let DATA = null;
 let SORT = { table: "sk", key: "toi", dir: -1 };
 let GSORT = { key: "shots_against", dir: -1 };
 
+/* ----------------------------------------------------------- shot volume */
+// The chance of at least k events, from the same Poisson the page already
+// uses for P(G) and P(PT) - so the shot columns rest on exactly the
+// assumption the rest of the page already rests on, rather than quietly
+// introducing a second one.
+//
+// Summed forward from exp(-lambda) rather than through a factorial: k is
+// small here, but lambda^i / i! overflows and underflows at opposite ends
+// while the running term does neither.
+function poissonAtLeast(lambda, k) {
+  if (!Number.isFinite(lambda) || lambda < 0) return null;
+  if (k <= 0) return 1;
+  let term = Math.exp(-lambda), cum = term;
+  for (let i = 1; i < k; i++) { term *= lambda / i; cum += term; }
+  return Math.max(0, Math.min(1, 1 - cum));
+}
+
+// Shots are a rate times an opportunity, and the two multiply. The same 2.4
+// can be a winger who shoots constantly in twelve minutes or a defenceman who
+// barely shoots in twenty-two, and those are not the same bet - the first is
+// a wager on his role surviving, the second on nothing much at all. So the
+// rate is recovered and the two are labelled.
+//
+// Medians are taken WITHIN POSITION, and over the whole slate rather than the
+// filtered view. A defenceman's shot rate against a winger's says nothing,
+// and a label that changed when you filtered to one game would be describing
+// the filter instead of the player.
+function deriveShots(skaters) {
+  const grp = r => r.position === "C" ? "C" : r.position === "D" ? "D" : "W";
+  for (const r of skaters) {
+    const sog = (r.sog === null || r.sog === undefined) ? NaN : Number(r.sog);
+    const toi = (r.toi === null || r.toi === undefined) ? NaN : Number(r.toi);
+    r.sog60 = (Number.isFinite(sog) && Number.isFinite(toi) && toi > 0)
+      ? sog * 60 / toi : null;
+    r.p_sog2 = poissonAtLeast(sog, 2);
+    r.p_sog3 = poissonAtLeast(sog, 3);
+    r.driver = "—";
+  }
+  const groups = new Map();
+  for (const r of skaters) {
+    const g = grp(r);
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(r);
+  }
+  // Number(null) is 0, NOT NaN - so mapping straight through Number() would
+  // drop every player with no shot rate into the median as a zero and drag it
+  // down. Nulls are removed before they can be counted as data.
+  const num = v => (v === null || v === undefined) ? NaN : Number(v);
+  const median = (rows, key) => {
+    const v = rows.map(r => num(r[key]))
+                  .filter(Number.isFinite).sort((a, b) => a - b);
+    if (!v.length) return null;
+    const m = Math.floor(v.length / 2);
+    return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
+  };
+  for (const rows of groups.values()) {
+    const mRate = median(rows, "sog60"), mToi = median(rows, "toi");
+    if (mRate === null || mToi === null) continue;
+    for (const r of rows) {
+      // Same trap on the way out: a null rate must stay unlabelled rather
+      // than becoming a zero that is dutifully reported as "low".
+      const rate = num(r.sog60), toi = num(r.toi);
+      if (!Number.isFinite(rate) || !Number.isFinite(toi)) continue;
+      const a = rate >= mRate, b = toi >= mToi;
+      r.driver = a && b ? "both" : a ? "rate" : b ? "mins" : "low";
+    }
+  }
+}
+
 // Columns are declared once and drive the header, the sort and the cells, so
 // a column can never end up with a heading that belongs to the value beside
 // it - which is what happens when the two lists are maintained separately.
@@ -164,6 +246,25 @@ const SK_COLS = [
   // unrelated numbers: P(PT) - P(G) = P(no goal) x P(at least one assist),
   // the chance he reaches the scoresheet WITHOUT scoring.
   ["p_assist_only", "A ONLY", r => pct(r.p_assist_only)],
+  ["gp_30d", "GP30", r => r.gp_30d],
+];
+// The same rows, read for shot volume instead of scoring. Deliberately NOT a
+// superset of the above - a table nobody can read across is worse than two
+// tables - and deliberately keeping PP, because power-play time is the single
+// biggest thing that moves a shot projection week to week.
+const SK_SHOT_COLS = [
+  ["player", "Player", r => r.name, "l"],
+  ["position", "Pos", r => r.position, "l"],
+  ["team", "Team", r => r.team, "l"],
+  ["opponent", "Opp", r => (r.is_home ? "vs " : "@ ") + r.opponent, "l"],
+  ["sog", "SOG", r => fmt(r.sog)],
+  ["sog60", "SOG/60", r => fmt(r.sog60, 1)],
+  ["toi", "TOI", r => fmt(r.toi, 1)],
+  ["pp_toi", "PP", r => fmt(r.pp_toi, 1)],
+  ["driver", "Driver", r => r.driver, "l"],
+  ["p_sog2", "P(2+)", r => pct(r.p_sog2)],
+  ["p_sog3", "P(3+)", r => pct(r.p_sog3)],
+  ["p_goals", "P(G)", r => pct(r.p_goals)],
   ["gp_30d", "GP30", r => r.gp_30d],
 ];
 const GO_COLS = [
@@ -204,6 +305,9 @@ async function boot() {
 async function load(file) {
   $("status").textContent = "Loading " + file + "…";
   DATA = await (await fetch("data/" + file + "?" + Date.now())).json();
+  // Derived once per slate, before anything draws, so sorting on a shot
+  // column sorts on a real number rather than on undefined.
+  deriveShots(DATA.skaters);
   $("game").innerHTML = '<option value="">every game</option>' +
     DATA.games.map(g => `<option value="${esc(g.away)}|${esc(g.home)}">
       ${esc(g.away)} @ ${esc(g.home)}</option>`).join("");
@@ -279,8 +383,17 @@ function drawTable(id, cols, rows, sort) {
 
 function draw() {
   if (!DATA) return;
-  const gone = DATA.dropped_stats || [];
-  drawTable("sk", SK_COLS.filter(c => !gone.includes(c[0])),
+  const shots = $("view").value === "shots";
+  $("allnote").hidden = shots;
+  $("shotnote").hidden = !shots;
+  // A derived column is only as real as the column it was derived FROM. If
+  // MoneyPuck did not carry shots in this build, the rate and the two
+  // probabilities are arithmetic on nothing, so they go with it rather than
+  // standing there as dashes that look like missing players.
+  const gone = (DATA.dropped_stats || []).slice();
+  if (gone.includes("sog")) gone.push("sog60", "p_sog2", "p_sog3", "driver");
+  const cols = shots ? SK_SHOT_COLS : SK_COLS;
+  drawTable("sk", cols.filter(c => !gone.includes(c[0])),
             filtered(DATA.skaters, true), SORT);
   drawTable("go", GO_COLS, filtered(DATA.goalies, false), GSORT);
 }
@@ -288,7 +401,7 @@ function draw() {
 function honesty() {
   // Only the ones this page would otherwise have shown. Naming a column the
   // reader never had is not honesty, it is noise.
-  const shown = new Set(SK_COLS.map(c => c[0]));
+  const shown = new Set(SK_COLS.concat(SK_SHOT_COLS).map(c => c[0]));
   const dropped = (DATA.dropped_stats || []).filter(s => shown.has(s));
   $("honesty").innerHTML = `
     <b>These are expectations, not predictions.</b> A projection of 0.35 goals
@@ -315,6 +428,27 @@ function honesty() {
     <b>Ice time is the part worth trusting.</b> It is by far the most
     predictable thing on this page, and it is also the multiplier on
     everything else, so an error there moves every other column at once.
+    <br><br>
+    <b>Shots are the most trustworthy output on this page, and P(2+) is the
+    least trustworthy part of them.</b> Goals are shots multiplied by a
+    shooting percentage, and a shooting percentage is mostly noise over a
+    season, let alone a night — which is why the model shrinks it so hard.
+    Shot volume carries none of that lottery: it is a rate times an
+    opportunity, and both are properties of a player's role rather than of his
+    luck. So the shot columns should beat the scoring columns.
+    The probabilities are the soft part. Real shot counts are a little more
+    spread out than a Poisson — a player's own night-to-night variance exceeds
+    his average — so <b>P(2+) and P(3+) are if anything slightly low in the
+    tail</b>, and the gap widens the further out you go. Treat them as a
+    ranking that is better than the raw expectation, not as a priced number.
+    <br><br>
+    <b>And shots on goal is a judged statistic.</b> A scorekeeper decides
+    whether an attempt was on net, can strike one he thinks would have missed,
+    and corrections land after the final whistle. League save percentage has
+    drifted from about .908 to about .896 across six seasons, which is partly
+    a change in what gets written down rather than in what happened on the
+    ice. That noise is in the history this model learned from, and it varies
+    by building.
     ${dropped.length ? `<br><br><b>Not available.</b> MoneyPuck did not carry
       ${esc(dropped.join(", "))} in this build, so ${dropped.length > 1
       ? "those columns are" : "that column is"} absent rather than zero.` : ""}`;
@@ -324,6 +458,14 @@ function honesty() {
   $(id).oninput = draw;
   $(id).onchange = draw;
 });
+// Switching view resets the sort to that view's headline column. The previous
+// sort is usually on a column the new view does not have, and sorting on a
+// column that is not on screen looks like a bug whichever way it falls.
+$("view").onchange = () => {
+  SORT.key = $("view").value === "shots" ? "sog" : "toi";
+  SORT.dir = -1;
+  draw();
+};
 boot();
 </script>
 </body>
