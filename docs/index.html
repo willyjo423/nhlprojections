@@ -96,6 +96,14 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
         <option value="all">all stats</option>
         <option value="shots">shot volume</option>
       </select></div>
+    <div class="ctl"><label for="ref" title="Who the R% and M% percentiles, and the Driver label, are measured against. A sportsbook only posts a shots line on players who shoot, so measuring against every skater dressing makes almost everyone bettable look top-of-the-class. Prop tier is the top 40% at his position by projected shots.">Compare against</label>
+      <select id="ref">
+        <option value="tier">prop tier (top 40% at his position)</option>
+        <option value="position">everyone at his position</option>
+        <option value="shown">the players shown</option>
+      </select></div>
+    <div class="ctl"><label for="minsog" title="Hide players projected below this many shots. Set it near the lowest line you would ever bet and the table becomes the prop universe.">Min SOG</label>
+      <input id="minsog" type="number" min="0" max="6" step="0.1" value="0"></div>
     <div class="ctl"><label for="q">Search</label>
       <input id="q" type="search" placeholder="name or team"></div>
     <div class="ctl"><label for="mingp" title="0 shows everyone who has played for these teams in the last year. Players with no game in the last 30 days are flagged on their row rather than hidden.">Min games, last 30 days</label>
@@ -114,13 +122,18 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
       <b>P(G)</b> and <b>P(PT)</b> are the chance of at least one goal, and of
       at least one point.</p>
     <p class="sub" id="shotnote" hidden>Click any column to sort; this view
-      opens on <b>SOG</b>, highest first. <b>SOG/60</b> is the shot rate, and
+      opens on <b>SOG</b>, highest first. <b>SOG/60</b> is the shot rate and
       <b>TOI</b> is what it gets multiplied by — the projection is those two
-      numbers and nothing else, so <b>DRIVER</b> says which one is carrying
-      it: <b>rate</b> means he shoots more than his position's median but
-      plays less, <b>mins</b> the reverse, <b>both</b> means above the median
-      on each, <b>low</b> neither. <b>P(2+)</b> and <b>P(3+)</b> are the
-      chance of clearing those shot totals.</p>
+      numbers and nothing else. <b>R%</b> and <b>M%</b> are his percentiles on
+      each, measured against whatever <b>Compare against</b> is set to.
+      <b>PP%</b> is the share of his own ice time spent on the power play —
+      high means his floor depends on penalties being called. <b>TM%</b> is his
+      share of his team's projected shots, against a denominator of the twelve
+      forwards and six defencemen most likely to dress. <b>Driver</b> names the
+      shape: <b>volume</b> shoots far more than his tier on ordinary minutes,
+      <b>workhorse</b> plays far more on an ordinary rate, <b>elite</b> is top
+      fifteen per cent on both, and <b>rate</b>/<b>mins</b>/<b>both</b> are the
+      milder versions.</p>
     <div class="panel scroll" style="margin-top:10px">
       <table id="sk"><thead></thead><tbody></tbody></table>
     </div>
@@ -180,44 +193,132 @@ function poissonAtLeast(lambda, k) {
 // filtered view. A defenceman's shot rate against a winger's says nothing,
 // and a label that changed when you filtered to one game would be describing
 // the filter instead of the player.
-function deriveShots(skaters) {
-  const grp = r => r.position === "C" ? "C" : r.position === "D" ? "D" : "W";
+const num = v => (v === null || v === undefined) ? NaN : Number(v);
+const posGroup = r => r.position === "C" ? "C" : r.position === "D" ? "D" : "W";
+
+// Everything that does not depend on who else you are looking at. Computed
+// once per slate.
+function deriveBase(skaters) {
   for (const r of skaters) {
-    const sog = (r.sog === null || r.sog === undefined) ? NaN : Number(r.sog);
-    const toi = (r.toi === null || r.toi === undefined) ? NaN : Number(r.toi);
+    const sog = num(r.sog), toi = num(r.toi), pp = num(r.pp_toi);
     r.sog60 = (Number.isFinite(sog) && Number.isFinite(toi) && toi > 0)
       ? sog * 60 / toi : null;
     r.p_sog2 = poissonAtLeast(sog, 2);
     r.p_sog3 = poissonAtLeast(sog, 3);
-    r.driver = "—";
+    // How much of his own night is spent on the power play. The sharpest
+    // single split in this table: a man who gets his shots at even strength
+    // has a floor that does not depend on how many penalties get called, and
+    // one who gets them on the power play is a bet on the referees as much as
+    // on him. Penalty counts swing hard game to game, so these are different
+    // kinds of wager at identical projections.
+    r.pp_share = (Number.isFinite(pp) && Number.isFinite(toi) && toi > 0)
+      ? pp / toi : null;
+    r.shot_share = null;
+    r.rate_pct = null; r.toi_pct = null; r.driver = "—";
   }
-  const groups = new Map();
+  // Share of his TEAM's shots, against a denominator of eighteen rather than
+  // of everyone listed.
+  //
+  // This page deliberately lists every player who has dressed recently, which
+  // is right - it does not know the lineup. But summing all of them for a
+  // team total would divide by twenty-five men when eighteen will play, and
+  // every share would come out a quarter too small. The top twelve forwards
+  // and top six defencemen by projected ice time ARE an NHL lineup, so that
+  // is the denominator.
+  const byTeam = new Map();
   for (const r of skaters) {
-    const g = grp(r);
+    if (!byTeam.has(r.team)) byTeam.set(r.team, []);
+    byTeam.get(r.team).push(r);
+  }
+  for (const rows of byTeam.values()) {
+    const live = k => rows.filter(r => (posGroup(r) === "D") === (k === "D")
+                                    && Number.isFinite(num(r.toi)))
+      .sort((a, b) => num(b.toi) - num(a.toi))
+      .slice(0, k === "D" ? 6 : 12);
+    const dressed = live("F").concat(live("D"));
+    let total = 0;
+    for (const r of dressed) if (Number.isFinite(num(r.sog))) total += num(r.sog);
+    if (!(total > 0)) continue;
+    for (const r of rows) {
+      const sog = num(r.sog);
+      if (Number.isFinite(sog)) r.shot_share = sog / total;
+    }
+  }
+}
+
+// THE PART THAT DEPENDS ON WHO YOU ARE COMPARING HIM TO, which was the whole
+// problem with the first version of this column.
+//
+// It ranked every player against the median of everyone dressing. But a
+// sportsbook only posts a shots line on players who shoot - the prop universe
+// is already the top slice of the slate - so measured against a median that
+// includes fourth-liners, essentially every player with a line available came
+// back "both". The label was true and useless: it was answering "is he better
+// than a fourth-liner" when the question is "does he stand out among the men
+// you can actually bet".
+//
+// So the reference group is now a choice, and the percentiles are reported as
+// numbers rather than collapsed into a word.
+function deriveRanks(skaters, mode, shown) {
+  for (const r of skaters) { r.rate_pct = null; r.toi_pct = null; r.driver = "—"; }
+  const universe = mode === "shown" ? shown : skaters;
+  const groups = new Map();
+  for (const r of universe) {
+    const g = posGroup(r);
     if (!groups.has(g)) groups.set(g, []);
     groups.get(g).push(r);
   }
-  // Number(null) is 0, NOT NaN - so mapping straight through Number() would
-  // drop every player with no shot rate into the median as a zero and drag it
-  // down. Nulls are removed before they can be counted as data.
-  const num = v => (v === null || v === undefined) ? NaN : Number(v);
-  const median = (rows, key) => {
-    const v = rows.map(r => num(r[key]))
-                  .filter(Number.isFinite).sort((a, b) => a - b);
-    if (!v.length) return null;
-    const m = Math.floor(v.length / 2);
-    return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
-  };
-  for (const rows of groups.values()) {
-    const mRate = median(rows, "sog60"), mToi = median(rows, "toi");
-    if (mRate === null || mToi === null) continue;
-    for (const r of rows) {
-      // Same trap on the way out: a null rate must stay unlabelled rather
-      // than becoming a zero that is dutifully reported as "low".
-      const rate = num(r.sog60), toi = num(r.toi);
-      if (!Number.isFinite(rate) || !Number.isFinite(toi)) continue;
-      const a = rate >= mRate, b = toi >= mToi;
-      r.driver = a && b ? "both" : a ? "rate" : b ? "mins" : "low";
+  for (const all of groups.values()) {
+    // The prop tier: the top two fifths at his position by projected shots,
+    // roughly who gets a line posted. Filter-independent on purpose, so it
+    // does not move when you search.
+    let ref = all;
+    if (mode === "tier") {
+      const ranked = all.filter(r => Number.isFinite(num(r.sog)))
+        .sort((a, b) => num(b.sog) - num(a.sog));
+      ref = ranked.slice(0, Math.max(4, Math.ceil(ranked.length * 0.4)));
+    }
+    // EVERY player is scored AGAINST the reference group, not only the ones
+    // inside it. Ranking solely within the tier was a real mistake: the tier
+    // is chosen by shots, so a defenceman playing twenty-six minutes who does
+    // not shoot falls outside it and came back unranked - and he is precisely
+    // the workhorse this column exists to find. Scored against the tier he
+    // lands at the top on minutes and the bottom on rate, which is the whole
+    // story in two numbers.
+    const scorer = key => {
+      const vals = ref.map(r => num(r[key]))
+                      .filter(Number.isFinite).sort((a, b) => a - b);
+      const n = vals.length;
+      return x => {
+        if (!n || !Number.isFinite(x)) return null;
+        if (n < 2) return 1;
+        let below = 0, ties = 0;
+        for (const v of vals) { if (v < x) below++; else if (v === x) ties++; }
+        // Ties share a percentile - without the (ties-1)/2 term two men on
+        // identical numbers are separated by array order alone. Clamped
+        // because a player ABOVE the whole reference group scores n/(n-1).
+        const p = (below + Math.max(0, ties - 1) / 2) / (n - 1);
+        return Math.max(0, Math.min(1, p));
+      };
+    };
+    const R = scorer("sog60"), M = scorer("toi");
+    for (const r of all) {
+      const a = R(num(r.sog60)), b = M(num(r.toi));
+      if (a === null || b === null) continue;
+      r.rate_pct = a; r.toi_pct = b;
+      // Finer than four boxes, and the interesting labels live in the TAILS.
+      // "volume" and "workhorse" are the ones worth hunting: a player extreme
+      // on one axis and ordinary on the other is a different bet from one who
+      // is merely good at both.
+      r.driver = (a >= 0.85 && b >= 0.85) ? "elite"
+               : (a >= 0.80 && b < 0.50) ? "volume"
+               : (b >= 0.80 && a < 0.50) ? "workhorse"
+               : (a >= 0.65 && b >= 0.65) ? "both"
+               : (a >= 0.65) ? "rate"
+               // "mid" rather than a dash: he IS ranked, and ordinary within
+               // the tier is a real finding. A dash here would read as missing
+               // data, which is the one thing it is not.
+               : (b >= 0.65) ? "mins" : "mid";
     }
   }
 }
@@ -261,10 +362,13 @@ const SK_SHOT_COLS = [
   ["sog60", "SOG/60", r => fmt(r.sog60, 1)],
   ["toi", "TOI", r => fmt(r.toi, 1)],
   ["pp_toi", "PP", r => fmt(r.pp_toi, 1)],
+  ["pp_share", "PP%", r => pct(r.pp_share)],
+  ["shot_share", "TM%", r => pct(r.shot_share)],
+  ["rate_pct", "R%", r => pct(r.rate_pct)],
+  ["toi_pct", "M%", r => pct(r.toi_pct)],
   ["driver", "Driver", r => r.driver, "l"],
   ["p_sog2", "P(2+)", r => pct(r.p_sog2)],
   ["p_sog3", "P(3+)", r => pct(r.p_sog3)],
-  ["p_goals", "P(G)", r => pct(r.p_goals)],
   ["gp_30d", "GP30", r => r.gp_30d],
 ];
 const GO_COLS = [
@@ -307,7 +411,7 @@ async function load(file) {
   DATA = await (await fetch("data/" + file + "?" + Date.now())).json();
   // Derived once per slate, before anything draws, so sorting on a shot
   // column sorts on a real number rather than on undefined.
-  deriveShots(DATA.skaters);
+  deriveBase(DATA.skaters);
   $("game").innerHTML = '<option value="">every game</option>' +
     DATA.games.map(g => `<option value="${esc(g.away)}|${esc(g.home)}">
       ${esc(g.away)} @ ${esc(g.home)}</option>`).join("");
@@ -342,6 +446,11 @@ function filtered(rows, isSkater) {
       if (grp !== p) return false;
     }
     if (mg && (r.gp_30d || 0) < mg) return false;
+    const ms = Number($("minsog").value) || 0;
+    if (isSkater && ms) {
+      const v = num(r.sog);
+      if (!Number.isFinite(v) || v < ms) return false;
+    }
     if (q && !(r.name.toLowerCase().includes(q) ||
                String(r.team).toLowerCase().includes(q))) return false;
     return true;
@@ -391,10 +500,14 @@ function draw() {
   // probabilities are arithmetic on nothing, so they go with it rather than
   // standing there as dashes that look like missing players.
   const gone = (DATA.dropped_stats || []).slice();
-  if (gone.includes("sog")) gone.push("sog60", "p_sog2", "p_sog3", "driver");
+  if (gone.includes("sog")) gone.push("sog60", "p_sog2", "p_sog3", "driver",
+              "shot_share", "rate_pct", "toi_pct");
   const cols = shots ? SK_SHOT_COLS : SK_COLS;
-  drawTable("sk", cols.filter(c => !gone.includes(c[0])),
-            filtered(DATA.skaters, true), SORT);
+  const rows = filtered(DATA.skaters, true);
+  // Ranked HERE rather than at load, because the reference group is a control
+  // and "the players shown" is one of its settings.
+  deriveRanks(DATA.skaters, $("ref").value, rows);
+  drawTable("sk", cols.filter(c => !gone.includes(c[0])), rows, SORT);
   drawTable("go", GO_COLS, filtered(DATA.goalies, false), GSORT);
 }
 
@@ -454,7 +567,7 @@ function honesty() {
       ? "those columns are" : "that column is"} absent rather than zero.` : ""}`;
 }
 
-["game", "pos", "q", "mingp"].forEach(id => {
+["game", "pos", "q", "mingp", "ref", "minsog"].forEach(id => {
   $(id).oninput = draw;
   $(id).onchange = draw;
 });
