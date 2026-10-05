@@ -138,8 +138,13 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
       games before that one, so the night in question is not inside its own
       average. <b>Mate</b> is the biggest night anyone else on his team had,
       measured against that man's own usual number, so it reads "somebody else
-      took them" rather than "his team shot a lot". Sort by <b>Last%</b>
-      ascending to find men whose shooting was taken off them.</p>
+      took them" rather than "his team shot a lot". <b>Gap</b> is
+      Usual% minus Last% in percentage points — positive means he took less of
+      his team's shooting than he normally does. <b>Sort by Gap, highest
+      first, and the men whose shooting was taken off them are at the top.</b>
+      It is in points rather than as a ratio, so read it beside Usual%: losing
+      two points matters more to a man who usually takes four than to one who
+      usually takes fourteen.</p>
     <div class="panel scroll" style="margin-top:10px">
       <table id="sk"><thead></thead><tbody></tbody></table>
     </div>
@@ -220,6 +225,20 @@ function deriveBase(skaters) {
     r.pp_share = (Number.isFinite(pp) && Number.isFinite(toi) && toi > 0)
       ? pp / toi : null;
     r.shot_share = null;
+    // HOW MUCH OF HIS USUAL SLICE HE DID NOT GET, in percentage points.
+    // Positive means he took less of his team's shooting than he normally
+    // does; negative means he took more. Materialised onto the row rather
+    // than computed in the cell, because the table sorts on the stored value
+    // and a column you cannot sort by is the one thing this column is for.
+    //
+    // POINTS, not a ratio. A man who usually takes 14% and took 6% reads +8,
+    // and one who usually takes 4% and took 2% reads +2 - even though the
+    // second man lost half his share and the first lost rather less. Within
+    // the prop tier, where usual shares are all bunched between about 10 and
+    // 18%, the two orderings are nearly identical; across the whole board
+    // they are not, so read this next to Usual% rather than on its own.
+    const ls = num(r.last_share), sn = num(r.share_norm);
+    r.share_gap = (Number.isFinite(ls) && Number.isFinite(sn)) ? sn - ls : null;
     r.rate_pct = null; r.toi_pct = null; r.driver = "—";
   }
   // Share of his TEAM's shots, against a denominator of eighteen rather than
@@ -382,6 +401,8 @@ const SK_SHOT_COLS = [
   ["last_sog", "Last", r => fmt(r.last_sog, 0)],
   ["last_share", "Last%", r => pct(r.last_share)],
   ["share_norm", "Usual%", r => pct(r.share_norm)],
+  ["share_gap", "Gap", r => r.share_gap == null ? "—"
+    : (r.share_gap > 0 ? "+" : "") + (100 * r.share_gap).toFixed(0) + "%"],
   ["mate_lift", "Mate", r => r.mate_lift == null ? "—"
     : Number(r.mate_lift).toFixed(1) + "x"],
   ["p_sog2", "P(2+)", r => pct(r.p_sog2)],
@@ -486,8 +507,18 @@ function drawTable(id, cols, rows, sort) {
     sort.key = k;
     draw();
   };
+  const missing = v => v === null || v === undefined
+    || (typeof v === "number" && !Number.isFinite(v));
   const sorted = rows.slice().sort((a, b) => {
     const av = sortKey(a, sort.key), bv = sortKey(b, sort.key);
+    // A MISSING VALUE IS NOT A SMALL ONE, AND IT IS NOT A LARGE ONE EITHER.
+    // null is not `typeof "number"`, so it used to fall through to the string
+    // branch and compare the text "null" against the text "0.12" - which put
+    // every player with no data at the TOP of a descending sort, directly
+    // above the man the sort was meant to find. Blanks now sink in BOTH
+    // directions, which is the only answer that is never misleading.
+    const am = missing(av), bm = missing(bv);
+    if (am || bm) return (am && bm) ? 0 : (am ? 1 : -1);
     const an = typeof av === "number", bn = typeof bv === "number";
     if (an && bn) return (av - bv) * sort.dir;
     return String(av).localeCompare(String(bv)) * sort.dir;
@@ -518,7 +549,7 @@ function draw() {
   // standing there as dashes that look like missing players.
   const gone = (DATA.dropped_stats || []).slice();
   if (gone.includes("sog")) gone.push("sog60", "p_sog2", "p_sog3", "driver",
-              "shot_share", "rate_pct", "toi_pct");
+              "shot_share", "rate_pct", "toi_pct", "share_gap");
   const cols = shots ? SK_SHOT_COLS : SK_COLS;
   const rows = filtered(DATA.skaters, true);
   // Ranked HERE rather than at load, because the reference group is a control
