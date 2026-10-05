@@ -125,15 +125,21 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
       opens on <b>SOG</b>, highest first. <b>SOG/60</b> is the shot rate and
       <b>TOI</b> is what it gets multiplied by — the projection is those two
       numbers and nothing else. <b>R%</b> and <b>M%</b> are his percentiles on
-      each, measured against whatever <b>Compare against</b> is set to.
-      <b>PP%</b> is the share of his own ice time spent on the power play —
-      high means his floor depends on penalties being called. <b>TM%</b> is his
-      share of his team's projected shots, against a denominator of the twelve
-      forwards and six defencemen most likely to dress. <b>Driver</b> names the
-      shape: <b>volume</b> shoots far more than his tier on ordinary minutes,
-      <b>workhorse</b> plays far more on an ordinary rate, <b>elite</b> is top
-      fifteen per cent on both, and <b>rate</b>/<b>mins</b>/<b>both</b> are the
-      milder versions.</p>
+      each, against whatever <b>Compare against</b> is set to. <b>PP%</b> is
+      the share of his ice time on the power play; high means his floor depends
+      on penalties being called. <b>TM%</b> is his projected share of his
+      team's shots. <b>Driver</b> names the shape: <b>volume</b> shoots far
+      more than his tier on ordinary minutes, <b>workhorse</b> plays far more
+      on an ordinary rate, <b>elite</b> is top fifteen per cent on both.
+      <br><br>
+      The next four are <b>history, not projection</b>. <b>Last</b> is his
+      shots in his most recent game, <b>Last%</b> the slice of his team's shots
+      that was, <b>Usual%</b> the slice he normally takes — built from the
+      games before that one, so the night in question is not inside its own
+      average. <b>Mate</b> is the biggest night anyone else on his team had,
+      measured against that man's own usual number, so it reads "somebody else
+      took them" rather than "his team shot a lot". Sort by <b>Last%</b>
+      ascending to find men whose shooting was taken off them.</p>
     <div class="panel scroll" style="margin-top:10px">
       <table id="sk"><thead></thead><tbody></tbody></table>
     </div>
@@ -367,6 +373,17 @@ const SK_SHOT_COLS = [
   ["rate_pct", "R%", r => pct(r.rate_pct)],
   ["toi_pct", "M%", r => pct(r.toi_pct)],
   ["driver", "Driver", r => r.driver, "l"],
+  // LAST NIGHT, which is history rather than projection and is labelled as
+  // such. LAST% is his slice of his team's shots in that game and USUAL% is
+  // the slice he normally takes, built from the games BEFORE it. MATE is the
+  // biggest night anyone else on his team had, measured against that man's own
+  // usual number - so it reads "somebody else took them" rather than "his team
+  // shot a lot".
+  ["last_sog", "Last", r => fmt(r.last_sog, 0)],
+  ["last_share", "Last%", r => pct(r.last_share)],
+  ["share_norm", "Usual%", r => pct(r.share_norm)],
+  ["mate_lift", "Mate", r => r.mate_lift == null ? "—"
+    : Number(r.mate_lift).toFixed(1) + "x"],
   ["p_sog2", "P(2+)", r => pct(r.p_sog2)],
   ["p_sog3", "P(3+)", r => pct(r.p_sog3)],
   ["gp_30d", "GP30", r => r.gp_30d],
@@ -554,6 +571,19 @@ function honesty() {
     his average — so <b>P(2+) and P(3+) are if anything slightly low in the
     tail</b>, and the gap widens the further out you go. Treat them as a
     ranking that is better than the raw expectation, not as a priced number.
+    <br><br>
+    <b>Last night is context, not a signal — yet.</b> The Last, Last%, Usual%
+    and Mate columns describe a game that has already been played. It is
+    tempting to read a squeezed man as due, and there is no mechanism in hockey
+    for that: who takes a line's shots on a given night is close to a random
+    draw around each man's usual share, and a draw has no memory. The two
+    stories that DO have mechanisms point elsewhere — ordinary noise says last
+    night tells you nothing, and a change of role says a quiet night predicts
+    another one. So nothing here is fed into the projection, and the columns
+    are ordered by nothing. <code>linemate_study.py</code> measures the
+    question on this same cache and prints one number with an interval; until
+    it clears zero, treat a low Last% as a reason the field will overlook him
+    rather than a reason he will shoot more.
     <br><br>
     <b>And shots on goal is a judged statistic.</b> A scorekeeper decides
     whether an attempt was on net, can strike one he thinks would have missed,
