@@ -138,7 +138,12 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
       games before that one, so the night in question is not inside its own
       average. <b>Mate</b> is the biggest night anyone else on his team had,
       measured against that man's own usual number, so it reads "somebody else
-      took them" rather than "his team shot a lot". <b>Gap</b> is
+      took them" rather than "his team shot a lot". <b>Pie</b> is his team's own
+      total that night against a normal one for them — below about 0.8 the
+      whole side was quiet, everyone's share is noisier, and a big gap there is
+      arithmetic rather than a squeeze. <b>Sqz</b> marks the rows where all
+      four conditions hold at once: he normally shoots, his own night was thin,
+      the pie was normal, and somebody else feasted. <b>Gap</b> is
       Usual% minus Last% in percentage points — positive means he took less of
       his team's shooting than he normally does. <b>Sort by Gap, highest
       first, and the men whose shooting was taken off them are at the top.</b>
@@ -405,6 +410,19 @@ const SK_SHOT_COLS = [
     : (r.share_gap > 0 ? "+" : "") + (100 * r.share_gap).toFixed(0) + "%"],
   ["mate_lift", "Mate", r => r.mate_lift == null ? "—"
     : Number(r.mate_lift).toFixed(1) + "x"],
+  // HIS TEAM'S OWN NIGHT, against a normal one for them. Without this a gap
+  // cannot be read: a share is a ratio, and one built from a fourteen-shot
+  // team night is far noisier than one built from a thirty-one-shot night.
+  // Printed as a ratio so 1.0 is a normal night at a glance.
+  ["pie", "Pie", r => {
+    const t = num(r.last_team_sog), n = num(r.team_sog_norm);
+    return (Number.isFinite(t) && Number.isFinite(n) && n > 0)
+      ? (t / n).toFixed(2) + "x" : "—";
+  }],
+  // The flag, built in the publisher from model.SQUEEZE - the same four
+  // thresholds linemate_study.py measures. One definition, so the mark on
+  // this row and the evidence for it are about the same rule.
+  ["squeezed", "Sqz", r => r.squeezed ? "YES" : "", "l"],
   ["p_sog2", "P(2+)", r => pct(r.p_sog2)],
   ["p_sog3", "P(3+)", r => pct(r.p_sog3)],
   ["gp_30d", "GP30", r => r.gp_30d],
@@ -549,7 +567,8 @@ function draw() {
   // standing there as dashes that look like missing players.
   const gone = (DATA.dropped_stats || []).slice();
   if (gone.includes("sog")) gone.push("sog60", "p_sog2", "p_sog3", "driver",
-              "shot_share", "rate_pct", "toi_pct", "share_gap");
+              "shot_share", "rate_pct", "toi_pct", "share_gap",
+              "pie", "squeezed");
   const cols = shots ? SK_SHOT_COLS : SK_COLS;
   const rows = filtered(DATA.skaters, true);
   // Ranked HERE rather than at load, because the reference group is a control
@@ -602,6 +621,25 @@ function honesty() {
     his average — so <b>P(2+) and P(3+) are if anything slightly low in the
     tail</b>, and the gap widens the further out you go. Treat them as a
     ranking that is better than the raw expectation, not as a priced number.
+    <br><br>
+    <b>Read Gap beside Usual% and Pie, never on its own.</b> Gap is in
+    percentage points, so the same +8 is a volume shooter having an off night
+    if he usually takes 18% and mostly noise if he usually takes 9% — small
+    shares are built from two or three shots and move about. And a gap on a
+    night his team managed fourteen shots is not a squeeze; it is a ratio with
+    a small denominator. Usual% says whether he is worth looking at and Pie
+    says whether the night can be read at all.
+    <br><br>
+    <b>Mate does less than its name suggests, and the arithmetic says why.</b>
+    The denominator here is the TEAM — eighteen skaters taking about thirty
+    shots. A team-mate going from a usual 2.4 to 6 is a big night, and it
+    redistributes 3.6 shots across seventeen other men: under a point of share
+    each. So a mate's night explains one or two points of a twelve-point gap,
+    not twelve. The crowding-out story needs LINE data, where three men share
+    about ten shots. Until then Mate is most useful backwards: a high gap with
+    a LOW mate means nobody else had a night, so the quiet was about him — a
+    shortened bench, a dropped line, something he played through. High Mate
+    makes the story cleaner; low Mate is the warning.
     <br><br>
     <b>Last night is context, not a signal — yet.</b> The Last, Last%, Usual%
     and Mate columns describe a game that has already been played. It is
