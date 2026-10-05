@@ -1,6 +1,6 @@
 {
  "date": "2026-10-05",
- "generated_at": "2026-10-05T03:03:26+00:00",
+ "generated_at": "2026-10-05T20:13:00+00:00",
  "games": [
   {
    "away": "PHI",
@@ -51,6 +51,9 @@
    "last_share": 0.121,
    "share_norm": 0.08,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -81,6 +84,9 @@
    "last_share": 0.0,
    "share_norm": 0.064,
    "mate_lift": 3.62,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -111,6 +117,9 @@
    "last_share": 0.056,
    "share_norm": 0.056,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -141,6 +150,9 @@
    "last_share": 0.167,
    "share_norm": 0.084,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -171,6 +183,9 @@
    "last_share": 0.069,
    "share_norm": 0.076,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -201,6 +216,9 @@
    "last_share": 0.0,
    "share_norm": 0.087,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -231,6 +249,9 @@
    "last_share": 0.067,
    "share_norm": 0.07,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -261,6 +282,9 @@
    "last_share": 0.04,
    "share_norm": 0.068,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -291,6 +315,9 @@
    "last_share": 0.0,
    "share_norm": 0.073,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": true,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -321,6 +348,9 @@
    "last_share": 0.061,
    "share_norm": 0.065,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -351,6 +381,9 @@
    "last_share": 0.105,
    "share_norm": 0.037,
    "mate_lift": 5.78,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -381,6 +414,9 @@
    "last_share": 0.0,
    "share_norm": 0.097,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -411,6 +447,9 @@
    "last_share": 0.03,
    "share_norm": 0.043,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -441,6 +480,9 @@
    "last_share": 0.0,
    "share_norm": 0.044,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -471,6 +513,9 @@
    "last_share": 0.069,
    "share_norm": 0.043,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -501,6 +546,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -531,6 +579,9 @@
    "last_share": 0.0,
    "share_norm": 0.046,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -561,6 +612,9 @@
    "last_share": 0.0,
    "share_norm": null,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-04-14"
@@ -591,6 +645,9 @@
    "last_share": 0.0,
    "share_norm": 0.075,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -621,6 +678,9 @@
    "last_share": 0.03,
    "share_norm": 0.038,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -651,6 +711,9 @@
    "last_share": 0.0,
    "share_norm": 0.051,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -681,6 +744,9 @@
    "last_share": 0.091,
    "share_norm": 0.058,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -711,6 +777,9 @@
    "last_share": 0.0,
    "share_norm": 0.083,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": true,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -741,6 +810,9 @@
    "last_share": 0.0,
    "share_norm": 0.061,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -771,6 +843,9 @@
    "last_share": 0.273,
    "share_norm": 0.123,
    "mate_lift": 2.56,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -801,6 +876,9 @@
    "last_share": 0.1,
    "share_norm": 0.071,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -831,6 +909,9 @@
    "last_share": 0.0,
    "share_norm": 0.045,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -861,6 +942,9 @@
    "last_share": 0.08,
    "share_norm": 0.135,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.2,
    "last_played": "2026-10-03"
@@ -891,6 +975,9 @@
    "last_share": 0.04,
    "share_norm": 0.052,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -921,6 +1008,9 @@
    "last_share": 0.074,
    "share_norm": 0.049,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -951,6 +1041,9 @@
    "last_share": 0.1,
    "share_norm": 0.118,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -981,6 +1074,9 @@
    "last_share": 0.2,
    "share_norm": 0.089,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1011,6 +1107,9 @@
    "last_share": 0.067,
    "share_norm": 0.104,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1041,6 +1140,9 @@
    "last_share": 0.185,
    "share_norm": 0.158,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1071,6 +1173,9 @@
    "last_share": 0.033,
    "share_norm": 0.12,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1101,6 +1206,9 @@
    "last_share": 0.1,
    "share_norm": 0.111,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1131,6 +1239,9 @@
    "last_share": 0.067,
    "share_norm": 0.09,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1161,6 +1272,9 @@
    "last_share": 0.034,
    "share_norm": 0.04,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -1191,6 +1305,9 @@
    "last_share": 0.1,
    "share_norm": 0.042,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1221,6 +1338,9 @@
    "last_share": 0.0,
    "share_norm": 0.059,
    "mate_lift": 3.71,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 20.06,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-16"
@@ -1251,6 +1371,9 @@
    "last_share": 0.04,
    "share_norm": 0.045,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1281,6 +1404,9 @@
    "last_share": 0.069,
    "share_norm": 0.086,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1311,6 +1437,9 @@
    "last_share": 0.12,
    "share_norm": 0.061,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 9.3,
    "last_played": "2026-10-03"
@@ -1341,6 +1470,9 @@
    "last_share": 0.033,
    "share_norm": null,
    "mate_lift": 2.41,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.31,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-01-24"
@@ -1371,6 +1503,9 @@
    "last_share": 0.0,
    "share_norm": 0.037,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1401,6 +1536,9 @@
    "last_share": 0.04,
    "share_norm": null,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-04-14"
@@ -1431,6 +1569,9 @@
    "last_share": 0.033,
    "share_norm": 0.039,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1461,6 +1602,9 @@
    "last_share": 0.0,
    "share_norm": null,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2026-04-14"
@@ -1491,6 +1635,9 @@
    "last_share": 0.0,
    "share_norm": 0.042,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -1521,6 +1668,9 @@
    "last_share": 0.0,
    "share_norm": 0.097,
    "mate_lift": 2.42,
+   "last_team_sog": 24.0,
+   "team_sog_norm": 28.13,
+   "squeezed": true,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-12"
@@ -1551,6 +1701,9 @@
    "last_share": 0.031,
    "share_norm": 0.037,
    "mate_lift": 2.47,
+   "last_team_sog": 32.0,
+   "team_sog_norm": 20.02,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-11"
@@ -1581,6 +1734,9 @@
    "last_share": 0.0,
    "share_norm": 0.041,
    "mate_lift": 3.71,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 20.06,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 26.9,
    "last_played": "2026-04-16"
@@ -1611,6 +1767,9 @@
    "last_share": 0.0,
    "share_norm": 0.035,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1641,6 +1800,9 @@
    "last_share": 0.091,
    "share_norm": 0.04,
    "mate_lift": 1.81,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 26.61,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-12"
@@ -1671,6 +1833,9 @@
    "last_share": 0.1,
    "share_norm": 0.042,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 26.9,
    "last_played": "2026-10-03"
@@ -1701,6 +1866,9 @@
    "last_share": 0.1,
    "share_norm": 0.091,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1731,6 +1899,9 @@
    "last_share": 0.138,
    "share_norm": 0.074,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1761,6 +1932,9 @@
    "last_share": 0.033,
    "share_norm": 0.047,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1791,6 +1965,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 3.47,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-04-02"
@@ -1821,6 +1998,9 @@
    "last_share": 0.067,
    "share_norm": 0.094,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1851,6 +2031,9 @@
    "last_share": 0.03,
    "share_norm": 0.07,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -1881,6 +2064,9 @@
    "last_share": 0.0,
    "share_norm": 0.038,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1911,6 +2097,9 @@
    "last_share": 0.0,
    "share_norm": 0.084,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1941,6 +2130,9 @@
    "last_share": 0.056,
    "share_norm": 0.06,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -1971,6 +2163,9 @@
    "last_share": 0.033,
    "share_norm": 0.027,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -2001,6 +2196,9 @@
    "last_share": 0.0,
    "share_norm": 0.04,
    "mate_lift": 2.43,
+   "last_team_sog": 34.0,
+   "team_sog_norm": 28.47,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-03-11"
@@ -2031,6 +2229,9 @@
    "last_share": 0.067,
    "share_norm": 0.104,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2061,6 +2262,9 @@
    "last_share": 0.04,
    "share_norm": 0.032,
    "mate_lift": 2.91,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.01,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-01"
@@ -2091,6 +2295,9 @@
    "last_share": 0.08,
    "share_norm": 0.082,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.2,
    "last_played": "2026-10-03"
@@ -2121,6 +2328,9 @@
    "last_share": 0.037,
    "share_norm": 0.032,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 26.2,
    "last_played": "2026-10-03"
@@ -2151,6 +2361,9 @@
    "last_share": 0.133,
    "share_norm": 0.033,
    "mate_lift": 2.66,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2181,6 +2394,9 @@
    "last_share": 0.056,
    "share_norm": 0.097,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2211,6 +2427,9 @@
    "last_share": 0.033,
    "share_norm": 0.077,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2241,6 +2460,9 @@
    "last_share": 0.0,
    "share_norm": 0.051,
    "mate_lift": 1.79,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.3,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2025-12-13"
@@ -2271,6 +2493,9 @@
    "last_share": 0.034,
    "share_norm": 0.032,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 28.3,
    "last_played": "2026-10-03"
@@ -2301,6 +2526,9 @@
    "last_share": 0.033,
    "share_norm": 0.088,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": true,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2331,6 +2559,9 @@
    "last_share": 0.074,
    "share_norm": 0.073,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2361,6 +2592,9 @@
    "last_share": 0.067,
    "share_norm": 0.048,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -2391,6 +2625,9 @@
    "last_share": 0.065,
    "share_norm": 0.046,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 24.7,
    "last_played": "2026-04-15"
@@ -2421,6 +2658,9 @@
    "last_share": 0.0,
    "share_norm": 0.044,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2451,6 +2691,9 @@
    "last_share": 0.033,
    "share_norm": 0.065,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2481,6 +2724,9 @@
    "last_share": 0.0,
    "share_norm": 0.031,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 24.7,
    "last_played": "2026-04-14"
@@ -2511,6 +2757,9 @@
    "last_share": 0.037,
    "share_norm": 0.067,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2541,6 +2790,9 @@
    "last_share": 0.034,
    "share_norm": 0.056,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 4.7,
    "last_played": "2026-10-03"
@@ -2571,6 +2823,9 @@
    "last_share": 0.0,
    "share_norm": 0.075,
    "mate_lift": 3.2,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 26.4,
+   "squeezed": true,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -2601,6 +2856,9 @@
    "last_share": 0.167,
    "share_norm": 0.071,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -2631,6 +2889,9 @@
    "last_share": 0.1,
    "share_norm": 0.032,
    "mate_lift": 2.55,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 23.8,
    "last_played": "2026-10-03"
@@ -2661,6 +2922,9 @@
    "last_share": 0.027,
    "share_norm": 0.044,
    "mate_lift": 4.18,
+   "last_team_sog": 37.0,
+   "team_sog_norm": 27.88,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 7.9,
    "last_played": "2025-11-03"
@@ -2691,6 +2955,9 @@
    "last_share": 0.0,
    "share_norm": 0.053,
    "mate_lift": 5.78,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -2721,6 +2988,9 @@
    "last_share": 0.04,
    "share_norm": 0.073,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2751,6 +3021,9 @@
    "last_share": 0.034,
    "share_norm": 0.048,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2781,6 +3054,9 @@
    "last_share": 0.0,
    "share_norm": 0.03,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 28.1,
    "last_played": "2026-10-03"
@@ -2811,6 +3087,9 @@
    "last_share": 0.167,
    "share_norm": 0.109,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2841,6 +3120,9 @@
    "last_share": 0.08,
    "share_norm": 0.024,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 23.2,
    "last_played": "2026-10-03"
@@ -2871,6 +3153,9 @@
    "last_share": 0.069,
    "share_norm": 0.086,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2901,6 +3186,9 @@
    "last_share": 0.067,
    "share_norm": 0.086,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2931,6 +3219,9 @@
    "last_share": 0.138,
    "share_norm": 0.092,
    "mate_lift": 1.94,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -2961,6 +3252,9 @@
    "last_share": 0.121,
    "share_norm": 0.069,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -2991,6 +3285,9 @@
    "last_share": 0.0,
    "share_norm": 0.06,
    "mate_lift": 3.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.31,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.0,
    "last_played": "2026-01-26"
@@ -3021,6 +3318,9 @@
    "last_share": 0.111,
    "share_norm": 0.051,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 28.7,
    "last_played": "2026-10-03"
@@ -3051,6 +3351,9 @@
    "last_share": 0.067,
    "share_norm": 0.07,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -3081,6 +3384,9 @@
    "last_share": 0.069,
    "share_norm": 0.087,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3111,6 +3417,9 @@
    "last_share": 0.04,
    "share_norm": 0.055,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 28.9,
    "last_played": "2026-10-03"
@@ -3141,6 +3450,9 @@
    "last_share": 0.067,
    "share_norm": 0.07,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3171,6 +3483,9 @@
    "last_share": 0.0,
    "share_norm": 0.056,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -3201,6 +3516,9 @@
    "last_share": 0.0,
    "share_norm": null,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 1.0,
    "last_played": "2026-10-02"
@@ -3231,6 +3549,9 @@
    "last_share": 0.037,
    "share_norm": 0.064,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3261,6 +3582,9 @@
    "last_share": 0.034,
    "share_norm": 0.041,
    "mate_lift": 2.36,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 27.87,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2025-12-07"
@@ -3291,6 +3615,9 @@
    "last_share": 0.032,
    "share_norm": 0.06,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -3321,6 +3648,9 @@
    "last_share": 0.0,
    "share_norm": 0.052,
    "mate_lift": 2.32,
+   "last_team_sog": 20.0,
+   "team_sog_norm": 26.57,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 22.3,
    "last_played": "2025-12-21"
@@ -3351,6 +3681,9 @@
    "last_share": 0.074,
    "share_norm": 0.076,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3381,6 +3714,9 @@
    "last_share": 0.08,
    "share_norm": 0.071,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3411,6 +3747,9 @@
    "last_share": 0.043,
    "share_norm": 0.042,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-14"
@@ -3441,6 +3780,9 @@
    "last_share": 0.036,
    "share_norm": 0.023,
    "mate_lift": 3.2,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -3471,6 +3813,9 @@
    "last_share": 0.038,
    "share_norm": 0.048,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -3501,6 +3846,9 @@
    "last_share": 0.0,
    "share_norm": 0.03,
    "mate_lift": 2.53,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 12.5,
    "last_played": "2025-10-25"
@@ -3531,6 +3879,9 @@
    "last_share": 0.0,
    "share_norm": 0.056,
    "mate_lift": 2.41,
+   "last_team_sog": 17.0,
+   "team_sog_norm": 27.89,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.9,
    "last_played": "2025-10-23"
@@ -3561,6 +3912,9 @@
    "last_share": 0.061,
    "share_norm": null,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 1.0,
    "last_played": "2026-10-02"
@@ -3591,6 +3945,9 @@
    "last_share": 0.061,
    "share_norm": 0.05,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -3621,6 +3978,9 @@
    "last_share": 0.1,
    "share_norm": 0.057,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3651,6 +4011,9 @@
    "last_share": 0.026,
    "share_norm": 0.036,
    "mate_lift": 5.78,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 7.1,
    "last_played": "2026-04-15"
@@ -3681,6 +4044,9 @@
    "last_share": 0.033,
    "share_norm": 0.04,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 28.0,
    "last_played": "2026-10-03"
@@ -3711,6 +4077,9 @@
    "last_share": 0.0,
    "share_norm": 0.073,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -3741,6 +4110,9 @@
    "last_share": 0.037,
    "share_norm": 0.051,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3771,6 +4143,9 @@
    "last_share": 0.1,
    "share_norm": 0.083,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -3801,6 +4176,9 @@
    "last_share": 0.033,
    "share_norm": 0.034,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.2,
    "last_played": "2026-10-03"
@@ -3831,6 +4209,9 @@
    "last_share": 0.056,
    "share_norm": 0.101,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 10.0,
    "last_played": "2026-10-03"
@@ -3861,6 +4242,9 @@
    "last_share": 0.0,
    "share_norm": 0.034,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 20.0,
    "last_played": "2026-04-16"
@@ -3891,6 +4275,9 @@
    "last_share": 0.079,
    "share_norm": 0.037,
    "mate_lift": 5.78,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 10.6,
    "last_played": "2026-04-15"
@@ -3921,6 +4308,9 @@
    "last_share": 0.03,
    "share_norm": 0.043,
    "mate_lift": 4.72,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 26.38,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 25.7,
    "last_played": "2026-04-13"
@@ -3951,6 +4341,9 @@
    "last_share": 0.067,
    "share_norm": 0.044,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -3981,6 +4374,9 @@
    "last_share": 0.138,
    "share_norm": 0.072,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4011,6 +4407,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 2.95,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 27.17,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 25.0,
    "last_played": "2026-03-05"
@@ -4041,6 +4440,9 @@
    "last_share": 0.0,
    "share_norm": 0.053,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4071,6 +4473,9 @@
    "last_share": 0.111,
    "share_norm": 0.086,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -4101,6 +4506,9 @@
    "last_share": 0.0,
    "share_norm": 0.05,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 2.0,
    "last_played": "2026-10-03"
@@ -4131,6 +4539,9 @@
    "last_share": 0.026,
    "share_norm": 0.03,
    "mate_lift": 2.81,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 26.47,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 15.7,
    "last_played": "2025-12-02"
@@ -4161,6 +4572,9 @@
    "last_share": 0.037,
    "share_norm": 0.03,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -4191,6 +4605,9 @@
    "last_share": 0.0,
    "share_norm": 0.029,
    "mate_lift": 4.18,
+   "last_team_sog": 37.0,
+   "team_sog_norm": 27.88,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 18.6,
    "last_played": "2025-11-03"
@@ -4221,6 +4638,9 @@
    "last_share": 0.0,
    "share_norm": 0.037,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.1,
    "last_played": "2026-10-03"
@@ -4251,6 +4671,9 @@
    "last_share": 0.056,
    "share_norm": 0.043,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4281,6 +4704,9 @@
    "last_share": 0.08,
    "share_norm": 0.06,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 19.0,
    "last_played": "2026-10-03"
@@ -4311,6 +4737,9 @@
    "last_share": 0.087,
    "share_norm": 0.03,
    "mate_lift": 2.05,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 23.2,
    "last_played": "2026-04-14"
@@ -4341,6 +4770,9 @@
    "last_share": 0.0,
    "share_norm": 0.055,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -4371,6 +4803,9 @@
    "last_share": 0.033,
    "share_norm": 0.042,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4401,6 +4836,9 @@
    "last_share": 0.0,
    "share_norm": 0.036,
    "mate_lift": 1.81,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 26.61,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-12"
@@ -4431,6 +4869,9 @@
    "last_share": 0.038,
    "share_norm": 0.035,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-16"
@@ -4461,6 +4902,9 @@
    "last_share": 0.111,
    "share_norm": 0.052,
    "mate_lift": 2.28,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 4.7,
    "last_played": "2026-10-03"
@@ -4491,6 +4935,9 @@
    "last_share": 0.0,
    "share_norm": 0.06,
    "mate_lift": 1.61,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.0,
    "last_played": "2026-03-26"
@@ -4521,6 +4968,9 @@
    "last_share": 0.067,
    "share_norm": 0.056,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4551,6 +5001,9 @@
    "last_share": 0.105,
    "share_norm": null,
    "mate_lift": 2.78,
+   "last_team_sog": 19.0,
+   "team_sog_norm": 27.88,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 1.0,
    "last_played": "2025-11-26"
@@ -4581,6 +5034,9 @@
    "last_share": 0.167,
    "share_norm": 0.067,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 27.4,
    "last_played": "2026-10-03"
@@ -4611,6 +5067,9 @@
    "last_share": 0.03,
    "share_norm": 0.072,
    "mate_lift": 3.71,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 20.06,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -4641,6 +5100,9 @@
    "last_share": 0.043,
    "share_norm": 0.031,
    "mate_lift": 2.72,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 26.55,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 25.0,
    "last_played": "2025-12-27"
@@ -4671,6 +5133,9 @@
    "last_share": 0.0,
    "share_norm": 0.039,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4701,6 +5166,9 @@
    "last_share": 0.033,
    "share_norm": 0.042,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4731,6 +5199,9 @@
    "last_share": 0.0,
    "share_norm": 0.061,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.1,
    "last_played": "2026-04-16"
@@ -4761,6 +5232,9 @@
    "last_share": 0.0,
    "share_norm": 0.041,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 22.7,
    "last_played": "2026-04-14"
@@ -4791,6 +5265,9 @@
    "last_share": 0.061,
    "share_norm": 0.05,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -4821,6 +5298,9 @@
    "last_share": 0.091,
    "share_norm": 0.041,
    "mate_lift": 3.71,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 20.06,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -4851,6 +5331,9 @@
    "last_share": 0.056,
    "share_norm": 0.032,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 27.9,
    "last_played": "2026-10-03"
@@ -4881,6 +5364,9 @@
    "last_share": 0.067,
    "share_norm": 0.07,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -4911,6 +5397,9 @@
    "last_share": 0.033,
    "share_norm": 0.06,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -4941,6 +5430,9 @@
    "last_share": 0.03,
    "share_norm": 0.031,
    "mate_lift": 4.72,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 26.38,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 23.8,
    "last_played": "2026-04-13"
@@ -4971,6 +5463,9 @@
    "last_share": 0.0,
    "share_norm": 0.07,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": true,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -5001,6 +5496,9 @@
    "last_share": 0.12,
    "share_norm": 0.102,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -5031,6 +5529,9 @@
    "last_share": 0.053,
    "share_norm": 0.04,
    "mate_lift": 3.57,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.1,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 23.8,
    "last_played": "2026-09-30"
@@ -5061,6 +5562,9 @@
    "last_share": 0.0,
    "share_norm": 0.052,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 23.6,
    "last_played": "2026-10-03"
@@ -5091,6 +5595,9 @@
    "last_share": 0.0,
    "share_norm": 0.038,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -5121,6 +5628,9 @@
    "last_share": 0.179,
    "share_norm": 0.071,
    "mate_lift": 3.2,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-15"
@@ -5151,6 +5661,9 @@
    "last_share": 0.042,
    "share_norm": 0.017,
    "mate_lift": 2.67,
+   "last_team_sog": 24.0,
+   "team_sog_norm": 27.1,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-14"
@@ -5181,6 +5694,9 @@
    "last_share": 0.0,
    "share_norm": 0.019,
    "mate_lift": 5.78,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.2,
    "last_played": "2026-04-15"
@@ -5211,6 +5727,9 @@
    "last_share": 0.034,
    "share_norm": 0.042,
    "mate_lift": 4.08,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 26.58,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 26.7,
    "last_played": "2026-02-04"
@@ -5241,6 +5760,9 @@
    "last_share": 0.0,
    "share_norm": 0.057,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-16"
@@ -5271,6 +5793,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 4.08,
+   "last_team_sog": 21.0,
+   "team_sog_norm": 26.52,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 9.3,
    "last_played": "2025-11-28"
@@ -5301,6 +5826,9 @@
    "last_share": 0.0,
    "share_norm": 0.059,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 13.1,
    "last_played": "2026-10-03"
@@ -5331,6 +5859,9 @@
    "last_share": 0.026,
    "share_norm": 0.047,
    "mate_lift": 4.08,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.45,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 22.7,
    "last_played": "2026-02-28"
@@ -5361,6 +5892,9 @@
    "last_share": 0.0,
    "share_norm": 0.061,
    "mate_lift": 3.71,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 20.06,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 22.7,
    "last_played": "2026-04-16"
@@ -5391,6 +5925,9 @@
    "last_share": 0.111,
    "share_norm": 0.05,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -5421,6 +5958,9 @@
    "last_share": 0.067,
    "share_norm": 0.023,
    "mate_lift": 2.22,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.2,
    "last_played": "2026-10-03"
@@ -5451,6 +5991,9 @@
    "last_share": 0.03,
    "share_norm": 0.045,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -5481,6 +6024,9 @@
    "last_share": 0.0,
    "share_norm": 0.072,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": true,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -5511,6 +6057,9 @@
    "last_share": 0.167,
    "share_norm": 0.052,
    "mate_lift": 1.52,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 14.7,
    "last_played": "2026-10-03"
@@ -5541,6 +6090,9 @@
    "last_share": 0.0,
    "share_norm": 0.059,
    "mate_lift": 2.68,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 27.92,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.1,
    "last_played": "2025-11-16"
@@ -5571,6 +6123,9 @@
    "last_share": 0.0,
    "share_norm": 0.042,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -5601,6 +6156,9 @@
    "last_share": 0.043,
    "share_norm": 0.051,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-14"
@@ -5631,6 +6189,9 @@
    "last_share": 0.091,
    "share_norm": 0.056,
    "mate_lift": 1.81,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 26.61,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-12"
@@ -5661,6 +6222,9 @@
    "last_share": 0.087,
    "share_norm": 0.047,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 27.6,
    "last_played": "2026-04-14"
@@ -5691,6 +6255,9 @@
    "last_share": 0.083,
    "share_norm": 0.058,
    "mate_lift": 2.59,
+   "last_team_sog": 24.0,
+   "team_sog_norm": 27.13,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-03-26"
@@ -5721,6 +6288,9 @@
    "last_share": 0.0,
    "share_norm": 0.034,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 20.0,
    "last_played": "2026-04-14"
@@ -5751,6 +6321,9 @@
    "last_share": 0.0,
    "share_norm": 0.049,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -5781,6 +6354,9 @@
    "last_share": 0.043,
    "share_norm": 0.053,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-04-14"
@@ -5811,6 +6387,9 @@
    "last_share": 0.15,
    "share_norm": 0.085,
    "mate_lift": 2.43,
+   "last_team_sog": 20.0,
+   "team_sog_norm": 19.31,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-01-11"
@@ -5841,6 +6420,9 @@
    "last_share": 0.033,
    "share_norm": 0.049,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 17.8,
    "last_played": "2026-10-03"
@@ -5871,6 +6453,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 3.57,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.1,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 28.6,
    "last_played": "2026-09-30"
@@ -5901,6 +6486,9 @@
    "last_share": 0.043,
    "share_norm": 0.043,
    "mate_lift": 2.56,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 19.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 10.6,
    "last_played": "2025-12-23"
@@ -5931,6 +6519,9 @@
    "last_share": 0.037,
    "share_norm": 0.037,
    "mate_lift": 2.11,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 27.41,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 7.1,
    "last_played": "2025-10-20"
@@ -5961,6 +6552,9 @@
    "last_share": 0.087,
    "share_norm": 0.076,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -5991,6 +6585,9 @@
    "last_share": 0.0,
    "share_norm": 0.028,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -6021,6 +6618,9 @@
    "last_share": 0.033,
    "share_norm": 0.037,
    "mate_lift": 3.4,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -6051,6 +6651,9 @@
    "last_share": 0.0,
    "share_norm": 0.04,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 19.7,
    "last_played": "2026-10-02"
@@ -6081,6 +6684,9 @@
    "last_share": 0.034,
    "share_norm": 0.086,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": true,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -6111,6 +6717,9 @@
    "last_share": 0.077,
    "share_norm": 0.044,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-04-16"
@@ -6141,6 +6750,9 @@
    "last_share": 0.0,
    "share_norm": 0.045,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 21.5,
    "last_played": "2026-04-14"
@@ -6171,6 +6783,9 @@
    "last_share": 0.04,
    "share_norm": 0.034,
    "mate_lift": 4.92,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -6201,6 +6816,9 @@
    "last_share": 0.032,
    "share_norm": 0.032,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 13.1,
    "last_played": "2026-04-15"
@@ -6231,6 +6849,9 @@
    "last_share": 0.13,
    "share_norm": 0.053,
    "mate_lift": 2.38,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.12,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 12.5,
    "last_played": "2026-04-14"
@@ -6261,6 +6882,9 @@
    "last_share": 0.037,
    "share_norm": 0.041,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -6291,6 +6915,9 @@
    "last_share": 0.056,
    "share_norm": 0.056,
    "mate_lift": 2.38,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 27.0,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.3,
    "last_played": "2026-10-03"
@@ -6321,6 +6948,9 @@
    "last_share": 0.0,
    "share_norm": 0.025,
    "mate_lift": 2.82,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 27.03,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 25.9,
    "last_played": "2026-03-21"
@@ -6351,6 +6981,9 @@
    "last_share": 0.033,
    "share_norm": 0.045,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 25.1,
    "last_played": "2026-10-03"
@@ -6381,6 +7014,9 @@
    "last_share": 0.04,
    "share_norm": 0.056,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-14"
@@ -6411,6 +7047,9 @@
    "last_share": 0.091,
    "share_norm": 0.046,
    "mate_lift": 1.81,
+   "last_team_sog": 22.0,
+   "team_sog_norm": 26.61,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 24.8,
    "last_played": "2026-04-12"
@@ -6441,6 +7080,9 @@
    "last_share": 0.037,
    "share_norm": 0.039,
    "mate_lift": 3.0,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 3,
    "games_used": 29.4,
    "last_played": "2026-10-03"
@@ -6471,6 +7113,9 @@
    "last_share": 0.033,
    "share_norm": 0.054,
    "mate_lift": 2.7,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.45,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-07"
@@ -6501,6 +7146,9 @@
    "last_share": 0.0,
    "share_norm": 0.038,
    "mate_lift": 3.35,
+   "last_team_sog": 27.0,
+   "team_sog_norm": 27.25,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 19.7,
    "last_played": "2026-01-28"
@@ -6531,6 +7179,9 @@
    "last_share": 0.0,
    "share_norm": 0.057,
    "mate_lift": 4.0,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.36,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.9,
    "last_played": "2025-11-16"
@@ -6561,6 +7212,9 @@
    "last_share": 0.03,
    "share_norm": 0.04,
    "mate_lift": 2.7,
+   "last_team_sog": 33.0,
+   "team_sog_norm": 27.08,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 24.7,
    "last_played": "2026-10-02"
@@ -6591,6 +7245,9 @@
    "last_share": 0.12,
    "share_norm": 0.024,
    "mate_lift": 4.89,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 20.14,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.0,
    "last_played": "2026-10-03"
@@ -6621,6 +7278,9 @@
    "last_share": 0.0,
    "share_norm": 0.034,
    "mate_lift": 4.18,
+   "last_team_sog": 32.0,
+   "team_sog_norm": 27.87,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 11.9,
    "last_played": "2025-11-22"
@@ -6651,6 +7311,9 @@
    "last_share": 0.067,
    "share_norm": 0.039,
    "mate_lift": 4.29,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 26.6,
    "last_played": "2026-10-03"
@@ -6681,6 +7344,9 @@
    "last_share": 0.032,
    "share_norm": 0.045,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.1,
    "last_played": "2026-04-15"
@@ -6711,6 +7377,9 @@
    "last_share": 0.053,
    "share_norm": 0.055,
    "mate_lift": 2.37,
+   "last_team_sog": 19.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.9,
    "last_played": "2026-04-11"
@@ -6741,6 +7410,9 @@
    "last_share": 0.025,
    "share_norm": 0.039,
    "mate_lift": 2.98,
+   "last_team_sog": 40.0,
+   "team_sog_norm": 28.3,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 24.5,
    "last_played": "2025-12-20"
@@ -6771,6 +7443,9 @@
    "last_share": 0.0,
    "share_norm": 0.068,
    "mate_lift": 2.32,
+   "last_team_sog": 23.0,
+   "team_sog_norm": 28.42,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 2.0,
    "last_played": "2026-01-28"
@@ -6801,6 +7476,9 @@
    "last_share": 0.0,
    "share_norm": 0.035,
    "mate_lift": 4.08,
+   "last_team_sog": 21.0,
+   "team_sog_norm": 26.52,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 13.6,
    "last_played": "2025-11-28"
@@ -6831,6 +7509,9 @@
    "last_share": 0.115,
    "share_norm": 0.073,
    "mate_lift": 3.62,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 26.59,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.4,
    "last_played": "2026-04-14"
@@ -6861,6 +7542,9 @@
    "last_share": 0.176,
    "share_norm": 0.046,
    "mate_lift": 2.56,
+   "last_team_sog": 17.0,
+   "team_sog_norm": 20.07,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.2,
    "last_played": "2026-04-15"
@@ -6891,6 +7575,9 @@
    "last_share": 0.0,
    "share_norm": 0.044,
    "mate_lift": 3.35,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 27.32,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 26.2,
    "last_played": "2026-01-17"
@@ -6921,6 +7608,9 @@
    "last_share": 0.08,
    "share_norm": 0.037,
    "mate_lift": 2.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.4,
    "last_played": "2026-10-02"
@@ -6951,6 +7641,9 @@
    "last_share": 0.071,
    "share_norm": 0.034,
    "mate_lift": 3.2,
+   "last_team_sog": 28.0,
+   "team_sog_norm": 26.4,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-15"
@@ -6981,6 +7674,9 @@
    "last_share": 0.094,
    "share_norm": 0.066,
    "mate_lift": 2.88,
+   "last_team_sog": 32.0,
+   "team_sog_norm": 28.45,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.9,
    "last_played": "2025-10-18"
@@ -7011,6 +7707,9 @@
    "last_share": 0.0,
    "share_norm": 0.032,
    "mate_lift": 3.71,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 28.13,
+   "squeezed": false,
    "gp_30d": 2,
    "games_used": 29.2,
    "last_played": "2026-10-03"
@@ -7041,6 +7740,9 @@
    "last_share": 0.0,
    "share_norm": 0.037,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.6,
    "last_played": "2026-04-15"
@@ -7071,6 +7773,9 @@
    "last_share": 0.0,
    "share_norm": 0.036,
    "mate_lift": 3.1,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.07,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 13.6,
    "last_played": "2026-04-04"
@@ -7101,6 +7806,9 @@
    "last_share": 0.0,
    "share_norm": 0.039,
    "mate_lift": 2.96,
+   "last_team_sog": 18.0,
+   "team_sog_norm": 18.55,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 14.7,
    "last_played": "2025-11-02"
@@ -7131,6 +7839,9 @@
    "last_share": 0.0,
    "share_norm": 0.048,
    "mate_lift": 3.47,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 27.09,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 12.5,
    "last_played": "2026-04-16"
@@ -7161,6 +7872,9 @@
    "last_share": 0.0,
    "share_norm": 0.051,
    "mate_lift": 3.31,
+   "last_team_sog": 14.0,
+   "team_sog_norm": 26.56,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 13.1,
    "last_played": "2025-11-26"
@@ -7191,6 +7905,9 @@
    "last_share": 0.04,
    "share_norm": 0.046,
    "mate_lift": 3.57,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 27.04,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 7.1,
    "last_played": "2026-04-14"
@@ -7221,6 +7938,9 @@
    "last_share": 0.042,
    "share_norm": 0.048,
    "mate_lift": 2.6,
+   "last_team_sog": 24.0,
+   "team_sog_norm": 27.1,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 5.5,
    "last_played": "2026-03-31"
@@ -7251,6 +7971,9 @@
    "last_share": 0.069,
    "share_norm": 0.04,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 19.3,
    "last_played": "2026-10-03"
@@ -7281,6 +8004,9 @@
    "last_share": 0.04,
    "share_norm": 0.03,
    "mate_lift": 2.83,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 28.4,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 29.3,
    "last_played": "2026-10-01"
@@ -7311,6 +8037,9 @@
    "last_share": 0.0,
    "share_norm": 0.035,
    "mate_lift": 3.4,
+   "last_team_sog": 26.0,
+   "team_sog_norm": 26.53,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-03-28"
@@ -7341,6 +8070,9 @@
    "last_share": 0.033,
    "share_norm": 0.033,
    "mate_lift": 2.95,
+   "last_team_sog": 30.0,
+   "team_sog_norm": 27.17,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 28.2,
    "last_played": "2026-03-05"
@@ -7371,6 +8103,9 @@
    "last_share": 0.032,
    "share_norm": 0.023,
    "mate_lift": 2.8,
+   "last_team_sog": 31.0,
+   "team_sog_norm": 28.39,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 19.0,
    "last_played": "2026-04-15"
@@ -7401,6 +8136,9 @@
    "last_share": 0.0,
    "share_norm": 0.029,
    "mate_lift": 2.05,
+   "last_team_sog": 29.0,
+   "team_sog_norm": 28.53,
+   "squeezed": false,
    "gp_30d": 1,
    "games_used": 11.3,
    "last_played": "2026-10-03"
@@ -7431,6 +8169,9 @@
    "last_share": 0.0,
    "share_norm": 0.02,
    "mate_lift": 2.66,
+   "last_team_sog": 25.0,
+   "team_sog_norm": 19.85,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.3,
    "last_played": "2026-03-21"
@@ -7461,6 +8202,9 @@
    "last_share": 0.053,
    "share_norm": 0.014,
    "mate_lift": 4.0,
+   "last_team_sog": 38.0,
+   "team_sog_norm": 28.5,
+   "squeezed": false,
    "gp_30d": 0,
    "games_used": 29.0,
    "last_played": "2026-04-15"
