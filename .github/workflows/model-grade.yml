@@ -54,15 +54,45 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: grade it on the cache
+      # Fifteen cases whose answers are known, pointed at the estimators
+      # below BEFORE they are pointed at real data. Among them: that the
+      # opponent factor adds nothing on a league where no team defends
+      # differently and recovers a real share of one where they do, that the
+      # Poisson tail function matches draws from a known rate, and - the one
+      # that matters most here - that the betting test CATCHES a model whose
+      # projections are 25% too high rather than printing it a happy ROI.
+      # If any of that fails, every number below is worthless and the job
+      # stops here.
+      - name: check the instruments
+        run: python validate.py --squeeze-self-test
+
+      - name: grade the RATE (projected onto actual ice time)
         run: |
           ARGS="--seasons ${{ inputs.seasons }}"
           if [ -n "${{ inputs.stat }}" ]; then ARGS="$ARGS --stat ${{ inputs.stat }}"; fi
-          python validate.py $ARGS | tee grade.txt
-          echo '## Model grade' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          cat grade.txt >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo 'The line that matters: "model beats a player own average by X%".' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          python validate.py $ARGS | tee rate.txt
+
+      # The one that decides whether an edge column is worth building. The
+      # rate grade above flatters the model by handing it the real minutes
+      # and ignoring the opponent and home factors entirely. This runs the
+      # WHOLE shipped number against a player's own average shots per game,
+      # and then tests whether its probabilities clear the -110 vig.
+      - name: grade the WHOLE projection, and test it against the vig
+        run: |
+          # The default is applied by BASH, not inside the expression:
+          # GitHub's ${{ }} has no ${VAR:-default} form, so writing
+          # ${{ inputs.stat:-sog }} either fails to parse or renders empty.
+          STAT="${{ inputs.stat }}"
+          python validate.py --full \
+            --seasons "${{ inputs.seasons }}" \
+            --stat "${STAT:-sog}" | tee full.txt
+          {
+            echo '## Model grade'
+            echo '### The rate alone, on actual ice time'
+            echo '```'; cat rate.txt; echo '```'
+            echo '### The whole shipped projection, and the betting test'
+            echo '```'; cat full.txt; echo '```'
+            echo 'Read the betting table, not the MAE table. MAE is nearly'
+            echo 'blind to the opponent factor; the claimed-versus-actual hit'
+            echo 'rate is not, and it is what a prop pays out on.'
+          } >> $GITHUB_STEP_SUMMARY
