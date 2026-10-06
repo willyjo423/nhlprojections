@@ -1,0 +1,59 @@
+# Run the squeezed-shooter study and print the answer in the log.
+#
+# No terminal needed: Actions tab -> "linemate study" -> "Run workflow".
+# It reads the cache already committed in data/ and downloads nothing, so it
+# finishes in well under a minute and cannot touch the published page.
+name: linemate study
+
+on:
+  workflow_dispatch:
+    inputs:
+      shooter_bar:
+        description: "only flag men averaging at least this many shots a game"
+        default: "1.8"
+      squeeze_drop:
+        description: "his night counts as thin at or below this fraction of his norm"
+        default: "0.5"
+      pie_floor:
+        description: "his team's total must be at least this fraction of its norm"
+        default: "0.8"
+      mate_lift:
+        description: "a team-mate must have shot at least this multiple of his norm"
+        default: "1.4"
+      seasons:
+        description: "cached seasons to read"
+        default: "2025,2026"
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # The instrument is checked against data whose answer is known BEFORE it
+      # is pointed at data whose answer is not. If it cannot find an effect
+      # that was deliberately put there, or finds one that was not, the number
+      # below means nothing and the job stops here.
+      - name: check the instrument
+        run: python linemate_study.py --self-test
+
+      - name: run it on the cache
+        run: |
+          python linemate_study.py \
+            --seasons "${{ inputs.seasons }}" \
+            --shooter-bar "${{ inputs.shooter_bar }}" \
+            --squeeze-drop "${{ inputs.squeeze_drop }}" \
+            --pie-floor "${{ inputs.pie_floor }}" \
+            --mate-lift "${{ inputs.mate_lift }}" \
+            | tee study.txt
+          echo '## Squeezed-shooter study' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat study.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
