@@ -1,0 +1,68 @@
+# Does the projection actually predict anything? The gate before building
+# anything on top of it.
+#
+# No terminal needed: Actions tab -> "model grade" -> "Run workflow".
+# Reads the cache already committed in data/ and cannot touch the published
+# page.
+#
+# WHAT TO READ IN THE OUTPUT
+# --------------------------
+# Three rows per stat, and only the comparison between them means anything:
+#
+#   league   every player gets his position's average rate. The floor. If
+#            nothing beats this, the stat is a position label with extra steps.
+#   own      the player's own simple career average. THIS is the number to
+#            beat, because it is what anyone could compute in a spreadsheet.
+#   model    the shipped estimator - shrunk, exponentially weighted.
+#
+# The last line of each block says how much `model` beats `own` by, as a
+# percentage of mean absolute error. For shots on goal:
+#
+#   clearly POSITIVE   the projection knows something a simple average does
+#                      not, and an edge column built on it is worth having.
+#   around ZERO        the shrinkage is costing about what it saves. An edge
+#                      column would be dressing up a career average.
+#   NEGATIVE           the shrinkage is actively hurting; fix the model before
+#                      building anything that consumes it.
+#
+# Nothing here is fitted, so there is nothing to overfit - every rate is built
+# from that player's EARLIER games only, and every stat is projected onto the
+# ACTUAL ice time of the game being graded so the rate is graded apart from
+# the deployment.
+name: model grade
+
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "cached seasons to read"
+        default: "2025,2026"
+      stat:
+        description: "one stat, or leave blank to grade all of them"
+        default: "sog"
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: grade it on the cache
+        run: |
+          ARGS="--seasons ${{ inputs.seasons }}"
+          if [ -n "${{ inputs.stat }}" ]; then ARGS="$ARGS --stat ${{ inputs.stat }}"; fi
+          python validate.py $ARGS | tee grade.txt
+          echo '## Model grade' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat grade.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo 'The line that matters: "model beats a player own average by X%".' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
