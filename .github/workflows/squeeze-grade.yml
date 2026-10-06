@@ -38,16 +38,18 @@ jobs:
       - run: pip install -r requirements.txt
 
       # The instrument is checked against data whose answer is known BEFORE
-      # it is pointed at data whose answer is not. Three cases: nothing there,
-      # a real rate cut, and a pure minutes cut. If it cannot tell the last
-      # two apart then the whole exercise is pointless, because telling them
-      # apart IS the exercise. The job stops here if it fails.
+      # it is pointed at data whose answer is not. Eight cases: nothing there,
+      # a real rate cut, a pure minutes cut, and the halflife sweep on data
+      # with no role changes, one permanent demotion, and churning deployment.
+      # If it cannot tell a cold shooter from a demoted one, or a real drift
+      # from noise, then the whole exercise is pointless - telling them apart
+      # IS the exercise. The job stops here if it fails.
       - name: check the instrument
         run: python validate.py --squeeze-self-test
 
       - name: grade it on the cache
         run: |
-          python validate.py --squeeze \
+          python validate.py --squeeze --toi-sweep \
             --seasons "${{ inputs.seasons }}" \
             --years "${{ inputs.years }}" \
             --stat "${{ inputs.stat }}" \
