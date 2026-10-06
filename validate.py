@@ -497,6 +497,132 @@ def _pois_ge(k: int, lam):
     return 1.0 - out
 
 
+def _nb_ge(k: int, mu, alpha: float):
+    """P(X >= k) for a negative binomial with mean `mu`, Var = mu + alpha*mu^2.
+
+    KEPT AS A DIAGNOSTIC, NOT USED AS THE CORRECTION. It was the obvious fix
+    for a tail that comes in high, and it does not work here: the dispersion
+    that gets fitted absorbs the MODEL's own prediction error as well as any
+    real overdispersion, which makes alpha large, and a negative binomial with
+    a large alpha piles mass onto ZERO. On a test slate that dropped P(2+)
+    below the Poisson and overcorrected an 13-point overclaim into an 11-point
+    underclaim. A correction whose shape is wrong is worse than none.
+    """
+    mu = np.asarray(mu, dtype=float)
+    if not np.isfinite(alpha) or alpha <= 0:
+        return _pois_ge(k, mu)
+    r = 1.0 / alpha
+    p = r / (r + mu)
+    term = np.power(p, r)                                      # P(0)
+    out = np.array(term, dtype=float)
+    for i in range(1, k):
+        term = term * (i + r - 1.0) / i * (1.0 - p)
+        out = out + term
+    return 1.0 - out
+
+
+def fit_dispersion(actual, mu, bins: int = 40) -> float:
+    """How much more spread out the counts are than a Poisson. A DIAGNOSTIC.
+
+    Method of moments, binned by the prediction. Within a bin,
+
+        Var(actual) = E[Var(actual | mu)] + Var(mu)
+                    = E[mu] + alpha * E[mu^2] + Var(mu)
+
+    so the Var(mu) term is subtracted before solving. `mu` is the MODEL's
+    estimate rather than the truth, so its error lands in alpha too - which is
+    exactly why this number is reported and not used to correct anything.
+    """
+    a = np.asarray(actual, dtype=float)
+    m = np.asarray(mu, dtype=float)
+    ok = np.isfinite(a) & np.isfinite(m) & (m > 0)
+    a, m = a[ok], m[ok]
+    if len(a) < 2000:
+        return 0.0
+    edges = np.unique(np.quantile(m, np.linspace(0, 1, bins + 1)))
+    idx = np.clip(np.digitize(m, edges[1:-1]), 0, len(edges) - 2)
+    num = den = 0.0
+    for b in range(len(edges) - 1):
+        sel = idx == b
+        n = int(sel.sum())
+        if n < 50:
+            continue
+        v = float(a[sel].var(ddof=1)) - float(m[sel].var(ddof=1))
+        mb, m2 = float(m[sel].mean()), float((m[sel] ** 2).mean())
+        if m2 <= 0:
+            continue
+        num += n * (v - mb) * m2
+        den += n * m2 * m2
+    return float(max(0.0, num / den)) if den > 0 else 0.0
+
+
+def fit_calibration(p, hit, bins: int = 20):
+    """Map the probability the page CLAIMS onto the one it DELIVERS.
+
+    This is the correction that ships, and it is deliberately assumption-free.
+    The parametric route - swapping the Poisson for a negative binomial - gets
+    the shape wrong, because the miss is not only overdispersion: shrinkage
+    compressing the top shooters is in there too, and the two do not share a
+    distribution. Rather than guess which, this measures the answer.
+
+    Claimed probabilities are put in quantile bins, the realised rate of each
+    is taken, and the result is forced to be non-decreasing by pooling
+    adjacent violators - a calibration curve that went DOWN where the model
+    said "more likely" would be fitting noise, and would also scramble any
+    ranking built on it.
+
+    Returns (x, y) for interpolation. Fit on one period, applied to another:
+    a curve fitted and tested on the same games closes any gap by
+    construction.
+    """
+    p = np.asarray(p, dtype=float)
+    h = np.asarray(hit, dtype=float)
+    ok = np.isfinite(p) & np.isfinite(h)
+    p, h = p[ok], h[ok]
+    if len(p) < 1000:
+        return None
+    edges = np.unique(np.quantile(p, np.linspace(0, 1, bins + 1)))
+    if len(edges) < 3:
+        return None
+    idx = np.clip(np.digitize(p, edges[1:-1]), 0, len(edges) - 2)
+    xs, ys, ns = [], [], []
+    for b in range(len(edges) - 1):
+        sel = idx == b
+        n = int(sel.sum())
+        if n < 100:
+            continue
+        xs.append(float(p[sel].mean()))
+        ys.append(float(h[sel].mean()))
+        ns.append(n)
+    if len(xs) < 3:
+        return None
+    # Pool adjacent violators, weighted by how many games are in each bin.
+    y = list(ys)
+    w = list(ns)
+    i = 0
+    while i < len(y) - 1:
+        if y[i] <= y[i + 1]:
+            i += 1
+            continue
+        tot = w[i] + w[i + 1]
+        y[i] = (y[i] * w[i] + y[i + 1] * w[i + 1]) / tot
+        w[i] = tot
+        del y[i + 1], w[i + 1]
+        xs = xs[:i + 1] + xs[i + 2:]
+        i = max(i - 1, 0)
+    return np.array(xs, dtype=float), np.clip(np.array(y, dtype=float), 0, 1)
+
+
+def apply_calibration(cal, p):
+    """The fitted curve, with flat ends. Extrapolating a calibration curve
+    past the probabilities it was fitted on is how a correction invents
+    confidence it never measured."""
+    if cal is None:
+        return np.asarray(p, dtype=float)
+    x, y = cal
+    return np.interp(np.asarray(p, dtype=float), x, y, left=y[0], right=y[-1])
+
+
 def walkforward_factors(hist: pd.DataFrame, stat: str,
                         grid_days: int = OPP_GRID_DAYS) -> pd.DataFrame:
     """The opponent and home-ice factors as they stood BEFORE each game.
@@ -652,18 +778,48 @@ def run_full(hist: pd.DataFrame, stat: str = "sog",
         rows[k] = np.asarray(v, dtype=float)
     out["rows"] = rows
 
+    # HOW MUCH MORE SPREAD OUT THAN A POISSON, fitted on the shipped number.
+    # Fitted on the FIRST HALF of the sample by date and applied to the whole
+    # of it, so the calibration it produces is not being graded on the games
+    # that chose it. A correction fitted and tested on the same rows would
+    # close any gap by construction and prove nothing.
+    shipped = np.asarray(preds["+ home (SHIPPED)"], dtype=float)
+    act = use[stat].to_numpy(dtype=float)
+    cut = use["date"].quantile(0.5)
+    early = (use["date"] <= cut).to_numpy()
+    out["alpha"] = fit_dispersion(act[early], shipped[early])
+    out["alpha_all"] = fit_dispersion(act, shipped)
+    out["alpha_n_fit"] = int(early.sum())
+
     # THE BETTING TEST. MAE is not what a prop pays out on.
     be = 0.5238                                    # the -110 break-even
     out["bets"] = []
+    out["bet_rows"] = list(BET_ROWS) + ["+ home, CALIBRATED"]
     for L in lines:
         k = int(np.ceil(L))
         row = {"line": L, "need": k}
-        for label in BET_ROWS:
-            lam = np.asarray(preds[label], dtype=float)
-            p = _pois_ge(k, lam)
-            hit = (use[stat].to_numpy(dtype=float) >= k)
-            ok = np.isfinite(p) & np.isfinite(use[stat].to_numpy(dtype=float))
-            take = ok & (p > be)
+        # The last entry re-prices the SAME predictions through the negative
+        # binomial, so any difference is the tail model and nothing else.
+        hit_all = act >= k
+        variants = [(lab, _pois_ge(k, np.asarray(preds[lab], dtype=float)))
+                    for lab in BET_ROWS]
+        # The SAME shipped probabilities, put through a curve fitted on the
+        # EARLIER half only. Any difference is the calibration and nothing
+        # else - same model, same games, same line.
+        p_ship = _pois_ge(k, shipped)
+        cal = fit_calibration(p_ship[early], hit_all[early])
+        variants.append(("+ home, CALIBRATED",
+                         apply_calibration(cal, p_ship)))
+        row["cal_points"] = 0 if cal is None else int(len(cal[0]))
+        for label, p in variants:
+            hit = hit_all
+            ok = np.isfinite(p) & np.isfinite(act)
+            # LATE GAMES ONLY for every row, not just the corrected one. The
+            # dispersion was fitted on the early half, so grading the Poisson
+            # rows on all the games and the corrected one on half of them
+            # would be comparing two different samples and calling the
+            # difference an improvement.
+            take = ok & (p > be) & ~early
             n = int(take.sum())
             if n < 200:
                 row[label] = {"n": n, "note": "too few"}
@@ -710,12 +866,24 @@ def report_full(res: dict, stat: str) -> None:
               "'rate x mins' and the shipped row IS the opponent and home "
               "factors.")
 
+    a = res.get("alpha", 0.0)
+    print(f"\n  DIAGNOSTIC ONLY - how much more spread out than a Poisson "
+          f"the counts are, with the model's own error folded in: "
+          f"alpha = {a:.4f} "
+          f"(fitted on the earlier half, {res.get('alpha_n_fit', 0):,} games; "
+          f"{res.get('alpha_all', 0.0):.4f} over all of them)")
+    if a > 0:
+        for mu in (2.0, 2.8, 3.5):
+            print(f"    at a {mu:.1f}-shot projection the variance is "
+                  f"{mu + a * mu * mu:.2f} rather than {mu:.2f}")
+
     print(f"\n  and the only test a prop pays out on: bet every game the model "
-          f"calls better than the -110 break-even (52.38%)")
+          f"calls better than the -110 break-even (52.38%), graded on the "
+          f"LATER half only")
     print(f"  {'line':>5s} {'model':>20s} {'bets':>7s} {'claims':>8s} "
           f"{'actual':>8s} {'gap':>8s} {'ROI':>8s}")
     for row in res["bets"]:
-        for label in BET_ROWS:
+        for label in res.get("bet_rows", BET_ROWS):
             g = row.get(label) or {}
             if g.get("note"):
                 print(f"  {row['line']:5.1f} {label:>20s} {g['n']:7d}   "
@@ -728,54 +896,72 @@ def report_full(res: dict, stat: str) -> None:
                   f"{100 * g['claimed']:7.2f}% {100 * g['realised']:7.2f}% "
                   f"{100 * gap:+7.2f}% {100 * g['roi']:+7.2f}%{flag}")
 
-    ship = [r.get("+ home (SHIPPED)") for r in res["bets"]]
-    ship = [g for g in ship if g and not g.get("note")]
     print()
-    if not ship:
-        print("  Not enough qualifying games to say anything.")
+    print("  IGNORE THE ROI COLUMN. It pays -110 on every pick, and a 65% "
+          "event is fairly priced near -190, so a positive number there is "
+          "the fake price and not an edge. It is printed only so a NEGATIVE "
+          "one is impossible to miss.")
+    print("  The two columns that mean something are CLAIMS against ACTUAL - "
+          "whether the probability is honest - and the hit rate of one model "
+          "against another at the SAME line.")
+
+    # Does the calibration close the gap the raw model leaves? PAIRED BY
+    # LINE: only the lines where BOTH rows had enough bets count, because
+    # averaging one model over three lines and the other over one would be
+    # comparing different slates and calling the difference an improvement.
+    pairs = []
+    for r in res["bets"]:
+        a_ = r.get("+ home (SHIPPED)")
+        b_ = r.get("+ home, CALIBRATED")
+        if not a_ or not b_ or a_.get("note") or b_.get("note"):
+            continue
+        pairs.append((r["line"],
+                      abs(a_["claimed"] - a_["realised"]),
+                      abs(b_["claimed"] - b_["realised"])))
+    print()
+    if not pairs:
+        print("  No line had enough bets under BOTH the raw and the "
+              "calibrated model, so the two cannot be compared here. That is "
+              "usually the calibration pushing probabilities the other way "
+              "across the threshold; widen the lines or the sample.")
         return
-    best = max(ship, key=lambda g: g["roi"])
-    if best["roi"] <= 0:
-        print("  At no standard line does the model clear the vig. Its "
-              "probabilities are not good enough to bet into -110, and an "
-              "edge column built on them would rank by its own error.")
-        print("  This does NOT mean no edge exists - it means the edge cannot "
-              "come from the projection as it stands. Fix the projection "
-              "first; a column cannot add information.")
+    po = float(np.mean([x[1] for x in pairs]))
+    cb = float(np.mean([x[2] for x in pairs]))
+    lines_txt = ", ".join(f"{x[0]:g}" for x in pairs)
+    print(f"  Average miss across the line(s) both could grade ({lines_txt}): "
+          f"as shipped {100 * po:.2f} points, calibrated {100 * cb:.2f}.")
+    print("  The curve was fitted on the EARLIER half of the seasons and "
+          "graded on the LATER half, so this is out of sample.")
+    if cb < po * 0.6:
+        print("  It holds up. Put the curve on the page: P(2+) and P(3+) can "
+              "then be read as the numbers they claim to be, and an edge "
+              "against a real line becomes meaningful.")
+    elif cb < po:
+        print("  It helps but does not close the gap, which means the miss "
+              "moves between seasons. Fit it per season, or over a shorter "
+              "window, before trusting a printed probability.")
     else:
-        print(f"  Best standard line is {best['n']:,} bets at "
-              f"{100 * best['roi']:+.2f}% ROI, claiming "
-              f"{100 * best['claimed']:.2f}% and hitting "
-              f"{100 * best['realised']:.2f}%.")
-        print("  That is against the STANDARD line, not a real one, so treat "
-              "it as whether the probabilities are honest rather than as a "
-              "backtest. If they are, real lines are worth pulling.")
+        print("  It does NOT hold up out of sample: the miss in the earlier "
+              "half is not the miss in the later half. Do not ship a curve "
+              "fitted this way - fix the projection instead, most likely the "
+              "shrinkage in model.PRIOR compressing the top shooters.")
 
 
 # ------------------------------------- is the ice-time halflife set too slow?
 TOI_HALFLIVES = [2.0, 3.0, 4.0, 6.0, 8.0, 12.0, 20.0]
 
 
-def sweep_toi(hist: pd.DataFrame, stat: str = "sog",
-              halflives=None) -> dict:
+def sweep_toi(hist: pd.DataFrame, stat: str = "sog", halflives=None) -> dict:
     """Does a faster ice-time halflife help, and what does it cost?
 
-    The squeeze grade found the whole effect sitting on PROJECTED minutes:
-    a recently-squeezed man plays fewer minutes than an eight-game halflife
-    expects. That is not a fact about squeezed players - it is a fact about
-    the halflife being slow after ANY role change, and demotions are only the
-    cases this flag happens to select.
-
-    So two numbers at every halflife, and they must both be printed:
+    Two numbers at every halflife, and both must be printed:
 
       TOI MAE        every graded game. Making the projection twitchier helps
-                     the handful of players whose role just changed and hurts
-                     everyone whose role did not.
-      flagged gap    the squeeze subset's deficit on projected minutes. This
-                     is the thing a faster halflife is supposed to close.
+                     the handful whose role just changed and hurts everyone
+                     whose role did not.
+      flagged gap    the squeeze subset's deficit on projected minutes.
 
-    A halflife that closes the gap while raising MAE is a trade, not a fix,
-    and reporting only the first number is how a model gets worse on purpose.
+    A halflife that closes the gap while raising MAE is a trade, not a fix.
     The MAE comparison is PAIRED - the same games at every halflife - because
     comparing two unpaired averages over 150,000 rows would make differences
     far too small to act on look decisive.
@@ -861,31 +1047,28 @@ def report_sweep(res: dict) -> None:
               f"is clear of its own noise.")
         print(f"    At {b['halflife']:g} the flagged gap moves "
               f"{cur['gap']:+.3f} -> {b['gap']:+.3f} shots.")
-    # DOES THE DEFICIT RESPOND TO THE HALFLIFE AT ALL? This is the question
-    # the sweep exists to answer, and it has to be asked before the trade is
-    # discussed - a trade between two things is meaningless if one of them
-    # does not move. Measured against the gap's OWN interval width, because
-    # "0.005 shots" means nothing without knowing what the noise is.
+
+    # DOES THE DEFICIT RESPOND TO THE HALFLIFE AT ALL? A trade between two
+    # things is meaningless if one of them does not move. Measured against the
+    # gap's OWN interval width, because "0.005 shots" means nothing without
+    # knowing what the noise is.
     gaps = [r["gap"] for r in rows if np.isfinite(r["gap"])]
     width = cur["gap_hi"] - cur["gap_lo"]
     spread = (max(gaps) - min(gaps)) if gaps else float("nan")
+    flat = False
     if np.isfinite(spread) and np.isfinite(width) and width > 0:
         print(f"  Across halflives from {min(r['halflife'] for r in rows):g} "
               f"to {max(r['halflife'] for r in rows):g} the flagged deficit "
               f"moves {spread:.3f} shots, against an interval "
               f"{width:.3f} wide on the shipped value.")
         if spread < 0.5 * width:
+            flat = True
             print("  So the deficit DOES NOT RESPOND to the halflife. It is "
                   "not a constant that is set too slow: those minutes are "
                   "being lost to news the model does not have - a scratch, a "
                   "demotion decided this morning, something he is playing "
                   "through. No value of this constant recovers information "
                   "that is not in the history.")
-            flat = True
-        else:
-            flat = False
-    else:
-        flat = False
     if not flat and tight["halflife"] != best["halflife"]:
         print(f"  The halflife that closes the flagged gap most "
               f"({tight['halflife']:g}, gap {tight['gap']:+.3f}) is NOT the "
@@ -899,6 +1082,7 @@ def report_sweep(res: dict) -> None:
 
 
 # --------------------------------------------- checking the instrument first
+
 def _squeeze_synthetic(n_players=260, n_games=90, seed=4, n_teams=26):
     """A league with no squeeze effect in it at all.
 
@@ -1190,6 +1374,72 @@ def squeeze_self_test() -> int:
               f"{str(want_flag).lower()}", overclaims == want_flag,
               f"claims {100*claimed:.2f}%, hits {100*realised:.2f}% "
               f"over {int(take.sum()):,} bets")
+
+    # 16-19. The overdispersion machinery. A dispersion fit that reports a
+    #        number on Poisson data would invent a correction the page does
+    #        not need; one that cannot recover an injected value would leave
+    #        a real miss uncorrected. Both directions, then the tail function
+    #        it feeds, then whether it actually fixes calibration.
+    rng4 = np.random.default_rng(9)
+    mu = rng4.uniform(1.0, 4.0, 120_000)
+    pois = rng4.poisson(mu).astype(float)
+    a0 = fit_dispersion(pois, mu)
+    check("on Poisson counts the dispersion fit reports ~zero", a0 < 0.02,
+          f"alpha = {a0:.4f}")
+
+    TRUE_A = 0.30
+    # A negative binomial with this mean and dispersion, drawn the standard
+    # way: a gamma-mixed Poisson.
+    shape = 1.0 / TRUE_A
+    over = rng4.poisson(rng4.gamma(shape, mu / shape)).astype(float)
+    a1 = fit_dispersion(over, mu)
+    check(f"it recovers an injected dispersion of {TRUE_A}",
+          abs(a1 - TRUE_A) < 0.06, f"alpha = {a1:.4f}")
+
+    worst_nb = 0.0
+    for kk in (2, 3, 4):
+        emp = float((over >= kk).mean())
+        got = float(np.mean(_nb_ge(kk, mu, a1)))
+        worst_nb = max(worst_nb, abs(got - emp))
+    check("the negative-binomial tail matches those draws",
+          worst_nb < 0.01, f"worst error {worst_nb:.5f} at k 2-4")
+
+    # 20-22. The CALIBRATION CURVE, which is what actually ships. It is fitted
+    #        on one half and graded on the other, exactly as run_full does, so
+    #        a curve that only works on its own fitting data fails here.
+    kk = 3
+    half = np.zeros(len(mu), dtype=bool)
+    half[: len(mu) // 2] = True                      # the "earlier" half
+    p_po = _pois_ge(kk, mu)
+    hit_o = (over >= kk).astype(float)
+
+    cal = fit_calibration(p_po[half], hit_o[half])
+    check("the calibration curve is monotone and has points to interpolate",
+          cal is not None and len(cal[0]) >= 3
+          and bool(np.all(np.diff(cal[1]) >= -1e-9)),
+          f"{0 if cal is None else len(cal[0])} points, non-decreasing")
+
+    p_cal = apply_calibration(cal, p_po)
+    tp, tc = (p_po > 0.5238) & ~half, (p_cal > 0.5238) & ~half
+    miss_po = abs(p_po[tp].mean() - hit_o[tp].mean())
+    miss_cal = abs(p_cal[tc].mean() - hit_o[tc].mean())
+    check("it fixes a real miss OUT OF SAMPLE", miss_cal < miss_po * 0.5,
+          f"raw off by {100*miss_po:.2f} points, calibrated off by "
+          f"{100*miss_cal:.2f}")
+
+    # And it must not invent a correction where none is needed: on counts that
+    # really are Poisson, the curve has to leave an honest model alone.
+    p_ok = _pois_ge(kk, mu)
+    hit_p = (pois >= kk).astype(float)
+    cal_ok = fit_calibration(p_ok[half], hit_p[half])
+    p_ok_c = apply_calibration(cal_ok, p_ok)
+    t0, t1 = (p_ok > 0.5238) & ~half, (p_ok_c > 0.5238) & ~half
+    m0 = abs(p_ok[t0].mean() - hit_p[t0].mean())
+    m1 = abs(p_ok_c[t1].mean() - hit_p[t1].mean())
+    check("and it leaves an already-honest model alone",
+          m1 < max(0.01, m0 + 0.005),
+          f"honest model was off by {100*m0:.2f} points, "
+          f"{100*m1:.2f} after calibration")
 
     print(f"\n{'all checks passed' if not bad else str(bad) + ' CHECK(S) FAILED'}")
     return 1 if bad else 0
