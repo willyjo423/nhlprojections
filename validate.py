@@ -44,8 +44,23 @@ Only the actual-ice-time number is left to correct.
 
     python validate.py
     python validate.py --stat goals --xg-sweep
+MEASURED, on 170,139 player-games and 13,191 flagged ones: the rate effect is
+-0.018 shots with an interval of [-0.048, +0.013], which crosses zero, while
+the projected-minutes effect is -0.054 [-0.084, -0.022]. So the flag carries
+NOTHING about how well a man shoots, and all of what little is there is the
+ice-time projection being late. There is no squeeze adjustment to build.
+
+`--toi-sweep` follows that one step further, because the lateness is not a
+fact about squeezed players - it is a fact about HALFLIFE_TOI, and a demotion
+is only the case this flag happens to select. It sweeps the halflife and
+prints BOTH the overall ice-time error and the flagged subset's deficit, so a
+change that helps recently-demoted players by making every other projection
+twitchier shows up as the trade it is.
+
+    python validate.py
+    python validate.py --stat goals --xg-sweep
     python validate.py --squeeze-self-test     # check it first, no download
-    python validate.py --squeeze               # then point it at the cache
+    python validate.py --squeeze --toi-sweep   # then point it at the cache
 """
 from __future__ import annotations
 
@@ -179,7 +194,33 @@ def report(name: str, res: dict) -> None:
               f"{100 * (base - mod) / base:+.1f}% of MAE")
 
 
-def run_toi(hist: pd.DataFrame) -> dict:
+def project_toi(hist: pd.DataFrame, halflife: float | None = None) -> pd.Series:
+    """The ice time the model would project for each game, from EARLIER games.
+
+    One definition, used by `run_toi`, by `run_squeeze` and by the halflife
+    sweep. It used to be written out twice - once here and once inside the
+    squeeze grader - and two copies of an estimator is how a sweep ends up
+    tuning a constant against something that does not ship.
+    """
+    hl = M.HALFLIFE_TOI if halflife is None else float(halflife)
+    h = hist.sort_values(["player_id", "date"])
+    g = h.groupby("player_id")
+    ew = g["toi"].transform(
+        lambda s: s.fillna(0).ewm(halflife=hl).mean().shift(1))
+    n = g.cumcount()
+    grp = h["position"].map(M.group_of)
+    lg = h.groupby(grp)["toi"].mean()
+    r = 0.5 ** (1.0 / hl)
+    wsum = (1.0 - r ** n.clip(lower=1)) / (1.0 - r)
+    prior = grp.map(lg).fillna(14.0)
+    # SHRUNK, the way model.py shrinks it. Grading the bare exponential
+    # average would flatter an estimator that does not ship - the same
+    # mistake this file used to make for every other stat.
+    return ((ew.fillna(0) * wsum + M.PRIOR_TOI * prior)
+            / (wsum + M.PRIOR_TOI)).reindex(hist.index)
+
+
+def run_toi(hist: pd.DataFrame, halflife: float | None = None) -> dict:
     """Ice time graded on its own terms.
 
     It was previously in the stat list and then skipped by a `continue`, so
@@ -189,26 +230,18 @@ def run_toi(hist: pd.DataFrame) -> dict:
     """
     h = hist.sort_values(["player_id", "date"]).copy()
     g = h.groupby("player_id")
-    h["_ew"] = g["toi"].transform(
-        lambda s: s.fillna(0).ewm(halflife=M.HALFLIFE_TOI).mean().shift(1))
     h["_own"] = g["toi"].transform(
         lambda s: s.fillna(0).expanding().mean().shift(1))
     h["_n"] = g.cumcount()
     h["grp"] = h["position"].map(M.group_of)
+    h["_proj"] = project_toi(h, halflife)
     lg = h.groupby("grp")["toi"].mean()
     use = h[(h["_n"] >= MIN_PRIOR_GAMES) & (h["toi"].fillna(0) > 0)].copy()
-    # SHRUNK, the way model.py shrinks it. Grading the bare exponential
-    # average would flatter an estimator that does not ship - the same
-    # mistake this file used to make for every other stat.
-    r = 0.5 ** (1.0 / M.HALFLIFE_TOI)
-    wsum = (1.0 - r ** use["_n"].clip(lower=1)) / (1.0 - r)
     prior = use["grp"].map(lg).fillna(14.0)
-    shrunk = ((use["_ew"].fillna(0) * wsum + M.PRIOR_TOI * prior)
-              / (wsum + M.PRIOR_TOI))
     return {
         "league": grade(use["toi"], prior),
         "own": grade(use["toi"], use["_own"]),
-        "model": grade(use["toi"], shrunk),
+        "model": grade(use["toi"], use["_proj"]),
     }
 
 
@@ -220,8 +253,27 @@ def _boot(a, b, n=2000, seed=5):
     return float(np.percentile(d, 2.5)), float(np.percentile(d, 97.5))
 
 
+def squeeze_flags(hist: pd.DataFrame, stat: str = "sog") -> pd.DataFrame:
+    """Last game's flag, per player-game. Computed ONCE, because the sweep
+    calls the grader a dozen times and the flag does not depend on the
+    halflife being swept."""
+    import linemate_study as LS
+
+    # The flag for each game, then carried FORWARD one game, so a row says
+    # "the game before this one was flagged" - which is the thing that is
+    # supposed to predict this one.
+    panel = LS.build_panel(hist[["player_id", "team", "game_id", "date",
+                                 stat]].rename(columns={stat: "sog"}))
+    panel = panel.sort_values(["player_id", "date"])
+    g = panel.groupby("player_id", sort=False)
+    panel["prev_sq"] = g["squeezed"].shift(1)
+    panel["prev_el"] = g["eligible"].shift(1)
+    return panel[["player_id", "game_id", "prev_sq", "prev_el"]]
+
+
 def run_squeeze(hist: pd.DataFrame, stat: str = "sog",
-                flags: pd.DataFrame | None = None) -> dict:
+                flags: pd.DataFrame | None = None,
+                toi_halflife: float | None = None) -> dict:
     """How much of the squeeze effect the SHIPPED model already catches.
 
     `linemate_study.py` measured a flagged player shooting 0.109 fewer shots
@@ -257,18 +309,7 @@ def run_squeeze(hist: pd.DataFrame, stat: str = "sog",
         return {}
 
     if flags is None:
-        import linemate_study as LS
-
-        # The flag for each game, then carried FORWARD one game, so a row says
-        # "the game before this one was flagged" - which is the thing that is
-        # supposed to predict this one.
-        panel = LS.build_panel(hist[["player_id", "team", "game_id", "date",
-                                     stat]].rename(columns={stat: "sog"}))
-        panel = panel.sort_values(["player_id", "date"])
-        g = panel.groupby("player_id", sort=False)
-        panel["prev_sq"] = g["squeezed"].shift(1)
-        panel["prev_el"] = g["eligible"].shift(1)
-        flags = panel[["player_id", "game_id", "prev_sq", "prev_el"]]
+        flags = squeeze_flags(hist, stat)
     flags = flags.drop_duplicates(["player_id", "game_id"])
 
     # The model's own rate, from earlier games only - the same construction
@@ -295,20 +336,10 @@ def run_squeeze(hist: pd.DataFrame, stat: str = "sog",
                      + prior_rate[use.index] * M.PRIOR[stat])
                     / (games + M.PRIOR[stat]))
 
-    # The ice time the model would have projected for this game, built the way
-    # model.py builds it and from earlier games only.
-    ht = hist.sort_values(["player_id", "date"]).copy()
-    gt = ht.groupby("player_id")
-    ht["_ew_toi"] = gt["toi"].transform(
-        lambda s: s.fillna(0).ewm(halflife=M.HALFLIFE_TOI).mean().shift(1))
-    ht["_n_toi"] = gt.cumcount()
-    ht["grp"] = ht["position"].map(M.group_of)
-    lg = ht.groupby("grp")["toi"].mean()
-    rt = 0.5 ** (1.0 / M.HALFLIFE_TOI)
-    wt = (1.0 - rt ** ht["_n_toi"].clip(lower=1)) / (1.0 - rt)
-    ht["_proj_toi"] = ((ht["_ew_toi"].fillna(0) * wt
-                        + M.PRIOR_TOI * ht["grp"].map(lg).fillna(14.0))
-                       / (wt + M.PRIOR_TOI))
+    # The ice time the model would have projected for this game, from earlier
+    # games only - the SAME function `run_toi` is graded on.
+    ht = hist[["player_id", "game_id"]].copy()
+    ht["_proj_toi"] = project_toi(hist, toi_halflife)
     # `validate="m:1"` is the point of these two lines: it raises rather than
     # quietly duplicating rows if a (player, game) key is not unique on the
     # right. A grading script that reshapes its own sample is worse than none.
@@ -409,6 +440,127 @@ def report_squeeze(res: dict, stat: str) -> None:
         print(f"  Of the {abs(prj):.3f} the page would miss, deployment "
               f"recovers about {share:.0f}%; {abs(act):.3f} is genuinely "
               f"left to correct.")
+
+
+# ------------------------------------- is the ice-time halflife set too slow?
+TOI_HALFLIVES = [2.0, 3.0, 4.0, 6.0, 8.0, 12.0, 20.0]
+
+
+def sweep_toi(hist: pd.DataFrame, stat: str = "sog",
+              halflives=None) -> dict:
+    """Does a faster ice-time halflife help, and what does it cost?
+
+    The squeeze grade found the whole effect sitting on PROJECTED minutes:
+    a recently-squeezed man plays fewer minutes than an eight-game halflife
+    expects. That is not a fact about squeezed players - it is a fact about
+    the halflife being slow after ANY role change, and demotions are only the
+    cases this flag happens to select.
+
+    So two numbers at every halflife, and they must both be printed:
+
+      TOI MAE        every graded game. Making the projection twitchier helps
+                     the handful of players whose role just changed and hurts
+                     everyone whose role did not.
+      flagged gap    the squeeze subset's deficit on projected minutes. This
+                     is the thing a faster halflife is supposed to close.
+
+    A halflife that closes the gap while raising MAE is a trade, not a fix,
+    and reporting only the first number is how a model gets worse on purpose.
+    The MAE comparison is PAIRED - the same games at every halflife - because
+    comparing two unpaired averages over 150,000 rows would make differences
+    far too small to act on look decisive.
+    """
+    hls = list(TOI_HALFLIVES if halflives is None else halflives)
+    shipped = float(M.HALFLIFE_TOI)
+    if shipped not in hls:
+        hls.append(shipped)
+    hls = sorted(set(hls))
+
+    flags = squeeze_flags(hist, stat)            # once; it does not move
+    h = hist.sort_values(["player_id", "date"]).copy()
+    h["_n"] = h.groupby("player_id").cumcount()
+    mask = ((h["_n"] >= MIN_PRIOR_GAMES) & (h["toi"].fillna(0) > 0)).to_numpy()
+
+    rows, errs = [], {}
+    for hl in hls:
+        p = project_toi(h, hl).to_numpy(dtype=float)
+        a = h["toi"].to_numpy(dtype=float)
+        ok = mask & np.isfinite(p) & np.isfinite(a)
+        errs[hl] = np.where(ok, np.abs(a - p), np.nan)
+        sq = run_squeeze(h, stat, flags=flags, toi_halflife=hl)
+        rows.append({
+            "halflife": hl,
+            "mae": float(np.nanmean(errs[hl])),
+            "n": int(np.isfinite(errs[hl]).sum()),
+            "gap": sq.get("on_projected_toi", {}).get("effect", float("nan")),
+            "gap_lo": sq.get("on_projected_toi", {}).get("lo", float("nan")),
+            "gap_hi": sq.get("on_projected_toi", {}).get("hi", float("nan")),
+            "rate": sq.get("on_actual_toi", {}).get("effect", float("nan")),
+        })
+
+    # Paired against the shipped halflife, on the games both could grade.
+    base = errs[shipped]
+    for r in rows:
+        d = errs[r["halflife"]] - base
+        d = d[np.isfinite(d)]
+        if not len(d) or r["halflife"] == shipped:
+            r["delta"], r["delta_se"] = 0.0, 0.0
+            continue
+        r["delta"] = float(d.mean())
+        r["delta_se"] = float(d.std(ddof=1) / np.sqrt(len(d)))
+    return {"shipped": shipped, "rows": rows}
+
+
+def report_sweep(res: dict) -> None:
+    if not res:
+        return
+    rows, shipped = res["rows"], res["shipped"]
+    print(f"\nice-time halflife sweep (model.py ships {shipped:g})")
+    print(f"  {'halflife':>9s} {'TOI MAE':>9s} {'vs shipped':>22s} "
+          f"{'flagged gap on proj mins':>28s}")
+    for r in rows:
+        tag = "  <- shipped" if r["halflife"] == shipped else ""
+        if r["halflife"] == shipped:
+            cmp_ = f"{'':>22s}"
+        else:
+            lo = r["delta"] - 1.96 * r["delta_se"]
+            hi = r["delta"] + 1.96 * r["delta_se"]
+            cmp_ = f"{r['delta']:+8.4f} [{lo:+.4f},{hi:+.4f}]"
+        print(f"  {r['halflife']:9.1f} {r['mae']:9.4f} {cmp_:>22s} "
+              f"  {r['gap']:+8.3f} [{r['gap_lo']:+.3f},{r['gap_hi']:+.3f}]"
+              f"{tag}")
+
+    best = min(rows, key=lambda r: r["mae"])
+    tight = min(rows, key=lambda r: abs(r["gap"]) if np.isfinite(r["gap"])
+                else np.inf)
+    cur = next(r for r in rows if r["halflife"] == shipped)
+    print()
+    # A difference smaller than twice its own standard error is not a
+    # difference. Saying "lowest MAE" without that check would recommend a
+    # change on noise, which is the whole reason the sweep is paired.
+    better = [r for r in rows if r["halflife"] != shipped
+              and r["delta"] + 1.96 * r["delta_se"] < 0]
+    if not better:
+        print(f"  No halflife beats {shipped:g} on ice-time error by more "
+              f"than its own noise. LEAVE model.HALFLIFE_TOI ALONE.")
+    else:
+        b = min(better, key=lambda r: r["delta"])
+        print(f"  {b['halflife']:g} lowers ice-time error by "
+              f"{abs(b['delta']):.4f} minutes a game "
+              f"({100 * abs(b['delta']) / cur['mae']:.2f}% of MAE), and that "
+              f"is clear of its own noise.")
+        print(f"    At {b['halflife']:g} the flagged gap moves "
+              f"{cur['gap']:+.3f} -> {b['gap']:+.3f} shots.")
+    if tight["halflife"] != best["halflife"]:
+        print(f"  The halflife that closes the flagged gap most "
+              f"({tight['halflife']:g}, gap {tight['gap']:+.3f}) is NOT the "
+              f"one with the lowest overall error ({best['halflife']:g}). "
+              f"That is a trade: it would help recently-demoted players by "
+              f"making every other projection twitchier.")
+    worth = abs(cur["gap"]) * 1.5
+    print(f"  For scale: the gap as shipped is {abs(cur['gap']):.3f} shots, "
+          f"or {worth:.3f} DK points. Nothing in this table is worth a "
+          f"change that costs accuracy anywhere else.")
 
 
 # --------------------------------------------- checking the instrument first
@@ -525,6 +677,56 @@ def squeeze_self_test() -> int:
     check("the same cut DOES show up on projected minutes", p["hi"] < 0,
           f"{p['effect']:+.3f} [{p['lo']:+.3f}, {p['hi']:+.3f}]")
 
+    # 4 and 5. The halflife sweep, which has a known answer in both
+    #          directions. On data where nobody's role ever changes, chasing
+    #          recent minutes can only chase noise, so a SLOW halflife must
+    #          win. Put a real step change in and a FAST one must win. A
+    #          sweep that cannot tell those apart would happily recommend
+    #          making the model twitchier to fit noise.
+    hls = [2.0, 8.0, 20.0]
+    flat = _squeeze_synthetic(n_players=140, n_games=80, seed=31)
+    r = sweep_toi(flat, "sog", halflives=hls)
+    won = min(r["rows"], key=lambda x: x["mae"])["halflife"]
+    check("with no role changes, a SLOW halflife wins", won == max(hls),
+          f"lowest error at {won:g}")
+
+    # ONE demotion, mid-career, permanent. My first draft of this asserted a
+    # fast halflife would win and it failed - correctly. A single step in an
+    # eighty-game career leaves roughly nine games in ten flat, and a fast
+    # halflife loses on every one of those to buy a quicker reaction on a
+    # handful. The assertion was wrong, not the sweep, so the right answer is
+    # now the one being checked. This is exactly the shipped situation: a
+    # squeezed man got demoted ONCE, and speeding the whole model up to catch
+    # it sooner is not a trade worth making.
+    stepped = flat.copy()
+    n = stepped.groupby("player_id").cumcount().to_numpy()
+    hit = (stepped["player_id"].to_numpy() % 2 == 0) & (n >= 40)
+    stepped.loc[hit, "toi"] = stepped.loc[hit, "toi"] * 0.25
+    stepped.loc[hit, "sog"] = np.random.default_rng(5).poisson(
+        stepped.loc[hit, "sog"].to_numpy() * 0.25).astype(float)
+    r = sweep_toi(stepped, "sog", halflives=hls)
+    won = min(r["rows"], key=lambda x: x["mae"])["halflife"]
+    check("ONE permanent demotion does NOT justify a fast halflife",
+          won != min(hls), f"lowest error at {won:g}")
+
+    # Deployment that actually churns: a new role every six games or so. NOW
+    # a fast halflife must win, and if it does not the sweep is blind to the
+    # only thing that would justify changing the constant.
+    churn = flat.copy()
+    rng = np.random.default_rng(41)
+    pid = churn["player_id"].to_numpy()
+    blk = pid * 1000 + (n // 6)
+    lvl = pd.Series(blk).map(
+        pd.Series(rng.uniform(0.35, 1.6, len(np.unique(blk))),
+                  index=np.unique(blk))).to_numpy()
+    churn["toi"] = np.clip(churn["toi"].to_numpy() * lvl, 3.0, 26.0)
+    churn["sog"] = rng.poisson(
+        churn["sog"].to_numpy() * lvl).astype(float)
+    r = sweep_toi(churn, "sog", halflives=hls)
+    won = min(r["rows"], key=lambda x: x["mae"])["halflife"]
+    check("when deployment churns, a FAST halflife wins", won == min(hls),
+          f"lowest error at {won:g}")
+
     print(f"\n{'all checks passed' if not bad else str(bad) + ' CHECK(S) FAILED'}")
     return 1 if bad else 0
 
@@ -542,6 +744,10 @@ def main() -> int:
     ap.add_argument("--squeeze-self-test", action="store_true",
                     help="check the squeeze estimator against synthetic data "
                          "whose answer is known, and download nothing")
+    ap.add_argument("--toi-sweep", action="store_true",
+                    help="sweep the ice-time halflife and print BOTH the "
+                         "overall error and the squeeze subset's deficit, so "
+                         "a trade cannot pass itself off as a fix")
     ap.add_argument("--years", type=float, default=4.0,
                     help="how far back to read, matching linemate_study.py so "
                          "the two numbers are measured on the same games")
@@ -552,7 +758,7 @@ def main() -> int:
 
     seasons = [int(s) for s in a.seasons.split(",") if s.strip()]
 
-    if a.squeeze:
+    if a.squeeze or a.toi_sweep:
         # Loaded with the SAME window the study used. Grading one sample and
         # comparing it to a number measured on another is how a difference in
         # the data gets reported as a difference in the model.
@@ -562,7 +768,10 @@ def main() -> int:
         print(f"{len(hist):,} player-games, "
               f"{hist['player_id'].nunique():,} players, "
               f"{hist['date'].min().date()} to {hist['date'].max().date()}")
-        report_squeeze(run_squeeze(hist, stat), stat)
+        if a.squeeze:
+            report_squeeze(run_squeeze(hist, stat), stat)
+        if a.toi_sweep:
+            report_sweep(sweep_toi(hist, stat))
         return 0
 
     hist = FETCH.load(seasons, "skaters")
