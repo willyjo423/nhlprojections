@@ -1,0 +1,58 @@
+# Grade the squeeze flag against the SHIPPED model, not against a baseline.
+#
+# No terminal needed: Actions tab -> "squeeze grade" -> "Run workflow".
+# It reads the cache already committed in data/ and cannot touch the
+# published page.
+#
+# linemate_study.py said a flagged shooter takes 0.109 fewer shots next game
+# than a crude baseline. This answers the only question that followed from
+# that: how much of it does the real projection ALREADY catch, because it
+# models ice time separately? The answer decides whether anything needs
+# changing at all.
+name: squeeze grade
+
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "cached seasons to read"
+        default: "2025,2026"
+      years:
+        description: "how far back to read (matches the study, so the two numbers are comparable)"
+        default: "4"
+      stat:
+        description: "which stat to grade"
+        default: "sog"
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # The instrument is checked against data whose answer is known BEFORE
+      # it is pointed at data whose answer is not. Three cases: nothing there,
+      # a real rate cut, and a pure minutes cut. If it cannot tell the last
+      # two apart then the whole exercise is pointless, because telling them
+      # apart IS the exercise. The job stops here if it fails.
+      - name: check the instrument
+        run: python validate.py --squeeze-self-test
+
+      - name: grade it on the cache
+        run: |
+          python validate.py --squeeze \
+            --seasons "${{ inputs.seasons }}" \
+            --years "${{ inputs.years }}" \
+            --stat "${{ inputs.stat }}" \
+            | tee grade.txt
+          echo '## Squeeze, graded against the shipped model' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat grade.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
