@@ -79,9 +79,12 @@ jobs:
       # and then tests whether its probabilities clear the -110 vig.
       - name: grade the WHOLE projection, and test it against the vig
         run: |
-          # The default is applied by BASH, not inside the expression:
-          # GitHub's ${{ }} has no ${VAR:-default} form, so writing
-          # ${{ inputs.stat:-sog }} either fails to parse or renders empty.
+          # The default is applied by BASH, on the next two lines, and NOT
+          # inside a GitHub expression. GitHub has no shell-style default
+          # form, and - this is the part that bit - it parses its expression
+          # syntax everywhere in the file INCLUDING inside shell comments, so
+          # a comment that merely quoted the broken form was itself a parse
+          # error. Do not write that syntax here even to explain it.
           STAT="${{ inputs.stat }}"
           python validate.py --full \
             --seasons "${{ inputs.seasons }}" \
