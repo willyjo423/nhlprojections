@@ -869,6 +869,25 @@ def test_assist_only_reaches_the_payload():
        "and the CSV header carries it, so a spreadsheet gets it too")
 
 
+def test_repair_names():
+    h = pd.DataFrame({
+        "player_id": [1, 1, 1, 2, 2, 3],
+        "name": ["Tim Stutzle", "Tim Sttzle", "Tim Sttzle",
+                 "Chris Tanev", "Christopher Tanev", "Connor McDavid"],
+        "date": pd.to_datetime(["2022-01-01", "2023-01-01", "2026-11-01",
+                                "2022-01-01", "2026-11-01", "2026-11-01"])})
+    out = P.repair_names(h)
+    ok(set(out[out.player_id == 1]["name"]) == {"Tim Stutzle"},
+       "stripped-letter name restored from older full spelling")
+    ok(set(out[out.player_id == 2]["name"]) == {"Chris Tanev", "Christopher Tanev"},
+       "nickname aliases are not treated as damage")
+    ok(not P._dropped_from("Tim Stutzle", "Tim Sttzle"), "direction checked")
+    r = pd.DataFrame({"player_id": [1, 3], "name": ["Tim Sttzle", "Connor McDavid"]})
+    r2 = P.apply_names(r, {1: "Tim Stützle"})
+    ok(list(r2["name"]) == ["Tim Stützle", "Connor McDavid"],
+       "official names override by id, others untouched")
+
+
 if __name__ == "__main__":
     for fn in (test_weights, test_shrinkage, test_rate_recovery,
                test_state_split, test_state_units, test_dedup,
@@ -882,7 +901,8 @@ if __name__ == "__main__":
                test_assist_only_column, test_assist_only_reaches_the_payload,
                test_refresh_latest_picks_the_newest_season,
                test_toi_units, test_opponent_and_home, test_goalies,
-               test_slate_parsing, test_json_safety, test_end_to_end_write):
+               test_slate_parsing, test_json_safety, test_end_to_end_write,
+               test_repair_names):
         print("\n" + fn.__name__)
         fn()
     print("\n" + (f"{len(FAIL)} FAILURES" if FAIL else "all checks passed"))

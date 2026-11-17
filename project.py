@@ -91,6 +91,90 @@ def canon_teams(hist: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+
+def _dropped_from(short: str, long: str) -> bool:
+    """True when `short` is `long` with some characters deleted.
+
+    MoneyPuck strips letters it cannot encode, so "Tim Stützle" arrives as
+    "Tim Sttzle" - a strict subsequence of the plain "Tim Stutzle" it used a
+    season earlier. Aliases ("Chris" / "Christopher") are left alone.
+    """
+    if len(short) >= len(long):
+        return False
+    # Same first name only: "Mitch" -> "Mitchell" is a nickname, not damage,
+    # and DFS sites list the short form.
+    if short.split(" ")[0] != long.split(" ")[0]:
+        return False
+    it = iter(long)
+    return all(ch in it for ch in short)
+
+
+def repair_names(hist: pd.DataFrame) -> pd.DataFrame:
+    """One spelling per player_id, preferring a name with no letters missing.
+
+    `rosters()` takes the latest name, which for accented players is the
+    mangled one, and a mangled name matches no DFS site. Here each id keeps
+    its latest spelling unless an older spelling is that same name with the
+    dropped letters still in it.
+    """
+    if not len(hist) or "name" not in hist.columns:
+        return hist
+    out = hist.copy()
+    fix = {}
+    for pid, grp in out.sort_values("date").groupby("player_id")["name"]:
+        names = [n for n in pd.unique(grp.dropna().astype(str))]
+        if len(names) < 2:
+            continue
+        latest = names[-1]
+        better = [n for n in names if _dropped_from(latest, n)]
+        if better:
+            fix[pid] = max(better, key=len)
+    if fix:
+        log.info("restored %d names MoneyPuck had stripped letters from",
+                 len(fix))
+        m = out["player_id"].map(fix)
+        out["name"] = m.fillna(out["name"])
+    return out
+
+
+def official_names(teams) -> dict:
+    """player_id -> "First Last" with accents, from the NHL's own rosters.
+
+    MoneyPuck's player id is the NHL id, so this is a straight lookup. Any
+    failure returns what it has; the history repair above still applies.
+    """
+    import requests
+    names = {}
+    for t in sorted(set(teams)):
+        try:
+            r = requests.get(
+                f"https://api-web.nhle.com/v1/roster/{t}/current",
+                timeout=20, headers={"User-Agent": "nhlprojections"})
+            if r.status_code != 200:
+                log.warning("roster %s: HTTP %s", t, r.status_code)
+                continue
+            js = r.json()
+        except Exception as e:  # network, JSON - never fatal
+            log.warning("roster %s: %s", t, e)
+            continue
+        for grp in ("forwards", "defensemen", "goalies"):
+            for pl in js.get(grp, []):
+                f = (pl.get("firstName") or {}).get("default", "")
+                l = (pl.get("lastName") or {}).get("default", "")
+                if pl.get("id") and (f or l):
+                    names[int(pl["id"])] = f"{f} {l}".strip()
+    return names
+
+
+def apply_names(roster: pd.DataFrame, names: dict) -> pd.DataFrame:
+    if not len(roster) or not names:
+        return roster
+    out = roster.copy()
+    m = out["player_id"].astype("int64").map(names)
+    out["name"] = m.fillna(out["name"])
+    return out
+
+
 def rosters(hist: pd.DataFrame, games: list[dict],
             asof: pd.Timestamp, min_players: int = 10) -> pd.DataFrame:
     """Who is available to each team tonight, from who has been playing.
@@ -275,8 +359,14 @@ def main() -> int:
         log.warning("MoneyPuck did not carry %s, so those columns are absent "
                     "rather than zero", ", ".join(dropped))
 
+    skhist, gohist = repair_names(skhist), repair_names(gohist)
     sk_roster = rosters(skhist, games, asof, min_players=12)
     go_roster = rosters(gohist, games, asof, min_players=2)
+    teams = [t for g in games for t in (g["home"], g["away"])]
+    official = official_names(teams)
+    log.info("official NHL names for %d players", len(official))
+    sk_roster = apply_names(sk_roster, official)
+    go_roster = apply_names(go_roster, official)
     log.info("slate roster: %d skaters, %d goalies", len(sk_roster),
              len(go_roster))
     if not len(sk_roster):
