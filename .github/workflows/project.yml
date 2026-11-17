@@ -6,6 +6,17 @@ on:
     # and off the hour because :00 is when every cron on GitHub fires at once
     # and schedules get delayed.
     - cron: "31 15 * * *"
+    # Backups. GitHub's scheduler delays crons on quiet repos by hours - on
+    # 2026-11-16 the 15:31 run started at 23:47 and on the 17th it had not
+    # started by 19:00, so the DFS board fell back to its own model all day.
+    # Every extra run checks whether today's file already exists and stops.
+    - cron: "11 17 * * *"
+    - cron: "41 18 * * *"
+    - cron: "11 20 * * *"
+  # And straight after the history fetch, whenever that actually runs.
+  workflow_run:
+    workflows: ["Fetch history"]
+    types: [completed]
   workflow_dispatch:
     inputs:
       date:
@@ -34,15 +45,28 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - name: Already projected today?
+        # A manual run always projects; scheduled and chained runs stop if
+        # today's file is already published.
+        run: |
+          DAY=$(date -u +%Y-%m-%d)
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ] && [ -f "docs/data/${DAY}.json" ]; then
+            echo "docs/data/${DAY}.json already published - nothing to do"
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          fi
       - uses: actions/setup-python@v5
+        if: env.SKIP != '1'
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
+        if: env.SKIP != '1'
 
       - name: Every import resolves
+        if: env.SKIP != '1'
         run: python -c "import source, fetch, model, slate, project, validate"
 
       - name: Tests
+        if: env.SKIP != '1'
         # These need no network and no cache, and they are the only thing
         # standing between a units bug and a page full of confident nonsense.
         run: |
@@ -50,6 +74,7 @@ jobs:
           python tests.py
 
       - name: The history cache is present
+        if: env.SKIP != '1'
         # Without this the projection step would quietly start fetching a
         # thousand players inside a job with a thirty minute limit, and fail
         # at minute thirty with a timeout that explains nothing.
@@ -63,12 +88,14 @@ jobs:
           ls -la data/
 
       - name: How old is the history
+        if: env.SKIP != '1'
         # Says it out loud every run. A page built from a frozen cache is
         # indistinguishable from one built from a current cache - same layout,
         # same plausible numbers, same "generated this morning" in the footer.
         run: python cache_age.py --max-age 4
 
       - name: Project
+        if: env.SKIP != '1'
         # Inputs go through the ENVIRONMENT, not through string interpolation
         # into the command line. `${{ inputs.games }}` pasted straight into a
         # shell is an injection point, and it also breaks on any input
@@ -85,6 +112,7 @@ jobs:
           python project.py "${args[@]}"
 
       - name: Commit
+        if: env.SKIP != '1'
         run: |
           set -e
           git config user.name "github-actions[bot]"
