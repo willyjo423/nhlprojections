@@ -1,6 +1,6 @@
 {
  "date": "2026-11-17",
- "generated_at": "2026-11-17T18:53:11+00:00",
+ "generated_at": "2026-11-17T20:14:39+00:00",
  "games": [
   {
    "away": "LAK",
@@ -1843,7 +1843,7 @@
    "last_played": "2026-11-08"
   },
   {
-   "name": "Martin Fehrvry",
+   "name": "Martin Feh\u00e9rv\u00e1ry",
    "team": "WSH",
    "opponent": "TBL",
    "is_home": false,
@@ -1975,7 +1975,7 @@
    "last_played": "2026-11-14"
   },
   {
-   "name": "Tim Sttzle",
+   "name": "Tim St\u00fctzle",
    "team": "OTT",
    "opponent": "WPG",
    "is_home": false,
@@ -13294,7 +13294,7 @@
    "last_played": "2026-11-08"
   },
   {
-   "name": "Viggo Bjrck",
+   "name": "Viggo Bj\u00f6rck",
    "team": "WPG",
    "opponent": "OTT",
    "is_home": true,
@@ -15703,7 +15703,7 @@
    "last_played": "2026-11-15"
   },
   {
-   "name": "Isac Lundestrm",
+   "name": "Isac Lundestrom",
    "team": "CBJ",
    "opponent": "NYI",
    "is_home": false,
@@ -16792,7 +16792,7 @@
    "last_played": "2026-04-12"
   },
   {
-   "name": "Oskar Bck",
+   "name": "Oskar B\u00e4ck",
    "team": "DAL",
    "opponent": "VGK",
    "is_home": false,
